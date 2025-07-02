@@ -105,7 +105,7 @@ const BinarySearch: React.FC = () => {
   const [inputArray, setInputArray] = useState<string>('1,2,3,4,5,6,7,8,9,10');
   const [speed] = useState<number>(1000);
   const [activeLanguage, setActiveLanguage] = useState<string>('javascript');
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+const intervalRef = useRef<number | null>(null);
 
   // Generate search steps for the current array and search value
   const generateSearchSteps = (arr: number[], target: number): SearchStep[] => {
