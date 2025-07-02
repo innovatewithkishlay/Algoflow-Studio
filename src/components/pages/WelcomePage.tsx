@@ -84,13 +84,10 @@ function DSAModernHero() {
   );
 }
 
+// --- FIXED VARIANTS ---
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.12, duration: 0.55, ease: "easeOut" },
-  }),
+  visible: { opacity: 1, y: 0 }
 };
 
 const staggerContainer = {
@@ -112,7 +109,7 @@ const WelcomePage: React.FC = () => {
           animate="visible"
           variants={{
             hidden: { opacity: 0, x: -40 },
-            visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } },
+            visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" as const } },
           }}
         >
           <h1 className="text-6xl font-extrabold leading-tight tracking-tight mb-6 text-indigo-800">
@@ -188,8 +185,10 @@ const WelcomePage: React.FC = () => {
           ].map((feature, i) => (
             <motion.div
               key={feature.title}
-              custom={i}
               variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              transition={{ delay: i * 0.12, duration: 0.55, ease: "easeOut" as const }}
               whileHover={{ scale: 1.04, boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}
               className="group rounded-3xl border border-gray-200 p-8 bg-white/80 shadow-sm hover:shadow-md transition cursor-pointer backdrop-blur-md"
             >
@@ -243,8 +242,10 @@ const WelcomePage: React.FC = () => {
           ].map((card, i) => (
             <motion.div
               key={card.category}
-              custom={i}
               variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              transition={{ delay: i * 0.12, duration: 0.55, ease: "easeOut" as const }}
               whileHover={{ scale: 1.03, boxShadow: "0 10px 30px rgba(0,0,0,0.07)" }}
               className="rounded-3xl border border-gray-200 p-8 bg-white/80 shadow-sm hover:shadow-md transition cursor-pointer backdrop-blur-md"
             >
