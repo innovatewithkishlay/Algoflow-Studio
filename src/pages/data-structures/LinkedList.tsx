@@ -179,16 +179,17 @@ const LinkedList: React.FC = () => {
             A linked list is a linear data structure where each element (node) contains data and a reference to the next node.
             Unlike arrays, linked lists don't require contiguous memory allocation, making them flexible for dynamic data.
           </p>
-          <div className="rounded-xl bg-[#F5E7DA] text-zinc-800 font-mono text-sm px-5 py-4 my-4 shadow-sm border border-[#ecd3b3] overflow-x-auto">
-            <span className="text-zinc-400">// Node structure</span> <br />
-            struct Node {'{'} <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;int data; <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;Node* next; <br />
-            {'}'};<br /><br />
-            <span className="text-zinc-400">// Example: 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; null</span> <br />
-            <span className="text-zinc-400">// Each node points to the next node</span> <br />
-            <span className="text-zinc-400">// Last node points to null (end of list)</span>
-          </div>
+          <div className="rounded-xl bg-[#F3F4F6] text-zinc-800 font-mono text-sm px-5 py-4 my-4 shadow-sm border border-zinc-200 overflow-x-auto">
+  <span className="text-zinc-400">// Node structure</span> <br />
+  struct Node {'{'} <br />
+  &nbsp;&nbsp;&nbsp;&nbsp;int data; <br />
+  &nbsp;&nbsp;&nbsp;&nbsp;Node* next; <br />
+  {'}'};<br /><br />
+  <span className="text-zinc-400">// Example: 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; null</span> <br />
+  <span className="text-zinc-400">// Each node points to the next node</span> <br />
+  <span className="text-zinc-400">// Last node points to null (end of list)</span>
+</div>
+
           <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mt-6 mb-3">
             <i className="bi bi-list-check text-indigo-600"></i>
             Key Features
