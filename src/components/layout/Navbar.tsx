@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation, NavLink } from "react-router-dom";
 import { useTheme } from "../../contexts/ThemeContext";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface NavbarProps {
   onSidebarToggle: () => void;
@@ -18,7 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
   const location = useLocation();
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur shadow-sm transition">
+    <header className="sticky top-0 z-50 w-full bg-white/70 dark:bg-zinc-900/70 backdrop-blur-lg shadow-md transition">
       <nav className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         {/* Left: Brand & Sidebar Toggle */}
         <div className="flex items-center gap-3">
@@ -33,7 +33,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
             </svg>
           </button>
           <Link to="/" className="flex items-center gap-2 font-extrabold text-xl tracking-tight text-indigo-700 dark:text-indigo-300">
-            {/* Abstract DSA SVG brand */}
+            {/* Custom SVG brand */}
             <svg width={28} height={28} viewBox="0 0 28 28" fill="none">
               <circle cx={14} cy={22} r={4} fill="#6366f1" />
               <circle cx={7} cy={8} r={3} fill="#a5b4fc" />
@@ -55,21 +55,28 @@ const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
               <li key={link.to}>
                 <NavLink
                   to={link.to}
-                  className={`relative px-4 py-2 rounded-lg font-medium text-base transition
+                  className={`
+                    relative px-4 py-2 rounded-lg font-medium text-base transition
                     ${isActive
-                      ? "text-indigo-700 dark:text-indigo-300"
-                      : "text-zinc-700 dark:text-zinc-200 hover:text-indigo-600 dark:hover:text-indigo-300"}
+                      ? "bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 shadow-sm"
+                      : "text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800"}
                   `}
+                  style={{ transition: "background 0.18s, color 0.18s" }}
                 >
                   <span>{link.label}</span>
-                  {/* Animated underline */}
-                  {isActive && (
-                    <motion.span
-                      layoutId="navbar-underline"
-                      className="absolute left-2 right-2 -bottom-1 h-0.5 rounded bg-indigo-500 dark:bg-indigo-400"
-                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                    />
-                  )}
+                  {/* Animated active background (optional) */}
+                  <AnimatePresence>
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-active-bg"
+                        className="absolute inset-0 rounded-lg z-[-1] bg-indigo-100 dark:bg-indigo-900"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.22 }}
+                      />
+                    )}
+                  </AnimatePresence>
                 </NavLink>
               </li>
             );
@@ -122,7 +129,6 @@ const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
               </motion.svg>
             )}
           </button>
-          
         </div>
       </nav>
     </header>
