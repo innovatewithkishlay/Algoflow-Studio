@@ -52,7 +52,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
               <line x1={14} y1={14} x2={7} y2={8} stroke="#818cf8" strokeWidth={2} />
               <line x1={14} y1={14} x2={21} y2={8} stroke="#818cf8" strokeWidth={2} />
             </motion.svg>
-            <span>DSA Visualizer</span>
+            <span>AlgoFlow Studio</span>
           </Link>
         </div>
 

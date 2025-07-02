@@ -26,7 +26,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-8 md:gap-0 justify-between items-start md:items-center">
     {/* About */}
     <div className="flex-1 mb-6 md:mb-0">
-      <span className="font-extrabold text-indigo-700 text-lg tracking-tight">DSA Visualizer</span>
+      <span className="font-extrabold text-indigo-700 text-lg tracking-tight">AlgoFlow Studio</span>
       <p className="text-zinc-600 mt-2 text-sm max-w-xs">
         An interactive platform to master Data Structures & Algorithms through stepwise visualizations and modern learning tools.
       </p>
@@ -59,7 +59,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     </div>
   </div>
   <div className="mt-8 text-center text-xs text-zinc-400">
-    &copy; {new Date().getFullYear()} DSA Visualizer &mdash; Empowering the next generation of problem solvers.
+    &copy; {new Date().getFullYear()} AlgoFlow Studio &mdash; Empowering the next generation of problem solvers.
   </div>
 </footer>
 

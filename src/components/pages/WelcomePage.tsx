@@ -164,7 +164,7 @@ const WelcomePage: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl font-bold mb-4">Why Choose DSA Visualizer?</h2>
+          <h2 className="text-4xl font-bold mb-4">Why Choose AlgoFlow Studio?</h2>
           <p className="text-gray-600 text-lg leading-relaxed">
             Interactive learning experience designed to make complex concepts easy to understand
           </p>

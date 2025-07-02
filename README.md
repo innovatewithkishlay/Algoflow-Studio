@@ -1,4 +1,4 @@
-# DSA Visualizer
+# AlgoFlow Studio
 
 An interactive web platform for mastering Data Structures and Algorithms through engaging visualizations. Crafted with React, TypeScript, and Bootstrap 5.3 for a seamless learning experience.
 
