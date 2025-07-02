@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
-import { useTheme } from '../../contexts/ThemeContext';
+// import { useTheme } from '../../contexts/ThemeContext';
 import { motion } from 'framer-motion';
 
+// Only plain objects for variants!
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.08, duration: 0.5, type: 'spring', stiffness: 80 },
-  }),
+  visible: { opacity: 1, y: 0 }
 };
 
 const Stack: React.FC = () => {
-  const { isDarkMode } = useTheme();
+  // const { isDarkMode } = useTheme();
   const [stack, setStack] = useState<number[]>([1, 2, 3, 4, 5]);
   const [inputValue, setInputValue] = useState<string>('');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -47,7 +44,7 @@ const Stack: React.FC = () => {
     <div className="min-h-screen bg-white py-10 px-4">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="mb-8">
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-8">
           <h1 className="text-4xl font-extrabold text-zinc-900 mb-2">Stack</h1>
           <p className="text-zinc-600 text-lg mb-4">
             A linear data structure that follows the Last-In-First-Out (LIFO) principle.
@@ -73,7 +70,7 @@ const Stack: React.FC = () => {
         </motion.div>
 
         {/* How Stack Works */}
-        <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={1} className="mb-8">
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-8">
           <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mb-3">
             <i className="bi bi-info-circle text-indigo-600"></i>
             How Stack Works
@@ -116,7 +113,7 @@ const Stack: React.FC = () => {
         </motion.div>
 
         {/* Key Operations */}
-        <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={2} className="mb-8">
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-8">
           <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mb-3">
             <i className="bi bi-list-check text-indigo-600"></i>
             Key Operations
@@ -132,7 +129,7 @@ const Stack: React.FC = () => {
         </motion.div>
 
         {/* Memory Layout */}
-        <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={3} className="mb-8">
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-8">
           <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mb-3">
             <i className="bi bi-cpu text-indigo-600"></i>
             Memory Layout
@@ -163,7 +160,7 @@ const Stack: React.FC = () => {
         </motion.div>
 
         {/* Interactive Demo */}
-        <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={4} className="mb-8">
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-8">
           <h5 className="flex items-center gap-2 text-indigo-700 text-lg font-semibold mb-4">
             <i className="bi bi-play-circle"></i> Interactive Demo & Visualization
           </h5>
@@ -226,6 +223,11 @@ const Stack: React.FC = () => {
                       onClick={() => setSelectedIndex(idx)}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      // Animate each stack element with a staggered delay
+                      initial="hidden"
+                      animate="visible"
+                      variants={fadeUp}
+                      transition={{ delay: idx * 0.08, duration: 0.5, type: "spring", stiffness: 80 }}
                     >
                       {value}
                     </motion.div>
@@ -258,7 +260,7 @@ const Stack: React.FC = () => {
         </motion.div>
 
         {/* Complexity Analysis */}
-        <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={5} className="mb-8">
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-8">
           <h4 className="flex items-center gap-2 text-green-700 text-xl font-semibold mb-4">
             <i className="bi bi-graph-up"></i> Time & Space Complexity
           </h4>
@@ -311,7 +313,7 @@ const Stack: React.FC = () => {
         </motion.div>
 
         {/* Use Cases */}
-        <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={6} className="mb-8">
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-8">
           <h4 className="flex items-center gap-2 text-green-700 text-xl font-semibold mb-4">
             <i className="bi bi-lightning"></i> Use Cases & Applications
           </h4>
@@ -356,7 +358,7 @@ const Stack: React.FC = () => {
         </motion.div>
 
         {/* Advantages and Disadvantages */}
-        <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={7} className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-white rounded-lg shadow p-6">
             <h4 className="flex items-center gap-2 text-green-700 text-xl font-semibold mb-4">
               <i className="bi bi-plus-circle"></i> Advantages
