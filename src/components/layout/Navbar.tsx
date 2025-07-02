@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation, NavLink } from "react-router-dom";
 import { useTheme } from "../../contexts/ThemeContext";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface NavbarProps {
   onSidebarToggle: () => void;
@@ -18,11 +18,10 @@ const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
   const location = useLocation();
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/70 dark:bg-zinc-900/70 backdrop-blur-lg shadow-md transition">
+    <header className="sticky top-0 z-50 w-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-lg shadow-md transition">
       <nav className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
-        {/* Left: Brand & Sidebar Toggle */}
+        {/* Brand & Sidebar Toggle */}
         <div className="flex items-center gap-3">
-          {/* Sidebar toggle for mobile */}
           <button
             className="lg:hidden p-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 transition"
             onClick={onSidebarToggle}
@@ -32,8 +31,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
               <path strokeLinecap="round" d="M4 7h14M4 12h14M4 17h14" />
             </svg>
           </button>
-          <Link to="/" className="flex items-center gap-2 font-extrabold text-xl tracking-tight text-indigo-700 dark:text-indigo-300">
-            {/* Custom SVG brand */}
+          <Link to="/" className="flex items-center gap-2 font-extrabold text-xl tracking-tight text-indigo-700 dark:text-indigo-300 select-none">
             <svg width={28} height={28} viewBox="0 0 28 28" fill="none">
               <circle cx={14} cy={22} r={4} fill="#6366f1" />
               <circle cx={7} cy={8} r={3} fill="#a5b4fc" />
@@ -47,7 +45,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
           </Link>
         </div>
 
-        {/* Center: Navigation */}
+        {/* Navigation */}
         <ul className="hidden lg:flex items-center gap-2">
           {navLinks.map((link) => {
             const isActive = location.pathname.startsWith(link.to);
@@ -56,38 +54,42 @@ const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
                 <NavLink
                   to={link.to}
                   className={`
-                    relative px-4 py-2 rounded-lg font-medium text-base transition
+                    group relative px-5 py-4 rounded-lg font-medium text-base transition
+                    focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400
                     ${isActive
-                      ? "bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 shadow-sm"
+                      ? "text-indigo-700 dark:text-indigo-200 bg-zinc-100 dark:bg-zinc-800 shadow"
                       : "text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800"}
                   `}
                   style={{ transition: "background 0.18s, color 0.18s" }}
                 >
-                  <span>{link.label}</span>
-                  {/* Animated active background (optional) */}
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.span
-                        layoutId="nav-active-bg"
-                        className="absolute inset-0 rounded-lg z-[-1] bg-indigo-100 dark:bg-indigo-900"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.22 }}
-                      />
-                    )}
-                  </AnimatePresence>
+                  <motion.span
+                    layout
+                    className="relative z-10"
+                    whileHover={{ scale: 1.08 }}
+                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                  >
+                    {link.label}
+                  </motion.span>
+                  {/* Animated border for active */}
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-active-border"
+                      className="absolute left-2 right-2 bottom-1 h-0.5 bg-indigo-500 dark:bg-indigo-400 rounded"
+                      initial={{ opacity: 0, scaleX: 0 }}
+                      animate={{ opacity: 1, scaleX: 1 }}
+                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                    />
+                  )}
                 </NavLink>
               </li>
             );
           })}
         </ul>
 
-        {/* Right: Theme Toggle & GitHub */}
+        {/* Theme Toggle & GitHub */}
         <div className="flex items-center gap-2">
-          {/* Theme Toggle */}
           <button
-            className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition"
+            className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 hover:bg-indigo-100 dark:hover:bg-indigo-900 transition shadow"
             onClick={toggleTheme}
             aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
             title={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
