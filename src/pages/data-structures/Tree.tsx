@@ -4,11 +4,7 @@ import { motion } from 'framer-motion';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.08, duration: 0.5, type: 'spring', stiffness: 80 },
-  }),
+  visible: { opacity: 1, y: 0 }
 };
 
 const Tree: React.FC = () => {
@@ -48,10 +44,10 @@ const Tree: React.FC = () => {
               <motion.div
                 key={idx}
                 className="flex flex-col items-center relative"
-                custom={idx}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1, type: 'spring', stiffness: 80 }}
+                initial="hidden"
+                animate="visible"
+                variants={fadeUp}
+                transition={{ delay: idx * 0.08, duration: 0.5, type: "spring", stiffness: 80 }}
                 whileHover={{ scale: 1.07, boxShadow: '0 8px 20px rgba(0,0,0,0.12)' }}
               >
                 <div
@@ -76,7 +72,7 @@ const Tree: React.FC = () => {
     <div className="min-h-screen bg-white py-10 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Page Header */}
-        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp} custom={0}>
+        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp}>
           <h1 className="text-4xl font-extrabold text-zinc-900">Tree</h1>
           <p className="text-zinc-700 text-lg mt-2">
             A hierarchical data structure consisting of nodes connected by edges
@@ -102,7 +98,7 @@ const Tree: React.FC = () => {
         </motion.div>
 
         {/* Information Section */}
-        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp} custom={1}>
+        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp}>
           <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mb-3">
             <i className="bi bi-info-circle text-indigo-600"></i>
             How Tree Works
@@ -171,7 +167,7 @@ class BinaryTree {
         </motion.div>
 
         {/* Types of Trees */}
-        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp} custom={2}>
+        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp}>
           <h4 className="flex items-center gap-2 text-indigo-700 text-xl font-semibold mb-4">
             <i className="bi bi-diagram-3"></i> Types of Trees
           </h4>
@@ -216,7 +212,7 @@ class BinaryTree {
         </motion.div>
 
         {/* Traversal Methods */}
-        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp} custom={3}>
+        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp}>
           <h4 className="flex items-center gap-2 text-indigo-700 text-xl font-semibold mb-4">
             <i className="bi bi-arrow-repeat"></i> Tree Traversal Methods
           </h4>
@@ -243,7 +239,7 @@ class BinaryTree {
         </motion.div>
 
         {/* Interactive Section */}
-        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp} custom={4}>
+        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp}>
           <h5 className="flex items-center gap-2 text-indigo-700 text-lg font-semibold mb-4">
             <i className="bi bi-play-circle"></i> Interactive Demo & Visualization
           </h5>
@@ -290,7 +286,7 @@ class BinaryTree {
         </motion.div>
 
         {/* Memory Layout Section */}
-        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp} custom={5}>
+        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp}>
           <h4 className="flex items-center gap-2 text-indigo-700 text-xl font-semibold mb-4">
             <i className="bi bi-cpu"></i> Memory Layout
           </h4>
@@ -301,7 +297,7 @@ class BinaryTree {
         </motion.div>
 
         {/* Complexity Analysis */}
-        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp} custom={6}>
+        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp}>
           <h4 className="flex items-center gap-2 text-green-700 text-xl font-semibold mb-4">
             <i className="bi bi-graph-up"></i> Time & Space Complexity
           </h4>
@@ -354,7 +350,7 @@ class BinaryTree {
         </motion.div>
 
         {/* Use Cases */}
-        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp} custom={7}>
+        <motion.div className="mb-8" initial="hidden" animate="visible" variants={fadeUp}>
           <h4 className="flex items-center gap-2 text-green-700 text-xl font-semibold mb-4">
             <i className="bi bi-lightning"></i> Use Cases & Applications
           </h4>
@@ -399,7 +395,7 @@ class BinaryTree {
         </motion.div>
 
         {/* Advantages and Disadvantages */}
-        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8" initial="hidden" animate="visible" variants={fadeUp} custom={8}>
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8" initial="hidden" animate="visible" variants={fadeUp}>
           <div className="bg-white rounded-lg shadow p-6">
             <h4 className="flex items-center gap-2 text-green-700 text-xl font-semibold mb-4">
               <i className="bi bi-plus-circle"></i> Advantages
