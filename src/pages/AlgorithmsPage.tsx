@@ -15,12 +15,12 @@ const containerVariants = {
 
 const cardVariants = {
   hidden: { opacity: 0, y: 32, scale: 0.97 },
-  visible: (i: number) => ({
+  visible: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { delay: i * 0.07, duration: 0.5, type: "spring", stiffness: 80 },
-  }),
+    transition: { duration: 0.5, type: "spring" as const, stiffness: 80 },
+  },
 };
 
 const AlgorithmsPage: React.FC = () => {
@@ -66,24 +66,23 @@ const AlgorithmsPage: React.FC = () => {
           {algorithms.map((algo, i) => (
             <motion.div
               key={algo.id}
-              custom={i}
               variants={cardVariants}
-              whileHover={{ y: -4, scale: 1.02, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.12)" }}
-              transition={{ type: "spring", stiffness: 80 }}
+              initial="hidden"
+              animate="visible"
+              transition={{
+                ...cardVariants.visible.transition,
+                delay: i * 0.07,
+              }}
+              whileHover={{
+                y: -4,
+                scale: 1.02,
+                boxShadow: "0 8px 32px 0 rgba(34,197,94,0.12)",
+              }}
               className="transition-all"
             >
               <Card
                 title={algo.name}
-                subtitle={
-                  <div className="flex flex-wrap gap-2 mt-1">
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-semibold">
-                      {algo.category}
-                    </span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-semibold">
-                      {algo.difficulty}
-                    </span>
-                  </div>
-                }
+                subtitle={`${algo.category} • ${algo.difficulty}`}
                 icon={algo.icon}
                 variant={algo.component ? "success" : "secondary"}
                 disabled={!algo.component}
