@@ -1,184 +1,167 @@
 # DSA Visualizer
 
-A modern, interactive web application for learning Data Structures and Algorithms through visualizations. Built with React, TypeScript, and Bootstrap 5.3.
+An interactive web platform for mastering Data Structures and Algorithms through engaging visualizations. Crafted with React, TypeScript, and Bootstrap 5.3 for a seamless learning experience.
 
-## 🚀 Features
+## ✨ Key Highlights
 
-- **Interactive Visualizations**: Step-by-step animations for algorithms and data structures
-- **Dark/Light Theme**: Toggle between themes with persistent preferences
-- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
-- **Comprehensive Coverage**: From basic arrays to advanced graph algorithms
-- **Educational Focus**: Designed specifically for learning and understanding DSA concepts
-- **Modern Routing**: Clean URL structure with React Router
+- **Stepwise Visualizations**: Watch algorithms and data structures unfold, one step at a time
+- **Theme Switcher**: Effortlessly toggle between dark and light modes, with your choice remembered
+- **Mobile-First Design**: Fully responsive—optimized for all devices
+- **Extensive Topics**: Covers everything from arrays to complex graph algorithms
+- **Learning-Oriented**: Built to simplify and demystify DSA concepts
+- **Modern Navigation**: Clean, intuitive routing powered by React Router
 
-## 🛠️ Tech Stack
+## 🧰 Technology Stack
 
-- **Frontend**: React 19.1.0 with TypeScript
+- **Frontend**: React 19.1.0 + TypeScript
 - **Routing**: React Router DOM
-- **Styling**: Bootstrap 5.3.7 with custom CSS
+- **Styling**: Bootstrap 5.3.7 & custom CSS
 - **Icons**: Bootstrap Icons
-- **Build Tool**: Vite
-- **Package Manager**: npm
+- **Build System**: Vite
+- **Package Management**: npm
 
-## 📦 Installation
+## ⚡ Getting Started
 
 1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/dsa-visualizer.git
-cd dsa-visualizer
-```
+   ```bash
+   git clone https://github.com/yourusername/dsa-visualizer.git
+   ```
 
 2. Install dependencies:
-```bash
-npm install
+   ```bash
+   npm install
+   ```
+
+3. Launch the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Open `http://localhost:5173` in your browser.
+
+## 🗂️ Project Layout
+
 ```
-
-3. Start the development server:
-```bash
-npm run dev
-```
-
-4. Open your browser and navigate to `http://localhost:5173`
-
-## 🏗️ Project Structure
-
-```
-dsa-visualizer/
 ├── src/
 │   ├── components/
-│   │   ├── algorithms/          # Algorithm visualizers
-│   │   ├── data-structures/     # Data structure visualizers
-│   │   ├── layout/              # Layout components (Navbar)
-│   │   ├── pages/               # Page components (Welcome)
-│   │   └── ui/                  # Reusable UI components
-│   ├── pages/                   # Route pages
-│   ├── config/                  # Configuration files
-│   ├── contexts/                # React contexts (Theme)
-│   ├── hooks/                   # Custom React hooks
-│   ├── styles/                  # CSS files
-│   ├── types/                   # TypeScript type definitions
-│   └── utils/                   # Utility functions
-├── public/                      # Static assets
+│   │   ├── algorithms/        # Algorithm visualizers
+│   │   ├── data-structures/   # Data structure visualizers
+│   │   ├── layout/            # Layout (Navbar, etc.)
+│   │   ├── pages/             # Page components
+│   │   └── ui/                # Reusable UI elements
+│   ├── pages/                 # Route-level pages
+│   ├── config/                # App configuration
+│   ├── contexts/              # React contexts (e.g., Theme)
+│   ├── hooks/                 # Custom hooks
+│   ├── styles/                # CSS & theme files
+│   ├── types/                 # TypeScript types
+│   └── utils/                 # Helper functions
+├── public/                    # Static assets
 └── package.json
 ```
 
-## 🎯 Available Visualizations
+## 📊 Visualizations Available
 
 ### Data Structures
-- ✅ **Arrays** - Basic array operations and properties
-- 🔄 **Linked Lists** - Coming soon
-- 🔄 **Stacks** - Coming soon
-- 🔄 **Queues** - Coming soon
-- 🔄 **Trees** - Coming soon
-- 🔄 **Graphs** - Coming soon
+- ✅ **Arrays** – Visualize core operations and properties
+- 🚧 **Linked Lists** – Coming soon
+- 🚧 **Stacks** – Coming soon
+- 🚧 **Queues** – Coming soon
+- 🚧 **Trees** – Coming soon
+- 🚧 **Graphs** – Coming soon
 
 ### Algorithms
-- ✅ **Linear Search** - Sequential search algorithm
-- 🔄 **Binary Search** - Coming soon
-- 🔄 **Bubble Sort** - Coming soon
-- 🔄 **Merge Sort** - Coming soon
-- 🔄 **Quick Sort** - Coming soon
-- 🔄 **DFS** - Coming soon
-- 🔄 **BFS** - Coming soon
+- ✅ **Linear Search** – Step-by-step search demonstration
+- 🚧 **Binary Search** – Coming soon
+- 🚧 **Bubble Sort** – Coming soon
+- 🚧 **Merge Sort** – Coming soon
+- 🚧 **Quick Sort** – Coming soon
+- 🚧 **DFS** – Coming soon
+- 🚧 **BFS** – Coming soon
 
-## 🧭 Navigation Structure
+## 🧭 App Navigation
 
-The application uses React Router with the following routes:
+The app leverages React Router for a smooth navigation experience:
 
-- `/` - Welcome/Home page
-- `/data-structures` - Data structures overview page
-- `/data-structures/:id` - Individual data structure visualizer
-- `/algorithms` - Algorithms overview page
-- `/algorithms/:id` - Individual algorithm visualizer
+- `/` – Home/Welcome
+- `/data-structures` – Overview of data structures
+- `/data-structures/:id` – Visualizer for a specific data structure
+- `/algorithms` – Algorithms overview
+- `/algorithms/:id` – Visualizer for a specific algorithm
 
 ### Navigation Features
 
-- **Navbar Dropdowns**: Easy access to all data structures and algorithms
-- **Breadcrumb Navigation**: Clear indication of current location
-- **Responsive Design**: Mobile-friendly navigation
-- **Theme Toggle**: Accessible from the navbar
+- **Dropdown Menus**: Instantly access any topic from the navbar
+- **Breadcrumbs**: Always know where you are
+- **Mobile Navigation**: Optimized for touch and small screens
+- **Theme Toggle**: Switch themes directly from the navbar
 
-## 🎨 Customization
+## 🎨 Customization Guide
 
 ### Adding New Visualizations
 
-1. Create a new component in the appropriate directory:
-   - `src/components/algorithms/` for algorithms
-   - `src/components/data-structures/` for data structures
+1. Create your component:
+   - Algorithms: `src/components/algorithms/`
+   - Data Structures: `src/components/data-structures/`
+2. Register it in the config:
+   - Algorithms: `src/config/algorithms.ts`
+   - Data Structures: `src/config/dataStructures.ts`
+3. The router will automatically pick up your new visualizer.
 
-2. Add the component to the configuration:
-   - `src/config/algorithms.ts` for algorithms
-   - `src/config/dataStructures.ts` for data structures
+### Theming & Styling
 
-3. The routing will automatically work with the new components.
+- Edit `src/styles/globals.css` for global styles and custom utilities
+- Adjust Bootstrap variables in the CSS for theme tweaks
 
-### Styling
+## 🚢 Deployment
 
-The application uses Bootstrap 5.3 with custom CSS variables. You can customize the appearance by modifying:
-- `src/styles/globals.css` - Global styles and custom utilities
-- Bootstrap theme variables in the CSS file
-
-## 🚀 Deployment
-
-### Build for Production
+### Production Build
 
 ```bash
 npm run build
 ```
 
-### Preview Production Build
+### Preview the Build
 
 ```bash
 npm run preview
 ```
 
-### Deploy to Vercel
+## 🤗 Contributing
 
-1. Install Vercel CLI:
-```bash
-npm i -g vercel
-```
-
-2. Deploy:
-```bash
-vercel
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
+1. Fork this repo
+2. Create a feature branch: `git checkout -b my-feature`
 3. Make your changes
-4. Commit your changes: `git commit -m 'Add feature'`
-5. Push to the branch: `git push origin feature-name`
-6. Submit a pull request
+4. Commit: `git commit -m "Describe your change"`
+5. Push: `git push origin my-feature`
+6. Open a pull request
 
-### Development Guidelines
+### Dev Best Practices
 
-- Follow TypeScript best practices
-- Use functional components with hooks
-- Maintain responsive design
-- Add proper error handling
-- Include accessibility features
-- Write clean, documented code
+- Stick to TypeScript conventions
+- Use functional components and hooks
+- Ensure mobile responsiveness
+- Handle errors gracefully
+- Prioritize accessibility
+- Keep code clean and well-documented
 - Use React Router for navigation
 
-## 📝 License
+## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Distributed under the MIT License. See [LICENSE](LICENSE) for details.
 
-## 🙏 Acknowledgments
+## 🙌 Credits
 
-- [Bootstrap](https://getbootstrap.com/) for the UI framework
-- [React](https://reactjs.org/) for the frontend library
-- [React Router](https://reactrouter.com/) for routing
-- [TypeScript](https://www.typescriptlang.org/) for type safety
-- [Vite](https://vitejs.dev/) for the build tool
+- [Bootstrap](https://getbootstrap.com/)
+- [React](https://react.dev/)
+- [React Router](https://reactrouter.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
 
-## 📞 Support
+## 💬 Need Help?
 
-If you have any questions or need help, please open an issue on GitHub or contact the maintainers.
+Open an issue on GitHub or reach out to the maintainers for support.
 
 ---
 
-**Happy Learning! 🎓**
+**Explore, visualize, and master DSA! 🚀**
