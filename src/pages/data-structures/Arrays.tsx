@@ -11,13 +11,10 @@ const containerVariants = {
   },
 };
 
+// Only plain objects for variants!
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.1, duration: 0.5, type: "spring", stiffness: 80 },
-  }),
+  visible: { opacity: 1, y: 0 }
 };
 
 const Arrays: React.FC = () => {
@@ -53,17 +50,16 @@ const Arrays: React.FC = () => {
           animate="visible"
           variants={containerVariants}
         >
-          <motion.div custom={0} variants={fadeUp} className="mb-4">
+          <motion.div variants={fadeUp} className="mb-4">
             <h1 className="text-4xl font-extrabold text-zinc-900">Arrays</h1>
           </motion.div>
-          <motion.div custom={1} variants={fadeUp} className="mb-6">
+          <motion.div variants={fadeUp} className="mb-6">
             <p className="text-zinc-600 text-lg">
               A collection of elements stored at contiguous memory locations, providing efficient random access.
             </p>
           </motion.div>
           <motion.div
             className="flex flex-wrap gap-6 text-zinc-500 text-sm"
-            custom={2}
             variants={fadeUp}
           >
             <div className="flex items-center gap-2">
@@ -88,7 +84,7 @@ const Arrays: React.FC = () => {
           animate="visible"
           variants={containerVariants}
         >
-          <motion.div custom={0} variants={fadeUp}>
+          <motion.div variants={fadeUp}>
             <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mb-3">
               <i className="bi bi-info-circle text-indigo-600"></i>
               What is an Array?
@@ -100,7 +96,6 @@ const Arrays: React.FC = () => {
           </motion.div>
           <motion.div
             className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 mt-4 font-mono text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
-            custom={1}
             variants={fadeUp}
           >
             {`// Array declaration and initialization
@@ -113,7 +108,7 @@ int last = numbers[4];  // O(1) access time
 // Memory layout: [1][2][3][4][5]
 // Index: 0  1  2  3  4`}
           </motion.div>
-          <motion.div custom={2} variants={fadeUp}>
+          <motion.div variants={fadeUp}>
             <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mt-6 mb-3">
               <i className="bi bi-list-check text-indigo-600"></i>
               Key Features
@@ -135,7 +130,7 @@ int last = numbers[4];  // O(1) access time
           animate="visible"
           variants={containerVariants}
         >
-          <motion.div custom={0} variants={fadeUp}>
+          <motion.div variants={fadeUp}>
             <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mb-3">
               <i className="bi bi-cpu text-indigo-600"></i>
               Memory Layout
@@ -148,24 +143,28 @@ int last = numbers[4];  // O(1) access time
           <motion.div
             className="p-4 rounded bg-gray-100 dark:bg-gray-800 mt-4"
             style={{ color: isDarkMode ? "#f8f9fa" : "#23272f" }}
-            custom={1}
             variants={fadeUp}
           >
             <div className="flex justify-center gap-2 mb-2 flex-wrap">
               {array.map((num, idx) => (
-                <div key={idx} className="text-center">
-                  <div
-                    className={`border-2 border-indigo-600 bg-indigo-600 text-white p-3 rounded cursor-pointer ${
-                      selectedIndex === idx ? "ring-4 ring-indigo-400" : ""
-                    }`}
-                    onClick={() => handleElementClick(idx)}
-                  >
-                    {num}
-                  </div>
+                <motion.div
+                  key={idx}
+                  className={`text-center border-2 border-indigo-600 bg-indigo-600 text-white p-3 rounded cursor-pointer ${
+                    selectedIndex === idx ? "ring-4 ring-indigo-400" : ""
+                  }`}
+                  onClick={() => handleElementClick(idx)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial="hidden"
+                  animate="visible"
+                  variants={fadeUp}
+                  transition={{ delay: idx * 0.08, duration: 0.5, type: "spring", stiffness: 80 }}
+                >
+                  {num}
                   <small className="block mt-1 text-indigo-700 font-semibold">
                     Address + {idx * 4}
                   </small>
-                </div>
+                </motion.div>
               ))}
             </div>
             <p className="text-center text-sm font-medium mt-2 text-indigo-700">
@@ -211,6 +210,10 @@ int last = numbers[4];  // O(1) access time
                     onClick={() => handleElementClick(idx)}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    initial="hidden"
+                    animate="visible"
+                    variants={fadeUp}
+                    transition={{ delay: idx * 0.08, duration: 0.5, type: "spring", stiffness: 80 }}
                   >
                     {num}
                   </motion.div>
