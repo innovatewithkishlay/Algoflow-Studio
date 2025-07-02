@@ -1,0 +1,13 @@
+body {
+  transition: background-color 0.3s ease;
+}
+
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+  min-height: 100vh;
+}
