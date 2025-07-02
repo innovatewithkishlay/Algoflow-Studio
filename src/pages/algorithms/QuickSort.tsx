@@ -13,6 +13,113 @@ interface QuickSortStep {
   sorted?: number[];
 }
 
+const codeImplementations = {
+  javascript: `function quickSort(arr, low, high) {
+  if (low < high) {
+    const pi = partition(arr, low, high);
+    quickSort(arr, low, pi - 1);
+    quickSort(arr, pi + 1, high);
+  }
+  return arr;
+}
+
+function partition(arr, low, high) {
+  const pivot = arr[high];
+  let i = low - 1;
+
+  for (let j = low; j < high; j++) {
+    if (arr[j] <= pivot) {
+      i++;
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+  [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+  return i + 1;
+}`,
+  python: `def quick_sort(arr, low, high):
+    if low < high:
+        pi = partition(arr, low, high)
+        quick_sort(arr, low, pi - 1)
+        quick_sort(arr, pi + 1, high)
+    return arr
+
+def partition(arr, low, high):
+    pivot = arr[high]
+    i = low - 1
+
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1`,
+  cpp: `void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[high]);
+    return i + 1;
+}`,
+  go: `func quickSort(arr []int, low, high int) []int {
+    if low < high {
+        pi := partition(arr, low, high)
+        quickSort(arr, low, pi-1)
+        quickSort(arr, pi+1, high)
+    }
+    return arr
+}
+
+func partition(arr []int, low, high int) int {
+    pivot := arr[high]
+    i := low - 1
+
+    for j := low; j < high; j++ {
+        if arr[j] <= pivot {
+            i++
+            arr[i], arr[j] = arr[j], arr[i]
+        }
+    }
+    arr[i+1], arr[high] = arr[high], arr[i+1]
+    return i + 1
+}`,
+  rust: `fn quick_sort<T: Ord>(arr: &mut [T]) {
+    if arr.len() > 1 {
+        let pivot_index = partition(arr);
+        quick_sort(&mut arr[..pivot_index]);
+        quick_sort(&mut arr[pivot_index + 1..]);
+    }
+}
+
+fn partition<T: Ord>(arr: &mut [T]) -> usize {
+    let pivot_index = arr.len() - 1;
+    let mut i = 0;
+
+    for j in 0..pivot_index {
+        if arr[j] <= arr[pivot_index] {
+            arr.swap(i, j);
+            i += 1;
+        }
+    }
+    arr.swap(i, pivot_index);
+    i
+}`
+};
+
 const QuickSort: React.FC = () => {
   const [originalArray, setOriginalArray] = useState<number[]>([64, 34, 25, 12, 22, 11, 90]);
   const [array, setArray] = useState<number[]>([64, 34, 25, 12, 22, 11, 90]);
@@ -23,7 +130,7 @@ const QuickSort: React.FC = () => {
   const [inputArray, setInputArray] = useState<string>('64,34,25,12,22,11,90');
   const [speed] = useState<number>(1000);
   const [activeLanguage, setActiveLanguage] = useState<string>('javascript');
-  const intervalRef = useRef<number | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Generate quick sort steps for the current array
   const generateQuickSortSteps = (arr: number[]): QuickSortStep[] => {
@@ -127,113 +234,6 @@ const QuickSort: React.FC = () => {
     return steps;
   };
 
-  const codeImplementations = {
-    javascript: `function quickSort(arr, low, high) {
-  if (low < high) {
-    const pi = partition(arr, low, high);
-    quickSort(arr, low, pi - 1);
-    quickSort(arr, pi + 1, high);
-  }
-  return arr;
-}
-
-function partition(arr, low, high) {
-  const pivot = arr[high];
-  let i = low - 1;
-
-  for (let j = low; j < high; j++) {
-    if (arr[j] <= pivot) {
-      i++;
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-  }
-  [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
-  return i + 1;
-}`,
-    python: `def quick_sort(arr, low, high):
-    if low < high:
-        pi = partition(arr, low, high)
-        quick_sort(arr, low, pi - 1)
-        quick_sort(arr, pi + 1, high)
-    return arr
-
-def partition(arr, low, high):
-    pivot = arr[high]
-    i = low - 1
-
-    for j in range(low, high):
-        if arr[j] <= pivot:
-            i += 1
-            arr[i], arr[j] = arr[j], arr[i]
-
-    arr[i + 1], arr[high] = arr[high], arr[i + 1]
-    return i + 1`,
-    cpp: `void quickSort(int arr[], int low, int high) {
-    if (low < high) {
-        int pi = partition(arr, low, high);
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
-    }
-}
-
-int partition(int arr[], int low, int high) {
-    int pivot = arr[high];
-    int i = low - 1;
-
-    for (int j = low; j < high; j++) {
-        if (arr[j] <= pivot) {
-            i++;
-            swap(arr[i], arr[j]);
-        }
-    }
-    swap(arr[i + 1], arr[high]);
-    return i + 1;
-}`,
-    go: `func quickSort(arr []int, low, high int) []int {
-    if low < high {
-        pi := partition(arr, low, high)
-        quickSort(arr, low, pi-1)
-        quickSort(arr, pi+1, high)
-    }
-    return arr
-}
-
-func partition(arr []int, low, high int) int {
-    pivot := arr[high]
-    i := low - 1
-
-    for j := low; j < high; j++ {
-        if arr[j] <= pivot {
-            i++
-            arr[i], arr[j] = arr[j], arr[i]
-        }
-    }
-    arr[i+1], arr[high] = arr[high], arr[i+1]
-    return i + 1
-}`,
-    rust: `fn quick_sort<T: Ord>(arr: &mut [T]) {
-    if arr.len() > 1 {
-        let pivot_index = partition(arr);
-        quick_sort(&mut arr[..pivot_index]);
-        quick_sort(&mut arr[pivot_index + 1..]);
-    }
-}
-
-fn partition<T: Ord>(arr: &mut [T]) -> usize {
-    let pivot_index = arr.len() - 1;
-    let mut i = 0;
-
-    for j in 0..pivot_index {
-        if arr[j] <= arr[pivot_index] {
-            arr.swap(i, j);
-            i += 1;
-        }
-    }
-    arr.swap(i, pivot_index);
-    i
-}`
-  };
-
   // Initialize sort steps when original array changes
   useEffect(() => {
     if (originalArray.length > 0) {
@@ -268,7 +268,7 @@ fn partition<T: Ord>(arr: &mut [T]) -> usize {
         return next;
       });
     };
-    intervalRef.current = window.setInterval(animate, speed);
+    intervalRef.current = setInterval(animate, speed);
   };
 
   const pauseAnimation = () => {
@@ -321,17 +321,16 @@ fn partition<T: Ord>(arr: &mut [T]) -> usize {
     setInputArray('64,34,25,12,22,11,90');
   };
 
+  // Array element coloring
   const getElementClass = (index: number) => {
     const step = sortSteps[currentStep];
-    if (!step) return 'array-element default';
-
-    if (step.sorted && step.sorted.includes(index)) return 'sorted';
-    if (step.pivotIndex === index) return 'pivot';
-    if (step.partitioning && index >= step.partitioning[0] && index <= step.partitioning[1]) return 'partitioning';
-    if (step.i === index) return 'i-pointer';
-    if (step.j === index) return 'j-pointer';
-
-    return 'default';
+    if (!step) return 'bg-zinc-100 border-zinc-300 text-zinc-700';
+    if (step.sorted && step.sorted.includes(index)) return 'bg-green-500 border-green-700 text-white font-bold scale-110 shadow-lg';
+    if (step.pivotIndex === index) return 'bg-yellow-400 border-yellow-600 text-zinc-900 font-bold scale-105 shadow';
+    if (step.partitioning && index >= step.partitioning[0] && index <= step.partitioning[1]) return 'bg-blue-100 border-blue-300 text-blue-700';
+    if (step.i === index) return 'bg-indigo-300 border-indigo-600 text-indigo-900 font-bold scale-105 shadow';
+    if (step.j === index) return 'bg-pink-300 border-pink-600 text-pink-900 font-bold scale-105 shadow';
+    return 'bg-zinc-200 border-zinc-300 text-zinc-700';
   };
 
   const getCurrentMessage = () => {
@@ -340,49 +339,44 @@ fn partition<T: Ord>(arr: &mut [T]) -> usize {
   };
 
   return (
-    <div className="container-fluid py-3">
-      {/* Page Header */}
-      <div className="page-header mb-4">
-        <div className="page-header-content">
-          <h1 className="page-title">Quick Sort</h1>
-          <p className="page-subtitle">A highly efficient, comparison-based sorting algorithm that uses a divide-and-conquer strategy with a pivot element</p>
-          <div className="page-meta">
-            <div className="page-meta-item"><i className="bi bi-clock"></i><span>Average: O(n log n)</span></div>
-            <div className="page-meta-item"><i className="bi bi-graph-up"></i><span>Worst: O(n²)</span></div>
-            <div className="page-meta-item"><i className="bi bi-gear"></i><span>Space: O(log n)</span></div>
-            <div className="page-meta-item"><i className="bi bi-check-circle"></i><span>In-place</span></div>
+    <div className="min-h-screen bg-white py-8 px-4">
+      <div className="max-w-4xl mx-auto">
+        {/* Page Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-extrabold text-zinc-900">Quick Sort</h1>
+          <p className="text-zinc-700 text-lg mt-2">
+            A highly efficient, comparison-based sorting algorithm that uses a divide-and-conquer strategy with a pivot element
+          </p>
+          <div className="flex flex-wrap gap-6 text-zinc-500 text-sm mt-4">
+            <div className="flex items-center gap-2"><i className="bi bi-clock text-indigo-600"></i> <span>Average: O(n log n)</span></div>
+            <div className="flex items-center gap-2"><i className="bi bi-graph-up text-indigo-600"></i> <span>Worst: O(n²)</span></div>
+            <div className="flex items-center gap-2"><i className="bi bi-gear text-indigo-600"></i> <span>Space: O(log n)</span></div>
+            <div className="flex items-center gap-2"><i className="bi bi-check-circle text-indigo-600"></i> <span>In-place</span></div>
           </div>
         </div>
-      </div>
 
-      {/* Information Section */}
-      <div className="info-section fade-in-up mb-4">
-        <h4><i className="bi bi-info-circle"></i> How Quick Sort Works</h4>
-        <p className="info-description">Quick Sort is a highly efficient, comparison-based sorting algorithm that uses a divide-and-conquer strategy. It works by selecting a 'pivot' element from the array and partitioning the other elements into two sub-arrays according to whether they are less than or greater than the pivot.</p>
-
-        <div className="code-example">
-          <div className="language-tabs mb-3">
-            <div className="nav nav-tabs" role="tablist">
-              {Object.keys(codeImplementations).map((lang) => (
-                <button key={lang} className={`nav-link ${activeLanguage === lang ? 'active' : ''}`} onClick={() => setActiveLanguage(lang)} type="button" role="tab">
-                  {lang === 'javascript' && <><i className="bi bi-code-slash"></i> JavaScript</>}
-                  {lang === 'python' && <><i className="bi bi-code-square"></i> Python</>}
-                  {lang === 'cpp' && <><i className="bi bi-braces"></i> C/C++</>}
-                  {lang === 'go' && <><i className="bi bi-gear"></i> Go</>}
-                  {lang === 'rust' && <><i className="bi bi-shield-check"></i> Rust</>}
-                </button>
-              ))}
-            </div>
-            <div className="tab-content">
-              <div className="tab-pane fade show active">
-                <pre><code>{codeImplementations[activeLanguage as keyof typeof codeImplementations]}</code></pre>
-              </div>
-            </div>
+        {/* Info Section */}
+        <div className="mb-8">
+          <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mb-3"><i className="bi bi-info-circle text-indigo-600"></i> How Quick Sort Works</h4>
+          <p className="text-zinc-700 leading-relaxed">
+            Quick Sort is a highly efficient, comparison-based sorting algorithm that uses a divide-and-conquer strategy. It works by selecting a 'pivot' element from the array and partitioning the other elements into two sub-arrays according to whether they are less than or greater than the pivot.
+          </p>
+          <div className="rounded-xl bg-[#F3F4F6] text-zinc-800 font-mono text-sm px-5 py-4 my-4 shadow-sm border border-zinc-200 overflow-x-auto">
+            <pre>{codeImplementations[activeLanguage as keyof typeof codeImplementations]}</pre>
           </div>
+          <div className="flex gap-2 mb-2">
+            {Object.keys(codeImplementations).map(lang => (
+              <button
+                key={lang}
+                className={`px-3 py-1 rounded-lg text-xs font-semibold ${activeLanguage === lang ? 'bg-indigo-600 text-white' : 'bg-zinc-200 text-zinc-700'}`}
+                onClick={() => setActiveLanguage(lang)}
+              >
+                {lang.toUpperCase()}
+              </button>
+            ))}
           </div>
-
-        <h4 className="mt-4"><i className="bi bi-list-check"></i> Key Features</h4>
-          <ul className="features-list">
+          <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mt-6 mb-3"><i className="bi bi-list-check text-indigo-600"></i> Key Features</h4>
+          <ul className="list-disc list-inside text-zinc-700 space-y-1">
             <li>Uses divide-and-conquer strategy</li>
             <li>In-place sorting algorithm</li>
             <li>Average case time complexity of O(n log n)</li>
@@ -393,214 +387,254 @@ fn partition<T: Ord>(arr: &mut [T]) -> usize {
           </ul>
         </div>
 
-              {/* Algorithm Steps */}
-      <div className="info-section mb-4">
-        <h4><i className="bi bi-list-ol"></i> Step-by-Step Process</h4>
-        <div className="row">
-          <div className="col-md-6">
-            <h6 className="text-highlight">Partitioning Phase:</h6>
-            <ol className="features-list">
-              <li>Choose a pivot element (usually last element)</li>
-              <li>Partition elements around the pivot</li>
-              <li>Place pivot in its final sorted position</li>
-              <li>Elements smaller than pivot go to the left</li>
-            </ol>
-          </div>
-          <div className="col-md-6">
-            <h6 className="text-highlight">Recursive Phase:</h6>
-            <ol className="features-list">
-              <li>Recursively sort the left subarray</li>
-              <li>Recursively sort the right subarray</li>
-              <li>Combine the sorted subarrays</li>
-              <li>Continue until all elements are sorted</li>
-            </ol>
+        {/* Algorithm Steps */}
+        <div className="mb-8">
+          <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mb-3"><i className="bi bi-list-ol text-indigo-600"></i> Step-by-Step Process</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h6 className="font-semibold text-zinc-900 mb-2">Partitioning Phase:</h6>
+              <ol className="list-decimal list-inside text-zinc-700 space-y-1">
+                <li>Choose a pivot element (usually last element)</li>
+                <li>Partition elements around the pivot</li>
+                <li>Place pivot in its final sorted position</li>
+                <li>Elements smaller than pivot go to the left</li>
+              </ol>
+            </div>
+            <div>
+              <h6 className="font-semibold text-zinc-900 mb-2">Recursive Phase:</h6>
+              <ol className="list-decimal list-inside text-zinc-700 space-y-1">
+                <li>Recursively sort the left subarray</li>
+                <li>Recursively sort the right subarray</li>
+                <li>Combine the sorted subarrays</li>
+                <li>Continue until all elements are sorted</li>
+              </ol>
+            </div>
           </div>
         </div>
-      </div>
 
         {/* Interactive Section */}
-      <div className="interactive-section slide-in-right mb-4">
-        <h5><i className="bi bi-play-circle"></i> Interactive Demo & Visualization</h5>
-
-        <div className="row g-3 mb-4">
-          <div className="col-md-12">
-            <label className="form-label">Array Elements:</label>
-            <div className="mb-2">
+        <div className="mb-8">
+          <h5 className="flex items-center gap-2 text-indigo-700 text-lg font-semibold mb-4">
+            <i className="bi bi-play-circle"></i> Interactive Demo & Visualization
+          </h5>
+          <div className="flex flex-col md:flex-row gap-4 mb-4">
+            <div className="flex-1">
+              <label className="block mb-1 text-zinc-700 font-medium">Array Elements:</label>
               <input
                 type="text"
-                className="form-control"
+                className="w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={inputArray}
                 onChange={(e) => setInputArray(e.target.value)}
                 placeholder="Enter comma-separated numbers"
                 disabled={isPlaying}
               />
-            </div>
-            <div className="d-flex gap-2">
-              <button className="btn btn-info-enhanced btn-enhanced" onClick={generateRandomArray} disabled={isPlaying}>
-                <i className="bi bi-shuffle"></i> Generate Random Array
-              </button>
-              <button className="btn btn-secondary btn-enhanced" onClick={resetArray} disabled={isPlaying}>
-                <i className="bi bi-arrow-clockwise"></i> Reset Array
-              </button>
-            </div>
-          </div>
-        </div>
-
-          <div className="mb-3">
-            <label className="form-label">Current Array:</label>
-            <div className="d-flex flex-wrap gap-2 mb-3">
-            {(array || []).map((value, index) => (
-              <div key={index} className={`array-element ${getElementClass(index)}`} style={{ minWidth: '3rem', position: 'relative' }}>
-                {value}
-                <small className="array-index-label position-absolute" style={{ bottom: '-22px', left: '50%', transform: 'translateX(-50%)' }}>[{index}]</small>
+              <div className="flex gap-2 mt-2">
+                <button
+                  className="bg-indigo-500 text-white px-4 py-2 rounded shadow hover:bg-indigo-600 transition"
+                  onClick={generateRandomArray}
+                  disabled={isPlaying}
+                >
+                  <i className="bi bi-shuffle"></i> Random Array
+                </button>
+                <button
+                  className="bg-zinc-300 text-zinc-700 px-4 py-2 rounded shadow hover:bg-zinc-400 transition"
+                  onClick={resetArray}
+                  disabled={isPlaying}
+                >
+                  <i className="bi bi-arrow-clockwise"></i> Reset Array
+                </button>
               </div>
-            ))}
             </div>
           </div>
-
-        <div className="mb-3">
-          <div className="d-flex flex-wrap gap-2 justify-content-center">
-              <button
-              className="btn btn-success-enhanced btn-enhanced"
+          <div className="mb-3">
+            <label className="block mb-1 text-zinc-700 font-medium">Current Array:</label>
+            <div className="flex flex-wrap gap-3 justify-center items-end mb-6">
+              {array.map((value, index) => (
+                <div
+                  key={index}
+                  className={`relative w-14 h-14 rounded-lg border-2 flex items-center justify-center transition-all duration-200 ${getElementClass(index)}`}
+                >
+                  <span className="text-lg font-semibold">{value}</span>
+                  <span className="absolute left-1/2 -bottom-5 -translate-x-1/2 text-xs text-zinc-400">[{index}]</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2 mb-4 justify-center">
+            <button
+              className="bg-green-600 text-white px-4 py-2 rounded shadow hover:bg-green-700 transition"
               onClick={isPlaying && !isPaused ? pauseAnimation : startAnimation}
               disabled={currentStep >= sortSteps.length - 1 && !isPaused}
               title={isPlaying && !isPaused ? 'Pause' : 'Play'}
             >
               <i className={`bi ${isPlaying && !isPaused ? 'bi-pause-fill' : 'bi-play-fill'}`}></i>
             </button>
-            <button className="btn btn-warning btn-enhanced" onClick={stopAnimation} title="Stop">
+            <button
+              className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
+              onClick={stopAnimation}
+              title="Stop"
+            >
               <i className="bi bi-stop-fill"></i>
             </button>
-            <button className="btn btn-info-enhanced btn-enhanced" onClick={stepBackward} disabled={currentStep <= -1} title="Step Back">
+            <button
+              className="bg-indigo-500 text-white px-4 py-2 rounded shadow hover:bg-indigo-600 transition"
+              onClick={stepBackward}
+              disabled={currentStep <= -1}
+              title="Step Back"
+            >
               <i className="bi bi-skip-backward-fill"></i>
-              </button>
-            <button className="btn btn-info-enhanced btn-enhanced" onClick={stepForward} disabled={currentStep >= sortSteps.length - 1} title="Step Forward">
+            </button>
+            <button
+              className="bg-indigo-500 text-white px-4 py-2 rounded shadow hover:bg-indigo-600 transition"
+              onClick={stepForward}
+              disabled={currentStep >= sortSteps.length - 1}
+              title="Step Forward"
+            >
               <i className="bi bi-skip-forward-fill"></i>
-              </button>
-            </div>
+            </button>
           </div>
-
-        <div className="mb-3">
-          <div className="d-flex justify-content-between align-items-center">
-            <span className="small text-muted">Step {currentStep + 1} of {sortSteps.length}</span>
-            <div className="progress flex-grow-1 mx-2" style={{ height: '8px' }}>
+          {/* Progress Bar */}
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs text-zinc-500">Step {currentStep + 1} of {sortSteps.length}</span>
+            <div className="flex-1 h-2 bg-zinc-200 rounded overflow-hidden mx-2">
               <div
-                className="progress-bar"
-                role="progressbar"
+                className="h-2 bg-indigo-500"
                 style={{ width: `${sortSteps.length > 0 ? ((currentStep + 1) / sortSteps.length) * 100 : 0}%` }}
-                aria-valuenow={currentStep + 1}
-                aria-valuemin={0}
-                aria-valuemax={sortSteps.length}
               ></div>
             </div>
-            <span className="small text-muted">{sortSteps.length > 0 ? Math.round(((currentStep + 1) / sortSteps.length) * 100) : 0}%</span>
+            <span className="text-xs text-zinc-500">{sortSteps.length > 0 ? Math.round(((currentStep + 1) / sortSteps.length) * 100) : 0}%</span>
+          </div>
+          {/* Step message */}
+          <div className="text-center mb-3">
+            <div className="inline-flex items-center gap-2 rounded border-2 border-indigo-400 bg-indigo-50 px-4 py-2 text-indigo-700 font-semibold shadow">
+              <i className="bi bi-chat-text"></i>
+              {getCurrentMessage()}
+            </div>
+          </div>
+          <div className="mt-4 flex items-center gap-2 bg-indigo-50 border border-indigo-200 rounded px-4 py-2 text-indigo-700">
+            <i className="bi bi-lightbulb"></i>
+            <strong>Tip:</strong> Use the controls to step through the quick sort algorithm. Watch how the pivot is selected and how elements are partitioned around it.
           </div>
         </div>
 
-        <div className="current-step-info mb-3">
-          <div className="alert alert-light">
-            <i className="bi bi-chat-text"></i> <strong>Message:</strong> {getCurrentMessage()}
+        {/* Complexity Analysis */}
+        <div className="mb-8">
+          <h4 className="flex items-center gap-2 text-green-700 text-xl font-semibold mb-4">
+            <i className="bi bi-graph-up"></i> Time & Space Complexity
+          </h4>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border border-gray-300 rounded-lg">
+              <thead className="bg-green-100">
+                <tr>
+                  <th className="px-4 py-2 border border-gray-300 text-left">Case</th>
+                  <th className="px-4 py-2 border border-gray-300 text-left">Time Complexity</th>
+                  <th className="px-4 py-2 border border-gray-300 text-left">Space Complexity</th>
+                  <th className="px-4 py-2 border border-gray-300 text-left">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="px-4 py-2 border border-gray-300">Best</td>
+                  <td className="px-4 py-2 border border-gray-300">
+                    <span className="inline-block bg-green-200 text-green-800 rounded px-2 py-1 font-semibold">O(n log n)</span>
+                  </td>
+                  <td className="px-4 py-2 border border-gray-300">O(log n)</td>
+                  <td className="px-4 py-2 border border-gray-300">When the pivot divides the array into roughly equal halves</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2 border border-gray-300">Average</td>
+                  <td className="px-4 py-2 border border-gray-300">
+                    <span className="inline-block bg-yellow-200 text-yellow-800 rounded px-2 py-1 font-semibold">O(n log n)</span>
+                  </td>
+                  <td className="px-4 py-2 border border-gray-300">O(log n)</td>
+                  <td className="px-4 py-2 border border-gray-300">Typical case with random data</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2 border border-gray-300">Worst</td>
+                  <td className="px-4 py-2 border border-gray-300">
+                    <span className="inline-block bg-red-200 text-red-800 rounded px-2 py-1 font-semibold">O(n²)</span>
+                  </td>
+                  <td className="px-4 py-2 border border-gray-300">O(n)</td>
+                  <td className="px-4 py-2 border border-gray-300">When the pivot is always the smallest or largest element</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Use Cases */}
+        <div className="mb-8">
+          <h4 className="flex items-center gap-2 text-green-700 text-xl font-semibold mb-4">
+            <i className="bi bi-lightning"></i> Use Cases & Applications
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-lg shadow p-4">
+              <h6 className="flex items-center gap-2 font-semibold text-zinc-900 mb-2">
+                <i className="bi bi-cpu text-green-600"></i> General Sorting
+              </h6>
+              <p className="text-zinc-700 text-sm">Most common use case for sorting large datasets efficiently</p>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <h6 className="flex items-center gap-2 font-semibold text-zinc-900 mb-2">
+                <i className="bi bi-database text-green-600"></i> Database Systems
+              </h6>
+              <p className="text-zinc-700 text-sm">Used in database engines for sorting query results</p>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <h6 className="flex items-center gap-2 font-semibold text-zinc-900 mb-2">
+                <i className="bi bi-code-square text-green-600"></i> Programming Languages
+              </h6>
+              <p className="text-zinc-700 text-sm">Default sorting algorithm in many programming languages</p>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <h6 className="flex items-center gap-2 font-semibold text-zinc-900 mb-2">
+                <i className="bi bi-graph-up text-green-600"></i> Data Analysis
+              </h6>
+              <p className="text-zinc-700 text-sm">Sorting large datasets for analysis and visualization</p>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <h6 className="flex items-center gap-2 font-semibold text-zinc-900 mb-2">
+                <i className="bi bi-speedometer2 text-green-600"></i> Real-time Systems
+              </h6>
+              <p className="text-zinc-700 text-sm">When predictable average performance is required</p>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <h6 className="flex items-center gap-2 font-semibold text-zinc-900 mb-2">
+                <i className="bi bi-hdd-network text-green-600"></i> Memory-constrained Systems
+              </h6>
+              <p className="text-zinc-700 text-sm">Due to its in-place sorting nature</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Advantages and Disadvantages */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <div className="bg-white rounded-lg shadow p-6">
+            <h4 className="flex items-center gap-2 text-green-700 text-xl font-semibold mb-4">
+              <i className="bi bi-plus-circle"></i> Advantages
+            </h4>
+            <ul className="list-disc list-inside text-zinc-700 space-y-1">
+              <li>Excellent average-case performance</li>
+              <li>In-place sorting algorithm</li>
+              <li>Cache-friendly due to locality</li>
+              <li>Works well with virtual memory</li>
+              <li>Efficient for large datasets</li>
+            </ul>
+          </div>
+          <div className="bg-white rounded-lg shadow p-6">
+            <h4 className="flex items-center gap-2 text-green-700 text-xl font-semibold mb-4">
+              <i className="bi bi-dash-circle"></i> Disadvantages
+            </h4>
+            <ul className="list-disc list-inside text-zinc-700 space-y-1">
+              <li>Poor performance on sorted arrays</li>
+              <li>Unstable sorting algorithm</li>
+              <li>Complex pivot selection</li>
+              <li>Not suitable for linked lists</li>
+              <li>Recursive implementation uses stack space</li>
+            </ul>
+          </div>
         </div>
       </div>
-
-        <div className="alert alert-info">
-          <i className="bi bi-lightbulb"></i> <strong>Tip:</strong> Use the controls to step through the quick sort algorithm. Watch how the pivot is selected and how elements are partitioned around it.
-        </div>
-      </div>
-
-      {/* Complexity Analysis */}
-      <div className="info-section mb-4">
-        <h4><i className="bi bi-graph-up"></i> Time & Space Complexity</h4>
-        <div className="table-responsive">
-          <table className="table complexity-table">
-            <thead>
-              <tr>
-                <th>Case</th>
-                <th>Time Complexity</th>
-                <th>Space Complexity</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><span className="complexity-badge best">Best</span></td>
-                <td>O(n log n)</td>
-                <td>O(log n)</td>
-                <td>When the pivot divides the array into roughly equal halves</td>
-              </tr>
-              <tr>
-                <td><span className="complexity-badge average">Average</span></td>
-                <td>O(n log n)</td>
-                <td>O(log n)</td>
-                <td>Typical case with random data</td>
-              </tr>
-              <tr>
-                <td><span className="complexity-badge worst">Worst</span></td>
-                <td>O(n²)</td>
-                <td>O(n)</td>
-                <td>When the pivot is always the smallest or largest element</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Use Cases */}
-      <div className="info-section mb-4">
-        <h4><i className="bi bi-lightning"></i> Use Cases & Applications</h4>
-        <div className="use-cases-grid">
-          <div className="use-case-item">
-            <h6><i className="bi bi-cpu"></i> General Sorting</h6>
-            <p>Most common use case for sorting large datasets efficiently</p>
-          </div>
-          <div className="use-case-item">
-            <h6><i className="bi bi-database"></i> Database Systems</h6>
-            <p>Used in database engines for sorting query results</p>
-          </div>
-          <div className="use-case-item">
-            <h6><i className="bi bi-code-square"></i> Programming Languages</h6>
-            <p>Default sorting algorithm in many programming languages</p>
-          </div>
-          <div className="use-case-item">
-            <h6><i className="bi bi-graph-up"></i> Data Analysis</h6>
-            <p>Sorting large datasets for analysis and visualization</p>
-          </div>
-          <div className="use-case-item">
-            <h6><i className="bi bi-speedometer2"></i> Real-time Systems</h6>
-            <p>When predictable average performance is required</p>
-          </div>
-          <div className="use-case-item">
-            <h6><i className="bi bi-hdd-network"></i> Memory-constrained Systems</h6>
-            <p>Due to its in-place sorting nature</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Advantages and Disadvantages */}
-      <div className="content-grid mb-4">
-        <div className="info-section">
-          <h4><i className="bi bi-plus-circle"></i> Advantages</h4>
-          <ul className="features-list">
-            <li>Excellent average-case performance</li>
-            <li>In-place sorting algorithm</li>
-            <li>Cache-friendly due to locality</li>
-            <li>Works well with virtual memory</li>
-            <li>Efficient for large datasets</li>
-          </ul>
-        </div>
-        <div className="info-section disadvantages-section">
-          <h4><i className="bi bi-dash-circle"></i> Disadvantages</h4>
-          <ul className="features-list">
-            <li>Poor performance on sorted arrays</li>
-            <li>Unstable sorting algorithm</li>
-            <li>Complex pivot selection</li>
-            <li>Not suitable for linked lists</li>
-            <li>Recursive implementation uses stack space</li>
-          </ul>
-        </div>
-      </div>
-
-
     </div>
   );
 };
