@@ -115,7 +115,7 @@ const WelcomePage: React.FC = () => {
             visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } },
           }}
         >
-          <h1 className="text-5xl font-extrabold leading-tight tracking-tight mb-6">
+          <h1 className="text-6xl font-extrabold leading-tight tracking-tight mb-6 text-indigo-800">
             Decode DSA Visually. Learn Smart.
           </h1>
           <p className="text-lg text-gray-600 mb-10 leading-relaxed">
@@ -125,13 +125,13 @@ const WelcomePage: React.FC = () => {
           <div className="flex flex-wrap gap-5">
             <Link
               to="/data-structures"
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-xl border border-gray-900 font-semibold text-gray-900 bg-white hover:bg-gray-900 hover:text-white transition"
+              className="inline-flex items-center gap-3 px-6 py-3 rounded-xl border border-indigo-800 font-semibold text-indigo-800 bg-white hover:bg-indigo-800 hover:text-white transition"
             >
               Dive into Structures
             </Link>
             <Link
               to="/algorithms"
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-xl border border-gray-300 font-semibold text-gray-700 bg-white hover:bg-gray-200 transition"
+              className="inline-flex items-center gap-3 px-6 py-3 rounded-xl border border-indigo-500 font-semibold text-indigo-700 bg-white hover:bg-indigo-100 transition"
             >
               Crack Algorithms Easily
             </Link>
@@ -153,7 +153,7 @@ const WelcomePage: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl font-bold mb-4">What Makes AlgoFlow Special?</h2>
+          <h2 className="text-5xl font-bold mb-4 text-indigo-800">What Makes AlgoFlow Special?</h2>
           <p className="text-gray-600 text-lg leading-relaxed">
             A beautifully crafted journey that transforms your DSA skills with clarity, practice, and visual brilliance.
           </p>
@@ -194,7 +194,7 @@ const WelcomePage: React.FC = () => {
               className="group rounded-3xl border border-gray-200 p-8 bg-white/80 shadow-sm hover:shadow-md transition cursor-pointer backdrop-blur-md"
             >
               <div className="mb-5">
-                <h3 className="text-xl font-semibold text-gray-900">{feature.title}</h3>
+                <h3 className="text-2xl font-semibold text-indigo-800">{feature.title}</h3>
                 <p className="text-sm text-gray-500">{feature.subtitle}</p>
               </div>
               <p className="text-gray-600 leading-relaxed">{feature.text}</p>
@@ -212,7 +212,7 @@ const WelcomePage: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl font-bold mb-4">Your Journey Starts Here</h2>
+          <h2 className="text-5xl font-bold mb-4 text-indigo-800">Your Journey Starts Here</h2>
           <p className="text-gray-600 text-lg leading-relaxed">
             Pick a path and begin mastering DSA like never before.
           </p>
@@ -225,57 +225,49 @@ const WelcomePage: React.FC = () => {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <motion.div
-            custom={0}
-            variants={fadeUp}
-            whileHover={{ scale: 1.03, boxShadow: "0 10px 30px rgba(0,0,0,0.07)" }}
-            className="rounded-3xl border border-gray-200 p-8 bg-white/80 shadow-sm hover:shadow-md transition cursor-pointer backdrop-blur-md"
-          >
-            <div className="mb-6">
-              <h3 className="text-xl font-semibold text-gray-900">Data Structures</h3>
-              <p className="text-sm text-gray-500">Foundation of programming</p>
-            </div>
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              {["Arrays & Lists", "Stacks & Queues", "Trees & Graphs", "Hash Tables"].map((item) => (
-                <div key={item} className="flex items-center gap-2 text-gray-700 text-sm">
-                  <span className="inline-block w-2 h-2 rounded-full bg-indigo-500"></span>
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-            <Link
-              to="/data-structures"
-              className="inline-block w-full text-center py-3 rounded-xl border border-gray-900 font-semibold text-gray-900 bg-white hover:bg-gray-900 hover:text-white transition"
+          {[
+            {
+              category: "Data Structures",
+              desc: "Foundation of programming",
+              list: ["Arrays & Lists", "Stacks & Queues", "Trees & Graphs", "Hash Tables"],
+              link: "/data-structures",
+              button: "Dive into Structures",
+            },
+            {
+              category: "Algorithms",
+              desc: "Problem-solving techniques",
+              list: ["Searching", "Sorting", "Graph Traversal", "Dynamic Programming"],
+              link: "/algorithms",
+              button: "Crack Algorithms Easily",
+            },
+          ].map((card, i) => (
+            <motion.div
+              key={card.category}
+              custom={i}
+              variants={fadeUp}
+              whileHover={{ scale: 1.03, boxShadow: "0 10px 30px rgba(0,0,0,0.07)" }}
+              className="rounded-3xl border border-gray-200 p-8 bg-white/80 shadow-sm hover:shadow-md transition cursor-pointer backdrop-blur-md"
             >
-              Dive into Structures
-            </Link>
-          </motion.div>
-
-          <motion.div
-            custom={1}
-            variants={fadeUp}
-            whileHover={{ scale: 1.03, boxShadow: "0 10px 30px rgba(0,0,0,0.07)" }}
-            className="rounded-3xl border border-gray-200 p-8 bg-white/80 shadow-sm hover:shadow-md transition cursor-pointer backdrop-blur-md"
-          >
-            <div className="mb-6">
-              <h3 className="text-xl font-semibold text-gray-900">Algorithms</h3>
-              <p className="text-sm text-gray-500">Problem-solving techniques</p>
-            </div>
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              {["Searching", "Sorting", "Graph Traversal", "Dynamic Programming"].map((item) => (
-                <div key={item} className="flex items-center gap-2 text-gray-700 text-sm">
-                  <span className="inline-block w-2 h-2 rounded-full bg-indigo-500"></span>
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-            <Link
-              to="/algorithms"
-              className="inline-block w-full text-center py-3 rounded-xl border border-gray-900 font-semibold text-gray-900 bg-white hover:bg-gray-900 hover:text-white transition"
-            >
-              Crack Algorithms Easily
-            </Link>
-          </motion.div>
+              <div className="mb-6">
+                <h3 className="text-2xl font-semibold text-indigo-800">{card.category}</h3>
+                <p className="text-sm text-gray-500">{card.desc}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                {card.list.map((item) => (
+                  <div key={item} className="flex items-center gap-2 text-gray-700 text-sm">
+                    <span className="inline-block w-2 h-2 rounded-full bg-indigo-500"></span>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+              <Link
+                to={card.link}
+                className="inline-block w-full text-center py-3 rounded-xl border border-indigo-800 font-semibold text-indigo-800 bg-white hover:bg-indigo-800 hover:text-white transition"
+              >
+                {card.button}
+              </Link>
+            </motion.div>
+          ))}
         </motion.div>
       </section>
     </div>
