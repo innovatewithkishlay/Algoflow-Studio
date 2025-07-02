@@ -214,14 +214,14 @@ const LinkedList: React.FC = () => {
             allowing for dynamic memory allocation and flexible size management.
           </p>
           <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex-1 bg-indigo-50 rounded-lg p-4 shadow">
+            <div className="flex-1 bg-[#F3F4F6] rounded-lg p-4 shadow">
               <h6 className="text-indigo-700 font-semibold mb-2">Node Structure:</h6>
               <div className="flex items-center justify-between border border-indigo-200 rounded p-2 bg-white">
                 <span className="font-medium">Data: {head ? head.value : 'null'}</span>
                 <span className="font-medium">Next: →</span>
               </div>
             </div>
-            <div className="flex-1 bg-green-50 rounded-lg p-4 shadow">
+            <div className="flex-1 bg-[#F3F4F6] rounded-lg p-4 shadow">
               <h6 className="text-green-700 font-semibold mb-2">Memory Benefits:</h6>
               <ul className="list-disc list-inside text-zinc-700 space-y-1">
                 <li>No memory wastage</li>
