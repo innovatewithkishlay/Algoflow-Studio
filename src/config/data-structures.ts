@@ -193,32 +193,32 @@ export const dataStructures: DataStructure[] = [
       'Dependency resolution'
     ]
   },
-  {
-    id: 'coming-soon',
-    name: 'More Data Structures Coming Soon',
-    description: 'We are working on adding more data structures to help you learn and visualize complex concepts.',
-    category: 'linear',
-    difficulty: 'beginner',
-    component: null,
-    icon: 'bi-hourglass-split',
-    features: [
-      'Hash Tables',
-      'Heaps',
-      'Tries',
-      'Advanced Trees'
-    ],
-    timeComplexity: {
-      access: 'TBD',
-      search: 'TBD',
-      insertion: 'TBD',
-      deletion: 'TBD'
-    },
-    spaceComplexity: 'TBD',
-    useCases: [
-      'Advanced data structures',
-      'Specialized use cases',
-      'Performance optimization',
-      'Real-world applications'
-    ]
-  }
+  // {
+  //   id: 'coming-soon',
+  //   name: 'More Data Structures Coming Soon',
+  //   description: 'We are working on adding more data structures to help you learn and visualize complex concepts.',
+  //   category: 'linear',
+  //   difficulty: 'beginner',
+  //   component: null,
+  //   icon: 'bi-hourglass-split',
+  //   features: [
+  //     'Hash Tables',
+  //     'Heaps',
+  //     'Tries',
+  //     'Advanced Trees'
+  //   ],
+  //   timeComplexity: {
+  //     access: 'TBD',
+  //     search: 'TBD',
+  //     insertion: 'TBD',
+  //     deletion: 'TBD'
+  //   },
+  //   spaceComplexity: 'TBD',
+  //   useCases: [
+  //     'Advanced data structures',
+  //     'Specialized use cases',
+  //     'Performance optimization',
+  //     'Real-world applications'
+  //   ]
+  // }
 ];

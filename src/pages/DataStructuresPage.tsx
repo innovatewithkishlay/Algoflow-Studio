@@ -4,11 +4,12 @@ import Card from "../components/ui/Card";
 import { dataStructures } from "../config/data-structures";
 import { motion } from "framer-motion";
 
+// Animation variants
 const containerVariants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.08,
+      staggerChildren: 0.09,
     },
   },
 };
@@ -18,6 +19,67 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
+// Modern, blurred, softly colored Coming Soon card
+const ComingSoonCard = () => (
+  <motion.div
+    variants={cardVariants}
+    whileHover={{ y: -2, boxShadow: "0 8px 32px 0 rgba(100, 116, 139, 0.15)" }}
+    transition={{ type: "spring", stiffness: 80 }}
+    className="relative w-full rounded-2xl p-6 flex flex-col gap-4 bg-white/30 backdrop-blur-md border border-gray-300 shadow-md text-gray-900 overflow-hidden"
+  >
+    <div className="flex items-center gap-3 mb-2">
+      <span className="text-2xl opacity-80">⏳</span>
+      <h2 className="text-xl font-semibold leading-tight">Coming Soon</h2>
+    </div>
+    <p className="text-gray-700 mb-2">
+      We’re working on adding more data structures to help you learn and visualize complex concepts.
+    </p>
+
+    <div>
+      <h6 className="text-xs font-semibold text-gray-600 mb-1">Categories</h6>
+      <div className="flex gap-2 flex-wrap">
+        <span className="inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-medium shadow-sm">
+          Hash Tables
+        </span>
+        <span className="inline-block px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-medium shadow-sm">
+          Heaps
+        </span>
+      </div>
+    </div>
+
+    <div>
+      <h6 className="text-xs font-semibold text-gray-600 mb-1 mt-2">Difficulty</h6>
+      <div className="flex gap-2 flex-wrap">
+        <span className="inline-block px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium shadow-sm">
+          Intermediate
+        </span>
+        <span className="inline-block px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium shadow-sm">
+          Advanced
+        </span>
+      </div>
+    </div>
+
+    <div>
+      <h6 className="text-xs font-semibold text-gray-600 mb-1 mt-2">Time Complexity</h6>
+      <div className="grid grid-cols-4 gap-2 text-center text-xs">
+        {["Access", "Search", "Insert", "Delete"].map((label) => (
+          <div key={label}>
+            <div className="text-gray-400">{label}</div>
+            <div className="font-bold text-gray-700">TBD</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div className="flex items-center justify-between mt-2">
+      <span className="text-xs bg-gray-200 text-gray-800 rounded px-2 py-0.5 font-semibold">
+        Space: TBD
+      </span>
+      <span className="text-xs bg-gray-300 text-gray-600 rounded px-2 py-1 font-semibold">Coming Soon</span>
+    </div>
+  </motion.div>
+);
+
 const DataStructuresPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-10 px-4">
@@ -25,7 +87,7 @@ const DataStructuresPage: React.FC = () => {
         {/* Header */}
         <header className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-10">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center shadow">
+            {/* <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center shadow">
               <svg width={28} height={28} viewBox="0 0 28 28" fill="none">
                 <circle cx={14} cy={22} r={4} fill="#6366f1" />
                 <circle cx={7} cy={8} r={3} fill="#a5b4fc" />
@@ -35,7 +97,7 @@ const DataStructuresPage: React.FC = () => {
                 <line x1={14} y1={14} x2={7} y2={8} stroke="#818cf8" strokeWidth={2} />
                 <line x1={14} y1={14} x2={21} y2={8} stroke="#818cf8" strokeWidth={2} />
               </svg>
-            </div>
+            </div> */}
             <div>
               <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900 mb-1">Data Structures</h1>
               <p className="text-zinc-500 text-base">
@@ -52,7 +114,7 @@ const DataStructuresPage: React.FC = () => {
           initial="hidden"
           animate="visible"
         >
-          {dataStructures.map((ds, i) => (
+          {dataStructures.map((ds) => (
             <motion.div
               key={ds.id}
               variants={cardVariants}
@@ -131,51 +193,8 @@ const DataStructuresPage: React.FC = () => {
             </motion.div>
           ))}
 
-          {/* Example of a dedicated "Coming Soon" card if you want it as a separate card */}
-          {/* 
-          <motion.div
-            variants={cardVariants}
-            whileHover={{ y: -4, boxShadow: "0 8px 32px 0 rgba(80,80,120,0.10)" }}
-            transition={{ type: "spring", stiffness: 80 }}
-            className="transition-all"
-          >
-            <div className="flex flex-col h-full bg-white/90 rounded-2xl shadow-lg border border-zinc-100 p-6">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-2xl">⏳</span>
-                <h2 className="text-xl font-bold text-zinc-900">More Data Structures Coming Soon</h2>
-              </div>
-              <hr className="my-2 border-zinc-200" />
-              <p className="text-zinc-600 mb-2">
-                We are working on <span className="font-semibold text-indigo-600">adding more data structures</span>
-                {" "}to help you learn and visualize complex concepts.
-              </p>
-              <div className="flex gap-2 flex-wrap mb-2">
-                <span className="inline-flex items-center px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-medium shadow-sm">
-                  <span className="w-2 h-2 rounded-full bg-green-400 mr-2"></span>
-                  Hash Tables
-                </span>
-                <span className="inline-flex items-center px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-medium shadow-sm">
-                  <span className="w-2 h-2 rounded-full bg-green-400 mr-2"></span>
-                  Heaps
-                </span>
-              </div>
-              <div className="grid grid-cols-4 gap-2 text-center text-xs mb-2">
-                {["Access", "Search", "Insert", "Delete"].map((label) => (
-                  <div key={label}>
-                    <div className="text-zinc-400">{label}</div>
-                    <div className="font-bold text-zinc-700">TBD</div>
-                  </div>
-                ))}
-              </div>
-              <div className="flex items-center justify-between mt-2">
-                <span className="text-xs bg-indigo-50 text-indigo-700 rounded px-2 py-0.5 font-semibold">
-                  Space: TBD
-                </span>
-                <span className="text-xs bg-zinc-200 text-zinc-500 rounded px-2 py-1 font-semibold">Coming Soon</span>
-              </div>
-            </div>
-          </motion.div>
-          */}
+          {/* Modern, blurry, softly colored Coming Soon card */}
+          <ComingSoonCard />
         </motion.div>
       </div>
     </div>
