@@ -130,7 +130,7 @@ const QuickSort: React.FC = () => {
   const [inputArray, setInputArray] = useState<string>('64,34,25,12,22,11,90');
   const [speed] = useState<number>(1000);
   const [activeLanguage, setActiveLanguage] = useState<string>('javascript');
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+const intervalRef = useRef<number | null>(null);
 
   // Generate quick sort steps for the current array
   const generateQuickSortSteps = (arr: number[]): QuickSortStep[] => {
