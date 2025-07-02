@@ -22,13 +22,10 @@ const featureCards = [
   },
 ];
 
+// Use only plain objects for variants!
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: 0.2 + i * 0.12, duration: 0.5, type: "spring", stiffness: 80 },
-  }),
+  visible: { opacity: 1, y: 0 }
 };
 
 const TimeComplexityPage: React.FC = () => {
@@ -58,10 +55,10 @@ const TimeComplexityPage: React.FC = () => {
             {featureCards.map((card, i) => (
               <motion.div
                 key={card.title}
-                custom={i}
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
+                transition={{ delay: 0.2 + i * 0.12, duration: 0.5, type: "spring", stiffness: 80 }}
                 className="flex flex-col items-center bg-white/60 rounded-2xl shadow-md p-6 backdrop-blur transition-all"
               >
                 <i className={`bi ${card.icon} text-4xl mb-3 ${card.color}`} />
