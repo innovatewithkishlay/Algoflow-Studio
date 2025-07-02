@@ -25,7 +25,7 @@ const cardVariants = {
 
 const AlgorithmsPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 py-10 px-4">
+    <div className="min-h-screen bg-white py-10 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <header className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-10">
@@ -68,7 +68,7 @@ const AlgorithmsPage: React.FC = () => {
               key={algo.id}
               custom={i}
               variants={cardVariants}
-              whileHover={{ y: -4, scale: 1.02, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.15)" }}
+              whileHover={{ y: -4, scale: 1.02, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.12)" }}
               transition={{ type: "spring", stiffness: 80 }}
               className="transition-all"
             >
@@ -87,7 +87,7 @@ const AlgorithmsPage: React.FC = () => {
                 icon={algo.icon}
                 variant={algo.component ? "success" : "secondary"}
                 disabled={!algo.component}
-                className="flex flex-col h-full bg-white/90 rounded-2xl shadow-lg border border-zinc-100 hover:border-green-300"
+                className="flex flex-col h-full bg-white rounded-2xl shadow-lg border border-zinc-100 hover:border-green-300"
               >
                 <p className="text-zinc-700 mb-4">{algo.description}</p>
 
