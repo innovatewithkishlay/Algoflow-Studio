@@ -1,45 +1,77 @@
-import React from 'react';
+import React from "react";
+import { motion } from "framer-motion";
+
+const featureCards = [
+  {
+    icon: "bi-graph-up",
+    color: "text-yellow-500",
+    title: "Big O Notation",
+    desc: "Understand worst-case complexity analysis",
+  },
+  {
+    icon: "bi-bar-chart",
+    color: "text-sky-500",
+    title: "Comparison Charts",
+    desc: "Visual comparison of algorithm efficiency",
+  },
+  {
+    icon: "bi-cpu",
+    color: "text-green-500",
+    title: "Performance Analysis",
+    desc: "Real-time performance metrics",
+  },
+];
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: 0.2 + i * 0.12, duration: 0.5, type: "spring", stiffness: 80 },
+  }),
+};
 
 const TimeComplexityPage: React.FC = () => {
   return (
-    <div className="container py-5">
-      <div className="text-center">
-        <h1 className="fw-bold mb-4 text-primary">Time Complexity Analysis & Visualization</h1>
-        <p className="lead text-dark mb-5">
-          Explore the time and space complexity of various data structures and algorithms with interactive visualizations and charts.
-        </p>
-        <div className="coming-soon-section p-5 bg-gradient-primary text-white rounded shadow-lg">
-          <h2 className="display-4 fw-bold mb-3 text-white">Coming Soon</h2>
-          <p className="text-white-75 fs-5 mb-4">
-            This section will feature interactive charts and explanations for Big O, Omega, and Theta notations, and compare the efficiency of different algorithms visually.
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-10 px-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-10">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-indigo-700 mb-4">
+            Time Complexity Analysis & Visualization
+          </h1>
+          <p className="text-lg text-zinc-600 mb-8">
+            Explore the time and space complexity of various data structures and algorithms with interactive visualizations and charts.
           </p>
-          <div className="features-preview mb-4">
-            <div className="row g-3">
-              <div className="col-md-4">
-                <div className="feature-item p-3 bg-white bg-opacity-10 rounded">
-                  <i className="bi bi-graph-up display-6 text-warning mb-2"></i>
-                  <h5 className="text-white">Big O Notation</h5>
-                  <p className="text-white-75 small">Understand worst-case complexity analysis</p>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="feature-item p-3 bg-white bg-opacity-10 rounded">
-                  <i className="bi bi-bar-chart display-6 text-info mb-2"></i>
-                  <h5 className="text-white">Comparison Charts</h5>
-                  <p className="text-white-75 small">Visual comparison of algorithm efficiency</p>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="feature-item p-3 bg-white bg-opacity-10 rounded">
-                  <i className="bi bi-cpu display-6 text-success mb-2"></i>
-                  <h5 className="text-white">Performance Analysis</h5>
-                  <p className="text-white-75 small">Real-time performance metrics</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <i className="bi bi-hourglass-split display-1 text-warning opacity-75"></i>
         </div>
+
+        <motion.section
+          initial={{ opacity: 0, scale: 0.97, y: 24 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.5, type: "spring", stiffness: 60 }}
+          className="rounded-3xl bg-white/80 backdrop-blur-lg shadow-xl px-6 py-10 mb-8 flex flex-col items-center"
+        >
+          <h2 className="text-2xl md:text-3xl font-bold text-indigo-700 mb-2">Coming Soon</h2>
+          <p className="text-zinc-700 text-base mb-6 max-w-2xl">
+            This section will feature <span className="font-semibold text-indigo-600">interactive charts</span> and explanations for <span className="font-semibold text-indigo-600">Big O, Omega, and Theta notations</span>, and visually compare the efficiency of different algorithms.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-6">
+            {featureCards.map((card, i) => (
+              <motion.div
+                key={card.title}
+                custom={i}
+                variants={cardVariants}
+                initial="hidden"
+                animate="visible"
+                className="flex flex-col items-center bg-white/60 rounded-2xl shadow-md p-6 backdrop-blur transition-all"
+              >
+                <i className={`bi ${card.icon} text-4xl mb-3 ${card.color}`} />
+                <h5 className="font-semibold text-zinc-800 mb-1">{card.title}</h5>
+                <p className="text-zinc-500 text-sm text-center">{card.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+          <i className="bi bi-hourglass-split text-5xl text-yellow-400 opacity-80 mt-2" />
+        </motion.section>
       </div>
     </div>
   );
