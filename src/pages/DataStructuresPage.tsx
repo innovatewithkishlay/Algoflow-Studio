@@ -87,17 +87,6 @@ const DataStructuresPage: React.FC = () => {
         {/* Header */}
         <header className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-10">
           <div className="flex items-center gap-3">
-            {/* <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center shadow">
-              <svg width={28} height={28} viewBox="0 0 28 28" fill="none">
-                <circle cx={14} cy={22} r={4} fill="#6366f1" />
-                <circle cx={7} cy={8} r={3} fill="#a5b4fc" />
-                <circle cx={21} cy={8} r={3} fill="#a5b4fc" />
-                <circle cx={14} cy={14} r={3.5} fill="#818cf8" />
-                <line x1={14} y1={18} x2={14} y2={14} stroke="#6366f1" strokeWidth={2} />
-                <line x1={14} y1={14} x2={7} y2={8} stroke="#818cf8" strokeWidth={2} />
-                <line x1={14} y1={14} x2={21} y2={8} stroke="#818cf8" strokeWidth={2} />
-              </svg>
-            </div> */}
             <div>
               <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900 mb-1">Data Structures</h1>
               <p className="text-zinc-500 text-base">

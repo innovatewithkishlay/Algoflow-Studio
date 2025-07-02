@@ -18,21 +18,32 @@ const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
   const location = useLocation();
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-lg shadow-md transition">
+    <header className="sticky top-0 z-50 w-full bg-white/70 dark:bg-zinc-900/80 backdrop-blur-lg shadow-md">
       <nav className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
-        {/* Brand & Sidebar Toggle */}
+        {/* Brand + Sidebar toggle */}
         <div className="flex items-center gap-3">
           <button
             className="lg:hidden p-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 transition"
             onClick={onSidebarToggle}
-            aria-label="Open sidebar"
+            aria-label="Toggle sidebar"
           >
-            <svg width={22} height={22} fill="none" stroke="currentColor" strokeWidth={2} className="text-indigo-600 dark:text-indigo-300">
+            <svg width={22} height={22} fill="none" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" d="M4 7h14M4 12h14M4 17h14" />
             </svg>
           </button>
-          <Link to="/" className="flex items-center gap-2 font-extrabold text-xl tracking-tight text-indigo-700 dark:text-indigo-300 select-none">
-            <svg width={28} height={28} viewBox="0 0 28 28" fill="none">
+          <Link
+            to="/"
+            className="flex items-center gap-2 font-extrabold text-xl text-indigo-700 dark:text-indigo-300 tracking-tight"
+          >
+            <motion.svg
+              initial={{ scale: 0.8, rotate: -10 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", stiffness: 120 }}
+              width={28}
+              height={28}
+              viewBox="0 0 28 28"
+              fill="none"
+            >
               <circle cx={14} cy={22} r={4} fill="#6366f1" />
               <circle cx={7} cy={8} r={3} fill="#a5b4fc" />
               <circle cx={21} cy={8} r={3} fill="#a5b4fc" />
@@ -40,44 +51,46 @@ const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
               <line x1={14} y1={18} x2={14} y2={14} stroke="#6366f1" strokeWidth={2} />
               <line x1={14} y1={14} x2={7} y2={8} stroke="#818cf8" strokeWidth={2} />
               <line x1={14} y1={14} x2={21} y2={8} stroke="#818cf8" strokeWidth={2} />
-            </svg>
+            </motion.svg>
             <span>DSA Visualizer</span>
           </Link>
         </div>
 
-        {/* Navigation */}
-        <ul className="hidden lg:flex items-center gap-2">
+        {/* Nav Links */}
+        <ul className="hidden lg:flex items-center gap-3">
           {navLinks.map((link) => {
             const isActive = location.pathname.startsWith(link.to);
             return (
               <li key={link.to}>
                 <NavLink
                   to={link.to}
-                  className={`
-                    group relative px-5 py-4 rounded-lg font-medium text-base transition
-                    focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400
-                    ${isActive
-                      ? "text-indigo-700 dark:text-indigo-200 bg-zinc-100 dark:bg-zinc-800 shadow"
-                      : "text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800"}
-                  `}
-                  style={{ transition: "background 0.18s, color 0.18s" }}
+                  className="relative px-5 py-3 font-medium rounded-md text-base transition-colors duration-200 group"
                 >
                   <motion.span
-                    layout
-                    className="relative z-10"
-                    whileHover={{ scale: 1.08 }}
-                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                    className={`z-10 relative ${
+                      isActive
+                        ? "text-indigo-700 dark:text-indigo-200"
+                        : "text-zinc-700 dark:text-zinc-300"
+                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   >
                     {link.label}
                   </motion.span>
-                  {/* Animated border for active */}
+
+                  {/* Underline hover effect */}
+                  {!isActive && (
+                    <span className="absolute bottom-1 left-1/2 w-0 h-0.5 bg-indigo-400 rounded-full group-hover:w-3/4 transition-all duration-300 transform -translate-x-1/2" />
+                  )}
+
+                  {/* Active underline animation */}
                   {isActive && (
                     <motion.span
-                      layoutId="nav-active-border"
+                      layoutId="nav-active"
                       className="absolute left-2 right-2 bottom-1 h-0.5 bg-indigo-500 dark:bg-indigo-400 rounded"
-                      initial={{ opacity: 0, scaleX: 0 }}
-                      animate={{ opacity: 1, scaleX: 1 }}
-                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 24 }}
                     />
                   )}
                 </NavLink>
@@ -86,18 +99,18 @@ const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
           })}
         </ul>
 
-        {/* Theme Toggle & GitHub */}
+        {/* Theme toggle */}
         <div className="flex items-center gap-2">
           <button
-            className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 hover:bg-indigo-100 dark:hover:bg-indigo-900 transition shadow"
             onClick={toggleTheme}
             aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
             title={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
+            className="p-2 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:scale-110 transition-all duration-200 shadow-sm"
           >
             {isDarkMode ? (
               <motion.svg
                 key="sun"
-                initial={{ rotate: -90, scale: 0.7, opacity: 0 }}
+                initial={{ rotate: -90, scale: 0.5, opacity: 0 }}
                 animate={{ rotate: 0, scale: 1, opacity: 1 }}
                 transition={{ type: "spring", stiffness: 200, damping: 15 }}
                 width={20}
@@ -112,7 +125,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
             ) : (
               <motion.svg
                 key="moon"
-                initial={{ rotate: 90, scale: 0.7, opacity: 0 }}
+                initial={{ rotate: 90, scale: 0.5, opacity: 0 }}
                 animate={{ rotate: 0, scale: 1, opacity: 1 }}
                 transition={{ type: "spring", stiffness: 200, damping: 15 }}
                 width={20}
