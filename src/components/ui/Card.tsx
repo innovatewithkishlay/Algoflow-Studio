@@ -2,7 +2,7 @@ import React, { type ReactNode } from 'react';
 
 interface CardProps {
   title?: string;
-  subtitle?: string;
+subtitle?: React.ReactNode;
   children: ReactNode;
   variant?: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark';
   className?: string;

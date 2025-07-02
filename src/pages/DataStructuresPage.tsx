@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Card from "../components/ui/Card";
 import { dataStructures } from "../config/data-structures";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const containerVariants = {
   hidden: {},
@@ -16,7 +16,11 @@ const containerVariants = {
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" as const }
+  },
 };
 
 const Badge = ({ children, color }: { children: React.ReactNode; color: string }) => (
@@ -36,11 +40,9 @@ const ComingSoonCard = () => (
       <span className="text-3xl opacity-80">⏳</span>
       <h2 className="text-xl font-bold tracking-tight">Coming Soon</h2>
     </div>
-
     <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
       We’re adding more data structures to help you learn visually with ease and depth.
     </p>
-
     <div>
       <h6 className="text-xs font-medium text-zinc-500 mb-1">Categories</h6>
       <div className="flex gap-2 flex-wrap">
@@ -48,7 +50,6 @@ const ComingSoonCard = () => (
         <Badge color="bg-purple-100 text-purple-700">Heaps</Badge>
       </div>
     </div>
-
     <div>
       <h6 className="text-xs font-medium text-zinc-500 mb-1 mt-2">Difficulty</h6>
       <div className="flex gap-2">
@@ -56,7 +57,6 @@ const ComingSoonCard = () => (
         <Badge color="bg-red-100 text-red-700">Advanced</Badge>
       </div>
     </div>
-
     <div>
       <h6 className="text-xs font-medium text-zinc-500 mb-1 mt-2">Time Complexity</h6>
       <div className="grid grid-cols-4 gap-2 text-center text-xs text-zinc-600 dark:text-zinc-400">
@@ -68,7 +68,6 @@ const ComingSoonCard = () => (
         ))}
       </div>
     </div>
-
     <div className="flex items-center justify-between mt-3">
       <Badge color="bg-zinc-200 text-zinc-800 dark:bg-zinc-600 dark:text-zinc-200">Space: TBD</Badge>
       <Badge color="bg-zinc-300 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-200">Coming Soon</Badge>
@@ -151,14 +150,15 @@ const DataStructuresPage: React.FC = () => {
                 <div className="mb-4">
                   <h6 className="text-sm font-semibold text-zinc-700 dark:text-zinc-200 mb-2">Time Complexity</h6>
                   <div className="grid grid-cols-4 gap-2 text-center text-xs">
-                    {["access", "search", "insertion", "deletion"].map((key, i) => (
-                      <div key={i}>
-                        <div className="text-zinc-400 capitalize">{key}</div>
-                        <div className="font-bold text-zinc-700 dark:text-zinc-100">
-                          {(ds.timeComplexity as any)[key]}
-                        </div>
-                      </div>
-                    ))}
+                   {(["access", "search", "insertion", "deletion"] as const).map((key) => (
+  <div key={key}>
+    <div className="text-zinc-400 capitalize">{key}</div>
+    <div className="font-bold text-zinc-700 dark:text-zinc-100">
+      {ds.timeComplexity[key]}
+    </div>
+  </div>
+))}
+
                   </div>
                 </div>
 
