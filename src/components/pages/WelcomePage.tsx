@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -15,13 +14,7 @@ function DSAModernHero() {
         backdropFilter: "blur(8px)",
       }}
     >
-      <svg
-        width="140"
-        height="140"
-        viewBox="0 0 140 140"
-        fill="none"
-        className="block"
-      >
+      <svg width="140" height="140" viewBox="0 0 140 140" fill="none" className="block">
         <motion.line
           x1="70" y1="120" x2="70" y2="60"
           stroke="#6366f1"
@@ -82,11 +75,7 @@ function DSAModernHero() {
         className="absolute inset-0 rounded-3xl pointer-events-none"
         initial={{ opacity: 0.13 }}
         animate={{ opacity: [0.13, 0.22, 0.13] }}
-        transition={{
-          duration: 2.2,
-          repeat: Infinity,
-          repeatType: "mirror",
-        }}
+        transition={{ duration: 2.2, repeat: Infinity, repeatType: "mirror" }}
         style={{
           background: "radial-gradient(circle at 60% 40%, #6366f1 0%, transparent 70%)",
         }}
@@ -127,24 +116,24 @@ const WelcomePage: React.FC = () => {
           }}
         >
           <h1 className="text-5xl font-extrabold leading-tight tracking-tight mb-6">
-            Master Data Structures & Algorithms
+            Decode DSA Visually. Learn Smart.
           </h1>
           <p className="text-lg text-gray-600 mb-10 leading-relaxed">
-            Learn complex concepts through interactive visualizations.<br />
-            Understand how algorithms work step-by-step with real-time animations.
+            Say goodbye to boring theory. <br />
+            Experience how Data Structures and Algorithms really work — visually, intuitively, and interactively.
           </p>
           <div className="flex flex-wrap gap-5">
             <Link
               to="/data-structures"
               className="inline-flex items-center gap-3 px-6 py-3 rounded-xl border border-gray-900 font-semibold text-gray-900 bg-white hover:bg-gray-900 hover:text-white transition"
             >
-              Explore Data Structures
+              Dive into Structures
             </Link>
             <Link
               to="/algorithms"
               className="inline-flex items-center gap-3 px-6 py-3 rounded-xl border border-gray-300 font-semibold text-gray-700 bg-white hover:bg-gray-200 transition"
             >
-              Learn Algorithms
+              Crack Algorithms Easily
             </Link>
           </div>
         </motion.div>
@@ -164,9 +153,9 @@ const WelcomePage: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl font-bold mb-4">Why Choose AlgoFlow Studio?</h2>
+          <h2 className="text-4xl font-bold mb-4">What Makes AlgoFlow Special?</h2>
           <p className="text-gray-600 text-lg leading-relaxed">
-            Interactive learning experience designed to make complex concepts easy to understand
+            A beautifully crafted journey that transforms your DSA skills with clarity, practice, and visual brilliance.
           </p>
         </motion.div>
 
@@ -179,20 +168,20 @@ const WelcomePage: React.FC = () => {
         >
           {[
             {
-              title: "Interactive Visualizations",
-              subtitle: "Step-by-step animations",
+              title: "Visual-First Learning",
+              subtitle: "Every step, visually explained",
               text:
                 "Watch algorithms execute in real-time with detailed step-by-step visualizations that help you understand the logic behind each operation.",
             },
             {
-              title: "Hands-on Learning",
-              subtitle: "Practice with examples",
+              title: "Code. Tweak. Learn.",
+              subtitle: "Experiment with instant feedback",
               text:
                 "Experiment with different inputs and see how algorithms behave. Modify parameters and observe the changes in real-time.",
             },
             {
-              title: "Comprehensive Coverage",
-              subtitle: "From basics to advanced",
+              title: "DSA from A to Z",
+              subtitle: "Foundations to Mastery",
               text:
                 "Cover essential data structures and algorithms including arrays, linked lists, trees, graphs, sorting, and searching algorithms.",
             },
@@ -223,9 +212,9 @@ const WelcomePage: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl font-bold mb-4">Start Learning</h2>
+          <h2 className="text-4xl font-bold mb-4">Your Journey Starts Here</h2>
           <p className="text-gray-600 text-lg leading-relaxed">
-            Choose your learning path and begin your journey
+            Pick a path and begin mastering DSA like never before.
           </p>
         </motion.div>
 
@@ -258,7 +247,7 @@ const WelcomePage: React.FC = () => {
               to="/data-structures"
               className="inline-block w-full text-center py-3 rounded-xl border border-gray-900 font-semibold text-gray-900 bg-white hover:bg-gray-900 hover:text-white transition"
             >
-              Explore Data Structures
+              Dive into Structures
             </Link>
           </motion.div>
 
@@ -284,7 +273,7 @@ const WelcomePage: React.FC = () => {
               to="/algorithms"
               className="inline-block w-full text-center py-3 rounded-xl border border-gray-900 font-semibold text-gray-900 bg-white hover:bg-gray-900 hover:text-white transition"
             >
-              Learn Algorithms
+              Crack Algorithms Easily
             </Link>
           </motion.div>
         </motion.div>
