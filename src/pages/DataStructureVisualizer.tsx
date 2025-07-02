@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, type: 'spring', stiffness: 80 } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, type: "spring" as const, stiffness: 80 } },
 };
 
 const DataStructureVisualizer: React.FC = () => {
