@@ -6,7 +6,7 @@ import QuickSort from '../pages/algorithms/QuickSort';
 import BFS from '../pages/algorithms/BFS';
 import DFS from '../pages/algorithms/DFS';
 import InsertionSort from '../pages/algorithms/InsertionSort';
-
+import SelectionSort from '../pages/algorithms/SelectionSort';
 export interface Algorithm {
   id: string;
   name: string;
@@ -330,6 +330,44 @@ export const algorithms: Algorithm[] = [
     'O(n²) time complexity'
   ]
 },
+
+{
+  id: 'selection-sort',
+  name: 'Selection Sort',
+  description: 'A simple, comparison-based sorting algorithm that repeatedly selects the minimum element from the unsorted part and puts it at the beginning.',
+  category: 'sorting',
+  difficulty: 'beginner',
+  component: SelectionSort,
+  icon: 'bi-arrow-down-up',
+  features: [
+    'In-place sorting',
+    'Simple implementation',
+    'Always O(n²) comparisons',
+    'Not stable'
+  ],
+  timeComplexity: {
+    best: 'O(n²)',
+    average: 'O(n²)',
+    worst: 'O(n²)'
+  },
+  spaceComplexity: 'O(1)',
+  useCases: [
+    'Small datasets',
+    'Educational purposes',
+    'When memory writes are expensive'
+  ],
+  advantages: [
+    'Simple to implement',
+    'In-place sorting',
+    'Fewer swaps than bubble sort'
+  ],
+  disadvantages: [
+    'Inefficient for large datasets',
+    'Not stable',
+    'O(n²) time complexity'
+  ]
+},
+
   {
     id: 'coming-soon',
     name: 'More Algorithms Coming Soon',
