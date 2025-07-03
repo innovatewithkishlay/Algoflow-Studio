@@ -8,6 +8,7 @@ import DFS from '../pages/algorithms/DFS';
 import InsertionSort from '../pages/algorithms/InsertionSort';
 import SelectionSort from '../pages/algorithms/SelectionSort';
 import HeapSort from '../pages/algorithms/HeapSort';
+import CountingSort from '../pages/algorithms/CountingSort';
 export interface Algorithm {
   id: string;
   name: string;
@@ -404,9 +405,42 @@ export const algorithms: Algorithm[] = [
     'More complex than simple sorts',
     'Poor locality of reference'
   ]
-}
-,
-
+},{
+  id: 'counting-sort',
+  name: 'Counting Sort',
+  description: 'A non-comparison-based sorting algorithm that sorts integers by counting the number of occurrences of each unique value.',
+  category: 'sorting',
+  difficulty: 'intermediate',
+  component: CountingSort,
+  icon: 'bi-bar-chart',
+  features: [
+    'Non-comparison-based',
+    'Stable sort',
+    'Efficient for small integer ranges',
+    'O(n + k) time'
+  ],
+  timeComplexity: {
+    best: 'O(n + k)',
+    average: 'O(n + k)',
+    worst: 'O(n + k)'
+  },
+  spaceComplexity: 'O(k)',
+  useCases: [
+    'Sorting small integer arrays',
+    'Counting frequencies',
+    'Radix sort subroutine'
+  ],
+  advantages: [
+    'Very fast for small ranges',
+    'Stable sort',
+    'Simple to implement'
+  ],
+  disadvantages: [
+    'Not suitable for large ranges',
+    'Not comparison-based',
+    'Uses extra space'
+  ]
+},
   {
     id: 'coming-soon',
     name: 'More Algorithms Coming Soon',
