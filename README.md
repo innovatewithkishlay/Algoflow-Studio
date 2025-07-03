@@ -15,8 +15,8 @@ An interactive web platform for mastering Data Structures and Algorithms through
 
 - **Frontend**: React 19.1.0 + TypeScript
 - **Routing**: React Router DOM
-- **Styling**: Bootstrap 5.3.7 & custom CSS
-- **Icons**: Bootstrap Icons
+- **Styling**: TailwindCss and Framer-Motion
+- **Icons**: React icons
 - **Build System**: Vite
 - **Package Management**: npm
 
@@ -24,7 +24,7 @@ An interactive web platform for mastering Data Structures and Algorithms through
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/dsa-visualizer.git
+   git clone https://github.com/yourusername/Algoflow-Studio.git
    ```
 
 2. Install dependencies:
