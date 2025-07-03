@@ -1,6 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ClerkProvider } from '@clerk/clerk-react'; 
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from 'react-router-dom';
+import {
+  ClerkProvider,
+  useUser,
+  useClerk,
+  ClerkLoaded,
+} from '@clerk/clerk-react';
+
 import { ThemeProvider } from './contexts/ThemeContext';
 import Layout from './components/layout/Layout';
 import WelcomePage from './components/pages/WelcomePage';
@@ -10,42 +21,86 @@ import DataStructureVisualizer from './pages/DataStructureVisualizer';
 import AlgorithmVisualizer from './pages/AlgorithmVisualizer';
 import TimeComplexityPage from './pages/TimeComplexityPage';
 
-
-// Import custom styles
 import './styles/globals.css';
 import './styles/components.css';
 
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
+const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isSignedIn } = useUser();
+  const { openSignIn } = useClerk();
+  const location = useLocation();
+
+  React.useEffect(() => {
+    if (!isSignedIn) {
+      setTimeout(() => {
+        openSignIn({ redirectUrl: location.pathname });
+      }, 200);
+    }
+  }, [isSignedIn, openSignIn, location]);
+
+  return isSignedIn ? <>{children}</> : null;
+};
+
 const App: React.FC = () => {
-	return (
-		<ClerkProvider publishableKey={clerkPubKey}>
-			<ThemeProvider>
-				<Router>
-					<Layout>
-						<Routes>
-							{/* Home/Welcome Page */}
-							<Route path="/" element={<WelcomePage />} />
+  return (
+    <ClerkProvider publishableKey={clerkPubKey}>
+      <ClerkLoaded>
+        <ThemeProvider>
+          <Router>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<WelcomePage />} />
 
-							{/* Data Structures Routes */}
-							<Route path="/data-structures" element={<DataStructuresPage />} />
-							<Route path="/data-structures/:id" element={<DataStructureVisualizer />} />
+                <Route
+                  path="/data-structures"
+                  element={
+                    <RequireAuth>
+                      <DataStructuresPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/data-structures/:id"
+                  element={
+                    <RequireAuth>
+                      <DataStructureVisualizer />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/algorithms"
+                  element={
+                    <RequireAuth>
+                      <AlgorithmsPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/algorithms/:id"
+                  element={
+                    <RequireAuth>
+                      <AlgorithmVisualizer />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/time-complexity"
+                  element={
+                    <RequireAuth>
+                      <TimeComplexityPage />
+                    </RequireAuth>
+                  }
+                />
 
-							{/* Algorithms Routes */}
-							<Route path="/algorithms" element={<AlgorithmsPage />} />
-							<Route path="/algorithms/:id" element={<AlgorithmVisualizer />} />
-
-							{/* Time Complexity Routes */}
-							<Route path="/time-complexity" element={<TimeComplexityPage />} />
-
-							{/* 404 Page - Redirect to home */}
-							<Route path="*" element={<WelcomePage />} />
-						</Routes>
-					</Layout>
-				</Router>
-			</ThemeProvider>
-		</ClerkProvider>
-	);
+                <Route path="*" element={<WelcomePage />} />
+              </Routes>
+            </Layout>
+          </Router>
+        </ThemeProvider>
+      </ClerkLoaded>
+    </ClerkProvider>
+  );
 };
 
 export default App;
