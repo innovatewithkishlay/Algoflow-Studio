@@ -1,121 +1,126 @@
 # AlgoFlow Studio
 
-An interactive web platform for mastering Data Structures and Algorithms through engaging visualizations. Crafted with React, TypeScript, and Bootstrap 5.3 for a seamless learning experience.
+An immersive, modern platform to learn, visualize, and master Data Structures & Algorithms through engaging animations. Built with React, TypeScript, Tailwind CSS, and Framer Motion.
 
-## ✨ Key Highlights
+![AlgoFlow Studio Preview](./Algo.gif)
 
-- **Stepwise Visualizations**: Watch algorithms and data structures unfold, one step at a time
-- **Theme Switcher**: Effortlessly toggle between dark and light modes, with your choice remembered
-- **Mobile-First Design**: Fully responsive—optimized for all devices
-- **Extensive Topics**: Covers everything from arrays to complex graph algorithms
-- **Learning-Oriented**: Built to simplify and demystify DSA concepts
-- **Modern Navigation**: Clean, intuitive routing powered by React Router
+---
 
-## 🧰 Technology Stack
+## Key Features
 
-- **Frontend**: React 19.1.0 + TypeScript
-- **Routing**: React Router DOM
-- **Styling**: TailwindCss and Framer-Motion
-- **Icons**: React icons
-- **Build System**: Vite
-- **Package Management**: npm
+- Live visualizations: Step-by-step algorithm and data structure animations
+- Theme toggle: Switch between dark and light modes, with preference saved
+- Fully responsive: Optimized for mobile, tablet, and desktop
+- Comprehensive DSA coverage: From arrays to advanced algorithms
+- Fast and modern: Powered by Vite for optimal performance
+- Smooth routing: Seamless navigation with React Router
 
-## ⚡ Getting Started
+---
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/Algoflow-Studio.git
-   ```
+## Technology Stack
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+| Category         | Stack                                    |
+|------------------|------------------------------------------|
+| Frontend         | React 19 + TypeScript                    |
+| Routing          | React Router DOM                         |
+| Styling          | Tailwind CSS, Framer Motion, Bootstrap 5 |
+| Icons            | Bootstrap Icons, React Icons             |
+| Build System     | Vite                                     |
+| Auth (Optional)  | Clerk                                    |
+| Package Manager  | npm                                      |
 
-3. Launch the development server:
-   ```bash
-   npm run dev
-   ```
+---
 
-4. Open `http://localhost:5173` in your browser.
+## Getting Started
 
-## 🗂️ Project Layout
+Clone the repository and start the development server:
 
-```
-├── src/
-│   ├── components/
-│   │   ├── algorithms/        # Algorithm visualizers
-│   │   ├── data-structures/   # Data structure visualizers
-│   │   ├── layout/            # Layout (Navbar, etc.)
-│   │   ├── pages/             # Page components
-│   │   └── ui/                # Reusable UI elements
-│   ├── pages/                 # Route-level pages
-│   ├── config/                # App configuration
-│   ├── contexts/              # React contexts (e.g., Theme)
-│   ├── hooks/                 # Custom hooks
-│   ├── styles/                # CSS & theme files
-│   ├── types/                 # TypeScript types
-│   └── utils/                 # Helper functions
-├── public/                    # Static assets
-└── package.json
+```bash
+git clone https://github.com/innovatewithkishlay/Algoflow-Studio.git
+cd Algoflow-Studio
+npm install
+npm run dev
 ```
 
-## 📊 Visualizations Available
+Then open `http://localhost:5173` in your browser.
 
-### Data Structures
-- ✅ **Arrays** – Visualize core operations and properties
-- 🚧 **Linked Lists** – Coming soon
-- 🚧 **Stacks** – Coming soon
-- 🚧 **Queues** – Coming soon
-- 🚧 **Trees** – Coming soon
-- 🚧 **Graphs** – Coming soon
+---
 
-### Algorithms
-- ✅ **Linear Search** – Step-by-step search demonstration
-- 🚧 **Binary Search** – Coming soon
-- 🚧 **Bubble Sort** – Coming soon
-- 🚧 **Merge Sort** – Coming soon
-- 🚧 **Quick Sort** – Coming soon
-- 🚧 **DFS** – Coming soon
-- 🚧 **BFS** – Coming soon
+## Project Structure
 
-## 🧭 App Navigation
+```
+src/
+├── components/             # Modular UI components
+│   ├── algorithms/         # Algorithm visualizations
+│   ├── data-structures/    # Data structure visualizations
+│   ├── layout/             # Navbar, footer, layout
+│   ├── pages/              # Page-specific components
+│   └── ui/                 # Reusable visual elements
+├── config/                 # Config files for routing and topics
+├── contexts/               # React Context (Theme, etc.)
+├── hooks/                  # Custom React hooks
+├── styles/                 # Tailwind + global CSS
+├── pages/                  # Route-level components
+├── utils/                  # Helper logic & utilities
+└── public/Algo.gif         # Home page preview GIF
+```
 
-The app leverages React Router for a smooth navigation experience:
+---
 
-- `/` – Home/Welcome
-- `/data-structures` – Overview of data structures
-- `/data-structures/:id` – Visualizer for a specific data structure
-- `/algorithms` – Algorithms overview
-- `/algorithms/:id` – Visualizer for a specific algorithm
+## App Navigation
 
-### Navigation Features
+| Route                      | Purpose                              |
+|----------------------------|--------------------------------------|
+| `/`                        | Welcome / Landing Page               |
+| `/data-structures`         | Explore DSA concepts                 |
+| `/data-structures/:id`     | Visualizer for a specific structure  |
+| `/algorithms`              | Algorithm overview                   |
+| `/algorithms/:id`          | Algorithm visualizer                 |
+| `/time-complexity`         | Complexity theory overview           |
 
-- **Dropdown Menus**: Instantly access any topic from the navbar
-- **Breadcrumbs**: Always know where you are
-- **Mobile Navigation**: Optimized for touch and small screens
-- **Theme Toggle**: Switch themes directly from the navbar
+---
 
-## 🎨 Customization Guide
+## Contribution Guide
 
-### Adding New Visualizations
+We welcome contributions of all kinds:
 
-1. Create your component:
-   - Algorithms: `src/components/algorithms/`
-   - Data Structures: `src/components/data-structures/`
-2. Register it in the config:
-   - Algorithms: `src/config/algorithms.ts`
-   - Data Structures: `src/config/dataStructures.ts`
-3. The router will automatically pick up your new visualizer.
+- Add new algorithm or data structure visualizers
+- Improve UI or add new animations
+- Add multi-language support (i18n)
+- Write unit or integration tests
+- Enhance accessibility and performance
+- Refactor components using modern React patterns
+- Improve documentation or add tutorials
 
-### Theming & Styling
+### How to Contribute
 
-- Edit `src/styles/globals.css` for global styles and custom utilities
-- Adjust Bootstrap variables in the CSS for theme tweaks
+1. Fork the repository
+2. Clone it:
+   ```bash
+   git clone https://github.com/your-username/Algoflow-Studio.git
+   ```
+3. Create a branch:
+   ```bash
+   git checkout -b feature-branch
+   ```
+4. Make your changes
+5. Commit:
+   ```bash
+   git commit -m "Add: your feature"
+   ```
+6. Push:
+   ```bash
+   git push origin feature-branch
+   ```
+7. Open a Pull Request on GitHub
 
-## 🚢 Deployment
+For questions, reach out via email: kishlay141@gmail.com
 
-### Production Build
+---
+
+## Deployment
+
+### Build for Production
 
 ```bash
 npm run build
@@ -127,41 +132,33 @@ npm run build
 npm run preview
 ```
 
-## 🤗 Contributing
-
-1. Fork this repo
-2. Create a feature branch: `git checkout -b my-feature`
-3. Make your changes
-4. Commit: `git commit -m "Describe your change"`
-5. Push: `git push origin my-feature`
-6. Open a pull request
-
-### Dev Best Practices
-
-- Stick to TypeScript conventions
-- Use functional components and hooks
-- Ensure mobile responsiveness
-- Handle errors gracefully
-- Prioritize accessibility
-- Keep code clean and well-documented
-- Use React Router for navigation
-
-## 📄 License
-
-Distributed under the MIT License. See [LICENSE](LICENSE) for details.
-
-## 🙌 Credits
-
-- [Bootstrap](https://getbootstrap.com/)
-- [React](https://react.dev/)
-- [React Router](https://reactrouter.com/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Vite](https://vitejs.dev/)
-
-## 💬 Need Help?
-
-Open an issue on GitHub or reach out to the maintainers for support.
+You can deploy the final build folder to Vercel, Netlify, or any static hosting provider.
 
 ---
 
-**Explore, visualize, and master DSA! 🚀**
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
+
+## Acknowledgements
+
+- React
+- React Router
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Vite
+
+---
+
+## Maintainer
+
+Kishlay Kumar  
+GitHub: [@innovatewithkishlay](https://github.com/innovatewithkishlay)  
+Email: kishlay141@gmail.com
+
+---
+
+Explore, visualize, and master DSA!
