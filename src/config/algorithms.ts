@@ -7,6 +7,7 @@ import BFS from '../pages/algorithms/BFS';
 import DFS from '../pages/algorithms/DFS';
 import InsertionSort from '../pages/algorithms/InsertionSort';
 import SelectionSort from '../pages/algorithms/SelectionSort';
+import HeapSort from '../pages/algorithms/HeapSort';
 export interface Algorithm {
   id: string;
   name: string;
@@ -367,6 +368,44 @@ export const algorithms: Algorithm[] = [
     'O(n²) time complexity'
   ]
 },
+
+{
+  id: 'heap-sort',
+  name: 'Heap Sort',
+  description: 'An efficient, comparison-based sorting algorithm that uses a binary heap data structure to sort elements.',
+  category: 'sorting',
+  difficulty: 'intermediate',
+  component: HeapSort,
+  icon: 'bi-diagram-3',
+  features: [
+    'In-place sorting',
+    'Consistent O(n log n) time',
+    'Uses binary heap',
+    'Not stable'
+  ],
+  timeComplexity: {
+    best: 'O(n log n)',
+    average: 'O(n log n)',
+    worst: 'O(n log n)'
+  },
+  spaceComplexity: 'O(1)',
+  useCases: [
+    'Large datasets',
+    'Memory-constrained systems',
+    'Real-time applications'
+  ],
+  advantages: [
+    'Consistent performance',
+    'In-place sorting',
+    'Good for large datasets'
+  ],
+  disadvantages: [
+    'Not stable',
+    'More complex than simple sorts',
+    'Poor locality of reference'
+  ]
+}
+,
 
   {
     id: 'coming-soon',
