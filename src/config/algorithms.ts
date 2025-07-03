@@ -5,6 +5,7 @@ import MergeSort from '../pages/algorithms/MergeSort';
 import QuickSort from '../pages/algorithms/QuickSort';
 import BFS from '../pages/algorithms/BFS';
 import DFS from '../pages/algorithms/DFS';
+import InsertionSort from '../pages/algorithms/InsertionSort';
 
 export interface Algorithm {
   id: string;
@@ -294,6 +295,41 @@ export const algorithms: Algorithm[] = [
       'May explore unnecessary nodes'
     ]
   },
+  {
+  id: 'insertion-sort',
+  name: 'Insertion Sort',
+  description: 'A simple, intuitive sorting algorithm that builds the sorted array one element at a time.',
+  category: 'sorting',
+  difficulty: 'beginner',
+  component: InsertionSort,
+  icon: 'bi-arrow-down',
+  features: [
+    'In-place sorting',
+    'Stable sort',
+    'Adaptive for nearly sorted data',
+    'Simple implementation'
+  ],
+  timeComplexity: {
+    best: 'O(n)',
+    average: 'O(n²)',
+    worst: 'O(n²)'
+  },
+  spaceComplexity: 'O(1)',
+  useCases: [
+    'Small datasets',
+    'Nearly sorted data',
+    'Real-time applications'
+  ],
+  advantages: [
+    'Simple and intuitive',
+    'Stable and in-place',
+    'Efficient for small/mostly sorted data'
+  ],
+  disadvantages: [
+    'Inefficient for large datasets',
+    'O(n²) time complexity'
+  ]
+},
   {
     id: 'coming-soon',
     name: 'More Algorithms Coming Soon',
