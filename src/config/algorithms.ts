@@ -10,6 +10,8 @@ import SelectionSort from '../pages/algorithms/SelectionSort';
 import HeapSort from '../pages/algorithms/HeapSort';
 import CountingSort from '../pages/algorithms/CountingSort';
 import RadixSort from '../pages/algorithms/RadixSort';
+import Kruskal from '../pages/algorithms/Kruskal';
+
 export interface Algorithm {
   id: string;
   name: string;
@@ -31,6 +33,41 @@ export interface Algorithm {
 }
 
 export const algorithms: Algorithm[] = [
+  {
+  id: 'kruskal',
+  name: "Kruskal's Algorithm",
+  description: "A greedy algorithm to find the Minimum Spanning Tree (MST) by selecting edges in ascending order of weight without forming cycles.",
+  category: 'graph',
+  difficulty: 'advanced',
+  component: Kruskal,
+  icon: 'bi-diagram-3',
+  features: [
+    'Greedy algorithm',
+    'Uses union-find data structure',
+    'Detects cycles',
+    'Builds MST'
+  ],
+  timeComplexity: {
+    best: 'O(E log E)',
+    average: 'O(E log E)',
+    worst: 'O(E log E)'
+  },
+  spaceComplexity: 'O(V)',
+  useCases: [
+    'Network design',
+    'Clustering',
+    'Approximation algorithms'
+  ],
+  advantages: [
+    'Simple and efficient',
+    'Works well with sparse graphs',
+    'Easy to implement'
+  ],
+  disadvantages: [
+    'Requires sorting edges',
+    'Not suitable for dense graphs compared to Prim’s'
+  ]
+},
   {
   id: 'radix-sort',
   name: 'Radix Sort',
