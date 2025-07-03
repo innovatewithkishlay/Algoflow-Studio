@@ -9,6 +9,7 @@ import InsertionSort from '../pages/algorithms/InsertionSort';
 import SelectionSort from '../pages/algorithms/SelectionSort';
 import HeapSort from '../pages/algorithms/HeapSort';
 import CountingSort from '../pages/algorithms/CountingSort';
+import RadixSort from '../pages/algorithms/RadixSort';
 export interface Algorithm {
   id: string;
   name: string;
@@ -30,6 +31,42 @@ export interface Algorithm {
 }
 
 export const algorithms: Algorithm[] = [
+  {
+  id: 'radix-sort',
+  name: 'Radix Sort',
+  description: 'A non-comparison-based sorting algorithm that sorts numbers by processing individual digits from least to most significant.',
+  category: 'sorting',
+  difficulty: 'intermediate',
+  component: RadixSort,
+  icon: 'bi-stack',
+  features: [
+    'Non-comparison-based',
+    'Stable sort',
+    'Efficient for fixed-length integers',
+    'O(d·(n + k)) time'
+  ],
+  timeComplexity: {
+    best: 'O(d·(n + k))',
+    average: 'O(d·(n + k))',
+    worst: 'O(d·(n + k))'
+  },
+  spaceComplexity: 'O(n + k)',
+  useCases: [
+    'Sorting large lists of integers',
+    'Sorting phone numbers, IDs, etc.',
+    'As a subroutine in other sorts'
+  ],
+  advantages: [
+    'Fast for numbers with limited digits',
+    'Stable sort',
+    'No comparisons between elements'
+  ],
+  disadvantages: [
+    'Not suitable for floating point or negative numbers (without modification)',
+    'Extra space for buckets',
+    'Not comparison-based'
+  ]
+},
   {
     id: 'linear-search',
     name: 'Linear Search',
