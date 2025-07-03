@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation, NavLink } from "react-router-dom";
-import { useTheme } from "../../contexts/ThemeContext";
 import { motion } from "framer-motion";
+import { SignedIn, SignedOut, UserButton, useClerk } from "@clerk/clerk-react";
 
 interface NavbarProps {
   onSidebarToggle: () => void;
@@ -14,8 +14,8 @@ const navLinks = [
 ];
 
 const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
-  const { isDarkMode, toggleTheme } = useTheme();
   const location = useLocation();
+  const { openSignIn, openSignUp } = useClerk();
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white/70 dark:bg-zinc-900/80 backdrop-blur-lg shadow-md">
@@ -99,51 +99,24 @@ const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
           })}
         </ul>
 
-        {/* Theme toggle */}
         <div className="flex items-center gap-2">
-          <button
-            onClick={toggleTheme}
-            aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
-            title={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
-            className="p-2 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:scale-110 transition-all duration-200 shadow-sm"
-          >
-            {isDarkMode ? (
-              <motion.svg
-                key="sun"
-                initial={{ rotate: -90, scale: 0.5, opacity: 0 }}
-                animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                width={20}
-                height={20}
-                fill="none"
-                viewBox="0 0 24 24"
-                className="text-yellow-400"
-              >
-                <circle cx={12} cy={12} r={5} stroke="currentColor" strokeWidth={2} />
-                <path stroke="currentColor" strokeWidth={2} strokeLinecap="round" d="M12 3v2M12 19v2M4.22 4.22l1.42 1.42M17.36 17.36l1.42 1.42M2 12h2m16 0h2M4.22 19.78l1.42-1.42M17.36 6.64l1.42-1.42" />
-              </motion.svg>
-            ) : (
-              <motion.svg
-                key="moon"
-                initial={{ rotate: 90, scale: 0.5, opacity: 0 }}
-                animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                width={20}
-                height={20}
-                fill="none"
-                viewBox="0 0 24 24"
-                className="text-indigo-500"
-              >
-                <path
-                  d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </motion.svg>
-            )}
-          </button>
+          <SignedOut>
+            <button
+              onClick={() => openSignIn()}
+              className="px-4 py-2 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition"
+            >
+              Sign In
+            </button>
+            <button
+              onClick={() => openSignUp()}
+              className="px-4 py-2 rounded-lg bg-white text-indigo-700 font-semibold border border-indigo-600 hover:bg-indigo-50 transition"
+            >
+              Sign Up
+            </button>
+          </SignedOut>
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
         </div>
       </nav>
     </header>
