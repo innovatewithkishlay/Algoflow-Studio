@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
   useLocation,
+  useNavigate,
 } from 'react-router-dom';
 import {
   ClerkProvider,
@@ -17,7 +18,7 @@ import Layout from './components/layout/Layout';
 import WelcomePage from './components/pages/WelcomePage';
 import DataStructuresPage from './pages/DataStructuresPage';
 import AlgorithmsPage from './pages/AlgorithmsPage';
-import DataStructureVisualizer from './pages/DataStructureVisualizer';
+import DataStructureVisualizer from './pages/DataStructureVisualizer';	
 import AlgorithmVisualizer from './pages/AlgorithmVisualizer';
 import TimeComplexityPage from './pages/TimeComplexityPage';
 
@@ -30,14 +31,21 @@ const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isSignedIn } = useUser();
   const { openSignIn } = useClerk();
   const location = useLocation();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     if (!isSignedIn) {
-      setTimeout(() => {
-        openSignIn({ redirectUrl: location.pathname });
-      }, 200);
+      openSignIn({ redirectUrl: location.pathname });
+
+      const timeout = setTimeout(() => {
+        if (!isSignedIn) {
+          navigate('/', { replace: true }); 
+        }
+      }, 1000); 
+
+      return () => clearTimeout(timeout);
     }
-  }, [isSignedIn, openSignIn, location]);
+  }, [isSignedIn, openSignIn, location, navigate]);
 
   return isSignedIn ? <>{children}</> : null;
 };
