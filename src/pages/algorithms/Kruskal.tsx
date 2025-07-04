@@ -186,17 +186,19 @@ const Kruskal: React.FC = () => {
     { x: 300, y: 300 },
   ];
 
-  // Edge coloring for visualization
-  const getEdgeColor = (edge: Edge, step: KruskalStep) => {
-    if (step.mstEdges.includes(edge.id)) return '#22c55e'; // green
-    if (step.consideredEdges.includes(edge.id)) return step.edge?.id === edge.id && step.cycle ? '#ef4444' : '#facc15'; // red if cycle, yellow if considered
+  // Edge coloring for visualization (safe for undefined step)
+  const getEdgeColor = (edge: Edge, step?: KruskalStep) => {
+    if (!step) return '#a1a1aa'; // fallback gray
+    if (step.mstEdges && step.mstEdges.includes(edge.id)) return '#22c55e'; // green
+    if (step.consideredEdges && step.consideredEdges.includes(edge.id))
+      return step.edge?.id === edge.id && step.cycle ? '#ef4444' : '#facc15'; // red if cycle, yellow if considered
     return '#a1a1aa'; // gray
   };
 
   // Node coloring for union-find
-  const getNodeColor = (node: number, step: KruskalStep) => {
+  const getNodeColor = (node: number, step?: KruskalStep) => {
     if (!step) return '#e0e7ef';
-    const group = step.unionFind[node];
+    const group = step.unionFind ? step.unionFind[node] : node;
     const palette = ['#bae6fd', '#bbf7d0', '#fef9c3', '#fca5a5', '#ddd6fe', '#fdba74', '#a7f3d0', '#fbcfe8', '#fcd34d'];
     return palette[group % palette.length];
   };
@@ -205,6 +207,8 @@ const Kruskal: React.FC = () => {
     if (currentStep >= 0 && currentStep < sortSteps.length) return sortSteps[currentStep].message;
     return 'Click "Start" to begin Kruskal’s Algorithm visualization.';
   };
+
+  const step = currentStep >= 0 ? sortSteps[currentStep] : undefined;
 
   return (
     <div className="min-h-screen bg-white py-8 px-4">
@@ -290,7 +294,6 @@ const Kruskal: React.FC = () => {
               <svg width={400} height={400} className="bg-slate-50 rounded shadow border" style={{ maxWidth: '100%' }}>
                 {/* Edges */}
                 {edges.map((edge, idx) => {
-                  const step = sortSteps[currentStep] || sortSteps[0];
                   const color = getEdgeColor(edge, step);
                   const { x: x1, y: y1 } = nodePositions[edge.u];
                   const { x: x2, y: y2 } = nodePositions[edge.v];
@@ -312,7 +315,6 @@ const Kruskal: React.FC = () => {
                 })}
                 {/* Nodes */}
                 {nodePositions.map(({ x, y }, idx) => {
-                  const step = sortSteps[currentStep] || sortSteps[0];
                   const fill = getNodeColor(idx, step);
                   return (
                     <g key={idx}>
