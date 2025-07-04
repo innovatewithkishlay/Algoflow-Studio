@@ -2,14 +2,24 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 0 },
   visible: { opacity: 1, y: 0 }
 };
 
+// Define the type for each step in the visualization
+interface NQueensStep {
+  board: number[];
+  row: number;
+  col: number;
+  placing: boolean;
+  solutions: number[][];
+  message: string;
+}
+
 // Helper to generate all steps for N-Queens backtracking visualization
-function solveNQueensSteps(n: number) {
+function solveNQueensSteps(n: number): NQueensStep[] {
   const board: number[] = [];
-  const steps: { board: number[]; row: number; col: number; placing: boolean; solutions: number[][]; message: string }[] = [];
+  const steps: NQueensStep[] = [];
   const solutions: number[][] = [];
 
   function isSafe(row: number, col: number) {
@@ -113,7 +123,7 @@ const defaultN = 4;
 
 const Backtracking: React.FC = () => {
   const [n, setN] = useState<number>(defaultN);
-  const [steps, setSteps] = useState<any[]>(() => solveNQueensSteps(defaultN));
+  const [steps, setSteps] = useState<NQueensStep[]>(() => solveNQueensSteps(defaultN));
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [insertValue, setInsertValue] = useState<number | ''>(defaultN);
@@ -126,7 +136,7 @@ const Backtracking: React.FC = () => {
   }, [n]);
 
   React.useEffect(() => {
-    let interval: any;
+let interval: ReturnType<typeof setInterval>;
     if (isPlaying && currentStep < steps.length - 1) {
       interval = setInterval(() => {
         setCurrentStep((prev) => {
@@ -136,7 +146,9 @@ const Backtracking: React.FC = () => {
         });
       }, speed);
     }
-    return () => clearInterval(interval);
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, [isPlaying, currentStep, steps.length, speed]);
 
   const handleStepForward = () => {
