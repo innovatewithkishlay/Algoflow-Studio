@@ -534,7 +534,7 @@ const WelcomePage: React.FC = () => {
                   className="text-center"
                 >
                   <Link 
-                    to={item.title.includes("Graph") ? "/algorithms/graph" : item.title.includes("Tree") ? "/data-structures/trees" : "/"}
+                to="/data-structures"
                     className="inline-flex items-center text-indigo-600 font-medium"
                   >
                     Explore Visualization
@@ -725,7 +725,7 @@ const WelcomePage: React.FC = () => {
             transition={{ delay: 0.4 }}
           >
             <Link
-              to="/signup"
+                to="/data-structures"
               className="inline-flex items-center px-8 py-4 rounded-xl font-bold text-indigo-600 bg-white hover:bg-gray-50 shadow-lg hover:shadow-xl transition"
             >
               <motion.span
