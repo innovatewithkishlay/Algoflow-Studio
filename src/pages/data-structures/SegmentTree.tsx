@@ -53,7 +53,6 @@ const SegmentTree: React.FC = () => {
   const [root, setRoot] = useState<SegmentTreeNode | undefined>();
   const [queryStart, setQueryStart] = useState<string>('');
   const [queryEnd, setQueryEnd] = useState<string>('');
-  const [queryResult, setQueryResult] = useState<number | null>(null);
   const [updateIndex, setUpdateIndex] = useState<string>('');
   const [updateValue, setUpdateValue] = useState<string>('');
   const [message, setMessage] = useState('');
@@ -63,7 +62,6 @@ const SegmentTree: React.FC = () => {
       const treeRoot = buildSegmentTree(array, 0, array.length - 1);
       layoutTree(treeRoot, 0, 60, 940, 90);
       setRoot(treeRoot);
-      setQueryResult(null);
       setMessage('');
     } else {
       setRoot(undefined);
@@ -83,24 +81,6 @@ const SegmentTree: React.FC = () => {
     );
   };
 
-  // Update value at index idx to val
-  const updateValueAtIndex = (
-    node: SegmentTreeNode | undefined,
-    idx: number,
-    val: number
-  ): number => {
-    if (!node) return 0;
-    if (node.start === node.end && node.start === idx) {
-      node.value = val;
-      return val;
-    }
-    if (idx < node.start || idx > node.end) return node.value;
-    const leftVal = updateValueAtIndex(node.left, idx, val);
-    const rightVal = updateValueAtIndex(node.right, idx, val);
-    node.value = leftVal + rightVal;
-    return node.value;
-  };
-
   // Handle query button
   const handleQuery = () => {
     const qs = Number(queryStart);
@@ -113,12 +93,10 @@ const SegmentTree: React.FC = () => {
       qs > qe
     ) {
       setMessage('Invalid query range.');
-      setQueryResult(null);
       return;
     }
     if (!root) return;
     const res = querySum(root, qs, qe);
-    setQueryResult(res);
     setMessage(`Sum of range [${qs}, ${qe}] is ${res}`);
   };
 
