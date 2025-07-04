@@ -48,7 +48,7 @@ function layoutTree(
   if (node.right) layoutTree(node.right, depth + 1, node.x, xMax, yStep);
 }
 
-const SegmentTreeVisualizer: React.FC = () => {
+const SegmentTree: React.FC = () => {
   const [array, setArray] = useState<number[]>([1, 3, 5, 7, 9, 11]);
   const [root, setRoot] = useState<SegmentTreeNode | undefined>();
   const [queryStart, setQueryStart] = useState<string>('');
@@ -58,7 +58,6 @@ const SegmentTreeVisualizer: React.FC = () => {
   const [updateValue, setUpdateValue] = useState<string>('');
   const [message, setMessage] = useState('');
 
-  // Build tree on array change
   useEffect(() => {
     if (array.length > 0) {
       const treeRoot = buildSegmentTree(array, 0, array.length - 1);
@@ -177,13 +176,46 @@ const SegmentTreeVisualizer: React.FC = () => {
           </div>
         </motion.div>
 
+        {/* What is a Segment Tree */}
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-8">
+          <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mb-3">
+            <i className="bi bi-info-circle text-indigo-600"></i>
+            What is a Segment Tree?
+          </h4>
+          <p className="text-zinc-700 leading-relaxed">
+            A segment tree is a binary tree that allows efficient range queries and updates on an array. Each node represents a segment (interval) of the array, and stores information (like sum, min, max) about that segment. Segment trees are widely used for problems involving range queries and modifications.<br />
+            <span className="text-zinc-400">// Example structure for sum queries</span>
+          </p>
+          <div className="rounded-xl bg-[#F3F4F6] text-zinc-800 font-mono text-sm px-5 py-4 my-4 shadow-sm border border-zinc-200 overflow-x-auto">
+            <pre>
+{`// Build segment tree for sum
+function build(arr, l, r) {
+  if (l === r) return { l, r, sum: arr[l] };
+  let m = Math.floor((l + r) / 2);
+  let left = build(arr, l, m);
+  let right = build(arr, m+1, r);
+  return { l, r, sum: left.sum + right.sum, left, right };
+}`}
+            </pre>
+          </div>
+          <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mb-3">
+            <i className="bi bi-list-check"></i>
+            Key Features
+          </h4>
+          <ul className="list-disc list-inside text-zinc-700 space-y-1">
+            <li>Efficient range queries and updates</li>
+            <li>Supports sum, min, max, gcd, and more</li>
+            <li>Binary tree structure</li>
+            <li>Divide and conquer approach</li>
+            <li>Flexible for different operations</li>
+          </ul>
+        </motion.div>
+
         {/* Interactive Section */}
         <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-8">
           <h5 className="flex items-center gap-2 text-indigo-700 text-lg font-semibold mb-4">
-            <i className="bi bi-play-circle"></i> Interactive Demo
+            <i className="bi bi-play-circle"></i> Interactive Demo & Visualization
           </h5>
-
-          {/* Array Input */}
           <div className="mb-4">
             <label className="block mb-1 text-zinc-700 font-medium">Array Elements (comma separated):</label>
             <input
@@ -196,8 +228,6 @@ const SegmentTreeVisualizer: React.FC = () => {
               }}
             />
           </div>
-
-          {/* Query Section */}
           <div className="flex flex-col md:flex-row gap-3 mb-4 max-w-md">
             <input
               type="number"
@@ -224,8 +254,6 @@ const SegmentTreeVisualizer: React.FC = () => {
               Query Sum
             </button>
           </div>
-
-          {/* Update Section */}
           <div className="flex flex-col md:flex-row gap-3 mb-4 max-w-md">
             <input
               type="number"
@@ -250,14 +278,11 @@ const SegmentTreeVisualizer: React.FC = () => {
               Update
             </button>
           </div>
-
           {message && (
             <div className="mb-4 text-indigo-700 font-semibold bg-indigo-50 px-4 py-2 rounded border border-indigo-300">
               {message}
             </div>
           )}
-
-          {/* Tree Visualization */}
           <div className="rounded shadow-lg border bg-indigo-50 py-4 px-2 overflow-x-auto">
             <svg width="100%" height={Math.max(240, (nodes.length > 0 ? Math.max(...nodes.map(n => n.y || 0)) + 80 : 240))}
               viewBox={`0 0 1000 ${Math.max(240, (nodes.length > 0 ? Math.max(...nodes.map(n => n.y || 0)) + 80 : 240))}`}
@@ -327,6 +352,10 @@ const SegmentTreeVisualizer: React.FC = () => {
               ))}
             </svg>
           </div>
+          <div className="mt-4 flex items-center gap-2 bg-indigo-50 border border-indigo-200 rounded px-4 py-2 text-indigo-700">
+            <i className="bi bi-lightbulb"></i>
+            <strong>Tip:</strong> Use range queries and updates to see the segment tree in action!
+          </div>
         </motion.div>
 
         {/* Complexity Analysis */}
@@ -334,29 +363,109 @@ const SegmentTreeVisualizer: React.FC = () => {
           <h4 className="flex items-center gap-2 text-indigo-700 text-xl font-semibold mb-4">
             <i className="bi bi-graph-up"></i> Time & Space Complexity
           </h4>
-          <ul className="list-disc list-inside text-zinc-700 space-y-1">
-            <li>Build: <strong>O(n)</strong></li>
-            <li>Query: <strong>O(log n)</strong></li>
-            <li>Update: <strong>O(log n)</strong></li>
-            <li>Space: <strong>O(n)</strong></li>
-          </ul>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border border-gray-300 rounded-lg">
+              <thead className="bg-indigo-100">
+                <tr>
+                  <th className="px-4 py-2 border border-gray-300 text-left">Operation</th>
+                  <th className="px-4 py-2 border border-gray-300 text-left">Time Complexity</th>
+                  <th className="px-4 py-2 border border-gray-300 text-left">Space Complexity</th>
+                  <th className="px-4 py-2 border border-gray-300 text-left">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="px-4 py-2 border border-gray-300">Build</td>
+                  <td className="px-4 py-2 border border-gray-300">
+                    <span className="inline-block bg-green-200 text-green-800 rounded px-2 py-1 font-semibold">O(n)</span>
+                  </td>
+                  <td className="px-4 py-2 border border-gray-300">O(n)</td>
+                  <td className="px-4 py-2 border border-gray-300">Build the tree from array</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2 border border-gray-300">Query</td>
+                  <td className="px-4 py-2 border border-gray-300">
+                    <span className="inline-block bg-green-200 text-green-800 rounded px-2 py-1 font-semibold">O(log n)</span>
+                  </td>
+                  <td className="px-4 py-2 border border-gray-300">O(1)</td>
+                  <td className="px-4 py-2 border border-gray-300">Range sum/min/max</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2 border border-gray-300">Update</td>
+                  <td className="px-4 py-2 border border-gray-300">
+                    <span className="inline-block bg-green-200 text-green-800 rounded px-2 py-1 font-semibold">O(log n)</span>
+                  </td>
+                  <td className="px-4 py-2 border border-gray-300">O(1)</td>
+                  <td className="px-4 py-2 border border-gray-300">Update element value</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </motion.div>
 
         {/* Use Cases */}
-        <motion.div initial="hidden" animate="visible" variants={fadeUp}>
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-8">
           <h4 className="flex items-center gap-2 text-indigo-700 text-xl font-semibold mb-4">
             <i className="bi bi-lightning"></i> Use Cases & Applications
           </h4>
-          <ul className="list-disc list-inside text-zinc-700 space-y-1">
-            <li>Range sum/min/max queries</li>
-            <li>Interval problems</li>
-            <li>Competitive programming</li>
-            <li>Dynamic array queries</li>
-          </ul>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-lg shadow p-4">
+              <h6 className="flex items-center gap-2 font-semibold text-zinc-900 mb-2">
+                <i className="bi bi-diagram-2 text-indigo-600"></i> Range Queries
+              </h6>
+              <p className="text-zinc-700 text-sm">Sum, min, max, gcd, etc. over intervals</p>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <h6 className="flex items-center gap-2 font-semibold text-zinc-900 mb-2">
+                <i className="bi bi-arrow-repeat text-indigo-600"></i> Interval Problems
+              </h6>
+              <p className="text-zinc-700 text-sm">Dynamic interval updates and queries</p>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <h6 className="flex items-center gap-2 font-semibold text-zinc-900 mb-2">
+                <i className="bi bi-lightning text-indigo-600"></i> Competitive Programming
+              </h6>
+              <p className="text-zinc-700 text-sm">Efficient solutions for coding contests</p>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <h6 className="flex items-center gap-2 font-semibold text-zinc-900 mb-2">
+                <i className="bi bi-list-ol text-indigo-600"></i> Dynamic Arrays
+              </h6>
+              <p className="text-zinc-700 text-sm">Queries and updates on changing arrays</p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Advantages and Disadvantages */}
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <div className="bg-white rounded-lg shadow p-6">
+            <h4 className="flex items-center gap-2 text-indigo-700 text-xl font-semibold mb-4">
+              <i className="bi bi-plus-circle"></i> Advantages
+            </h4>
+            <ul className="list-disc list-inside text-zinc-700 space-y-1">
+              <li>Efficient range queries and updates (<b>O(log n)</b>)</li>
+              <li>Flexible for many types of queries (sum, min, max, etc.)</li>
+              <li>Can handle dynamic array modifications</li>
+              <li>Supports divide-and-conquer and recursive algorithms</li>
+              <li>Space-efficient compared to brute-force solutions</li>
+            </ul>
+          </div>
+          <div className="bg-white rounded-lg shadow p-6">
+            <h4 className="flex items-center gap-2 text-indigo-700 text-xl font-semibold mb-4">
+              <i className="bi bi-dash-circle"></i> Disadvantages
+            </h4>
+            <ul className="list-disc list-inside text-zinc-700 space-y-1">
+              <li>Requires extra space for the tree structure (<b>O(n)</b>)</li>
+              <li>More complex to implement than arrays or prefix sums</li>
+              <li>Updates and queries require recursive logic</li>
+              <li>Not as cache-friendly as flat arrays</li>
+              <li>Less efficient for very small arrays or simple use-cases</li>
+            </ul>
+          </div>
         </motion.div>
       </div>
     </div>
   );
 };
 
-export default SegmentTreeVisualizer;
+export default SegmentTree;
