@@ -30,8 +30,65 @@ const codeImplementations = {
     }
   }
   return mst;
+}`,
+
+  python: `def kruskal(n, edges):
+    edges.sort(key=lambda x: x[2])
+    parent = list(range(n))
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    mst = []
+    for u, v, weight in edges:
+        if find(u) != find(v):
+            mst.append((u, v, weight))
+            parent[find(u)] = find(v)
+    return mst`,
+
+  cpp: `struct Edge {
+    int u, v, weight;
+};
+int find(vector<int>& parent, int x) {
+    return parent[x] == x ? x : parent[x] = find(parent, parent[x]);
+}
+vector<Edge> kruskal(int n, vector<Edge>& edges) {
+    sort(edges.begin(), edges.end(), [](Edge a, Edge b) { return a.weight < b.weight; });
+    vector<int> parent(n);
+    iota(parent.begin(), parent.end(), 0);
+    vector<Edge> mst;
+    for (auto& e : edges) {
+        if (find(parent, e.u) != find(parent, e.v)) {
+            mst.push_back(e);
+            parent[find(parent, e.u)] = find(parent, e.v);
+        }
+    }
+    return mst;
+}`,
+
+  java: `class Edge implements Comparable<Edge> {
+    int u, v, weight;
+    public int compareTo(Edge other) { return this.weight - other.weight; }
+}
+int find(int[] parent, int x) {
+    if (parent[x] != x) parent[x] = find(parent, parent[x]);
+    return parent[x];
+}
+List<Edge> kruskal(int n, List<Edge> edges) {
+    Collections.sort(edges);
+    int[] parent = new int[n];
+    for (int i = 0; i < n; i++) parent[i] = i;
+    List<Edge> mst = new ArrayList<>();
+    for (Edge e : edges) {
+        if (find(parent, e.u) != find(parent, e.v)) {
+            mst.add(e);
+            parent[find(parent, e.u)] = find(parent, e.v);
+        }
+    }
+    return mst;
 }`
 };
+
 
 const defaultEdges: Edge[] = [
   { u: 0, v: 1, weight: 4, id: 0 },
