@@ -7,63 +7,151 @@ const fadeUp = {
   visible: { opacity: 1, y: 0 }
 };
 
+// Tree node structure for binary tree
+interface TreeNode {
+  value: number;
+  left: TreeNode | null;
+  right: TreeNode | null;
+  x?: number;
+  y?: number;
+}
+
+// Insert a value into a BST
+function insertNode(root: TreeNode | null, value: number): TreeNode {
+  if (!root) return { value, left: null, right: null };
+  if (value < root.value) root.left = insertNode(root.left, value);
+  else root.right = insertNode(root.right, value);
+  return root;
+}
+
+// Build BST from array
+function buildTree(arr: number[]): TreeNode | null {
+  let root: TreeNode | null = null;
+  for (const v of arr) root = insertNode(root, v);
+  return root;
+}
+
+// Recursively assign x/y positions for tree layout
+function layoutTree(
+  node: TreeNode | null,
+  depth: number,
+  xMin: number,
+  xMax: number,
+  yStep: number
+): void {
+  if (!node) return;
+  const x = (xMin + xMax) / 2;
+  const y = depth * yStep + 60;
+  node.x = x;
+  node.y = y;
+  if (node.left) layoutTree(node.left, depth + 1, xMin, x, yStep);
+  if (node.right) layoutTree(node.right, depth + 1, x, xMax, yStep);
+}
+
+// Flatten tree for rendering (DFS)
+function flattenTree(node: TreeNode | null): TreeNode[] {
+  if (!node) return [];
+  return [node, ...flattenTree(node.left), ...flattenTree(node.right)];
+}
+
 const Tree: React.FC = () => {
   const { isDarkMode } = useTheme();
-  const [treeData, setTreeData] = useState<number[]>([1, 2, 3, 4, 5]);
+  const [treeArr, setTreeArr] = useState<number[]>([8, 4, 12, 2, 6, 10, 14]);
   const [inputValue, setInputValue] = useState<string>('');
+  const [selected, setSelected] = useState<number | null>(null);
+
+  // Build and layout the tree
+  const treeRoot = buildTree(treeArr);
+  if (treeRoot) layoutTree(treeRoot, 0, 60, 940, 90);
+  const nodes = flattenTree(treeRoot);
 
   const addNode = () => {
     if (inputValue.trim() && !isNaN(Number(inputValue))) {
-      setTreeData([...treeData, Number(inputValue)]);
+      setTreeArr([...treeArr, Number(inputValue)]);
       setInputValue('');
     }
   };
 
   const clearTree = () => {
-    setTreeData([]);
+    setTreeArr([]);
+    setSelected(null);
   };
 
   const generateRandomTree = () => {
-    const newTree = Array.from({ length: 5 }, () => Math.floor(Math.random() * 20) + 1);
-    setTreeData(newTree);
+    const newTree = Array.from({ length: 7 }, () => Math.floor(Math.random() * 40) + 1);
+    setTreeArr(newTree);
+    setSelected(null);
   };
 
-  // Visualization: Flat array (for demo)
+  // SVG tree visualization
   const renderTreeVisualization = () => {
-    const containerClass = isDarkMode ? 'bg-zinc-800 text-zinc-100' : 'bg-zinc-100 text-zinc-900';
+    if (!treeRoot) {
+      return (
+        <div className="flex flex-col items-center gap-2 text-zinc-400 min-h-[180px]">
+          <span className="text-4xl">🌳</span>
+          <p>Tree is empty</p>
+        </div>
+      );
+    }
+    const containerClass = isDarkMode ? 'bg-zinc-800' : 'bg-zinc-100';
+    const width = 1000, height = Math.max(240, (nodes.length > 0 ? Math.max(...nodes.map(n => n.y || 0)) + 80 : 240));
     return (
-      <div className={`p-4 rounded min-h-[100px] min-w-[300px] flex items-center justify-center ${containerClass}`}>
-        {treeData.length === 0 ? (
-          <div className="flex flex-col items-center gap-2 text-zinc-400">
-            <span className="text-4xl">🌳</span>
-            <p>Tree is empty</p>
-          </div>
-        ) : (
-          <div className="flex flex-row gap-6 justify-center items-center flex-wrap">
-            {treeData.map((value, idx) => (
-              <motion.div
-                key={idx}
-                className="flex flex-col items-center relative"
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                transition={{ delay: idx * 0.08, duration: 0.5, type: "spring", stiffness: 80 }}
-                whileHover={{ scale: 1.07, boxShadow: '0 8px 20px rgba(0,0,0,0.12)' }}
+      <div className={`rounded shadow-lg border ${containerClass} py-4 px-2`}>
+        <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`}>
+          {/* Edges */}
+          {nodes.map((node, idx) => (
+            <g key={'edges-' + idx}>
+              {node.left && (
+                <line
+                  x1={node.x} y1={node.y}
+                  x2={node.left.x} y2={node.left.y}
+                  stroke="#a5b4fc"
+                  strokeWidth={4}
+                />
+              )}
+              {node.right && (
+                <line
+                  x1={node.x} y1={node.y}
+                  x2={node.right.x} y2={node.right.y}
+                  stroke="#a5b4fc"
+                  strokeWidth={4}
+                />
+              )}
+            </g>
+          ))}
+          {/* Nodes */}
+          {nodes.map((node, idx) => (
+            <motion.g
+              key={idx}
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp}
+              transition={{ delay: idx * 0.05, duration: 0.5, type: "spring", stiffness: 80 }}
+              onClick={() => setSelected(node.value)}
+              style={{ cursor: 'pointer' }}
+            >
+              <circle
+                cx={node.x}
+                cy={node.y}
+                r={28}
+                fill={selected === node.value ? "#6366f1" : "#e0e7ef"}
+                stroke="#6366f1"
+                strokeWidth={selected === node.value ? 5 : 3}
+                style={{ filter: selected === node.value ? 'drop-shadow(0 0 6px #818cf8)' : undefined }}
+              />
+              <text
+                x={node.x}
+                y={node.y! + 7}
+                textAnchor="middle"
+                fontSize={20}
+                fill={selected === node.value ? "#fff" : "#3730a3"}
+                fontWeight={700}
               >
-                <div
-                  className={`border-4 rounded-full flex justify-center items-center font-semibold text-xl w-12 h-12 cursor-pointer transition ${
-                    isDarkMode
-                      ? 'border-indigo-500 bg-indigo-600 text-white'
-                      : 'border-indigo-600 bg-indigo-500 text-white'
-                  }`}
-                >
-                  {value}
-                </div>
-                <div className="text-xs text-indigo-500 mt-1 font-semibold">Node {idx}</div>
-              </motion.div>
-            ))}
-          </div>
-        )}
+                {node.value}
+              </text>
+            </motion.g>
+          ))}
+        </svg>
       </div>
     );
   };
@@ -245,9 +333,17 @@ class BinaryTree {
           </h5>
           <div className="mb-3">
             <label className="block mb-2 text-zinc-700 font-medium">
-              Current Tree Nodes: <span className="font-semibold text-indigo-700">{treeData.length}</span>
+              Current Tree Nodes: <span className="font-semibold text-indigo-700">{treeArr.length}</span>
             </label>
             {renderTreeVisualization()}
+            {selected !== null && (
+              <div className="text-center mt-2">
+                <div className="inline-flex items-center gap-2 rounded border-2 border-green-600 bg-green-100 px-4 py-2 text-green-800 font-semibold shadow">
+                  <i className="bi bi-check-circle"></i>
+                  Selected: {selected}
+                </div>
+              </div>
+            )}
           </div>
           <div className="flex flex-col sm:flex-row gap-3 mb-3">
             <input
@@ -268,7 +364,7 @@ class BinaryTree {
             <button
               className="bg-red-600 text-white px-4 py-2 rounded shadow hover:bg-red-700 transition"
               onClick={clearTree}
-              disabled={treeData.length === 0}
+              disabled={treeArr.length === 0}
             >
               <i className="bi bi-trash"></i> Clear Tree
             </button>
@@ -281,7 +377,7 @@ class BinaryTree {
           </div>
           <div className="mt-4 flex items-center gap-2 bg-indigo-50 border border-indigo-200 rounded px-4 py-2 text-indigo-700">
             <i className="bi bi-lightbulb"></i>
-            <strong>Tip:</strong> Add nodes to see how the tree structure is built.
+            <strong>Tip:</strong> Click a node to highlight it. Try adding, clearing, or randomizing!
           </div>
         </motion.div>
 
@@ -291,9 +387,8 @@ class BinaryTree {
             <i className="bi bi-cpu"></i> Memory Layout
           </h4>
           <p className="text-zinc-700 leading-relaxed mb-4">
-            Trees are hierarchical data structures where each node can have multiple children. The visualization below shows the current tree nodes as a flat array (for demo purposes).
+            Trees are hierarchical data structures where each node can have multiple children. The visualization above shows a real binary tree structure.
           </p>
-          {renderTreeVisualization()}
         </motion.div>
 
         {/* Complexity Analysis */}
