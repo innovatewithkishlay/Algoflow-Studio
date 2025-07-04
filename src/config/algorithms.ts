@@ -11,7 +11,7 @@ import HeapSort from '../pages/algorithms/HeapSort';
 import CountingSort from '../pages/algorithms/CountingSort';
 import RadixSort from '../pages/algorithms/RadixSort';
 import Kruskal from '../pages/algorithms/Kruskal';
-
+import Dijkstra from '../pages/algorithms/Dijkstra';
 export interface Algorithm {
   id: string;
   name: string;
@@ -33,6 +33,41 @@ export interface Algorithm {
 }
 
 export const algorithms: Algorithm[] = [
+  {
+  id: 'dijkstra',
+  name: "Dijkstra's Algorithm",
+  description: "An efficient algorithm to find the shortest path from a source node to all other nodes in a weighted graph with non-negative weights.",
+  category: 'graph',
+  difficulty: 'advanced',
+  component: Dijkstra,
+  icon: 'bi-geo-alt',
+  features: [
+    'Priority queue',
+    'Shortest path finding',
+    'Non-negative weights',
+    'Stepwise visualization'
+  ],
+  timeComplexity: {
+    best: 'O((V + E) log V)',
+    average: 'O((V + E) log V)',
+    worst: 'O((V + E) log V)'
+  },
+  spaceComplexity: 'O(V)',
+  useCases: [
+    'GPS navigation',
+    'Network routing',
+    'Robotics pathfinding'
+  ],
+  advantages: [
+    'Efficient for non-negative weights',
+    'Widely used in practice',
+    'Finds all shortest paths from a source'
+  ],
+  disadvantages: [
+    'Cannot handle negative weights',
+    'Less efficient for dense graphs'
+  ]
+},
   {
   id: 'kruskal',
   name: "Kruskal's Algorithm",
