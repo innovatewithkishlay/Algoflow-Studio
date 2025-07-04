@@ -4,7 +4,7 @@ import Stack from '../pages/data-structures/Stack';
 import Queue from '../pages/data-structures/Queue';
 import Tree from '../pages/data-structures/Tree';
 import Graph from '../pages/data-structures/Graph';
-
+import Heap from '../pages/data-structures/Heap';
 export interface DataStructure {
   id: string;
   name: string;
@@ -25,6 +25,34 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'heap',
+  name: 'Heap (Binary Max Heap)',
+  description: 'A complete binary tree where each parent node is greater than or equal to its children, supporting efficient priority queue operations.',
+  category: 'non-linear',
+  difficulty: 'intermediate',
+  component: Heap,
+  icon: 'bi-diagram-2',
+  features: [
+    'Complete binary tree',
+    'Efficient insert and remove-max',
+    'Priority queue structure',
+    'Array-based implementation'
+  ],
+  timeComplexity: {
+    access: 'O(1)',
+    search: 'O(n)',
+    insertion: 'O(log n)',
+    deletion: 'O(log n)'
+  },
+  spaceComplexity: 'O(n)',
+  useCases: [
+    'Priority queues',
+    'Heap sort',
+    'Dijkstra/Prim’s algorithms',
+    'Scheduling tasks'
+  ]
+},
   {
     id: 'arrays',
     name: 'Arrays',
@@ -63,7 +91,7 @@ export const dataStructures: DataStructure[] = [
     icon: 'bi-link-45deg',
     features: [
       'Dynamic size',
-      'Sequential access',
+      'Sequential access',  
       'Memory efficient',
       'Easy insertion/deletion'
     ],
