@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Card from "../components/ui/Card";
 import { dataStructures } from "../config/data-structures";
@@ -29,9 +29,20 @@ const Badge = ({ children, color }: { children: React.ReactNode; color: string }
   </span>
 );
 
-
-
 const DataStructuresPage: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Filter logic: match name, description, features, or useCases
+  const filteredDataStructures = dataStructures.filter(ds => {
+    const q = searchQuery.toLowerCase();
+    return (
+      ds.name.toLowerCase().includes(q) ||
+      ds.description.toLowerCase().includes(q) ||
+      ds.features.some(f => f.toLowerCase().includes(q)) ||
+      ds.useCases.some(u => u.toLowerCase().includes(q))
+    );
+  });
+
   return (
     <motion.div
       className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900 py-10 px-4"
@@ -59,82 +70,98 @@ const DataStructuresPage: React.FC = () => {
           </div>
         </motion.header>
 
+        {/* Search Bar */}
+        <div className="mb-8 flex justify-center">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            className="w-full max-w-lg rounded border border-gray-300 px-4 py-2 text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            placeholder="Search data structures..."
+          />
+        </div>
+
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          {dataStructures.map((ds) => (
-            <motion.div
-              key={ds.id}
-              variants={cardVariants}
-              whileHover={{
-                y: -4,
-                boxShadow: "0 8px 32px rgba(80, 80, 120, 0.1)",
-              }}
-              transition={{ type: "spring", stiffness: 90 }}
-              className="transition-all"
-            >
-              <Card
-                title={ds.name}
-                subtitle={
-                  <div className="flex flex-wrap gap-2 mt-1">
-                    <Badge color="bg-indigo-100 text-indigo-700">{ds.category}</Badge>
-                    <Badge color="bg-purple-100 text-purple-700">{ds.difficulty}</Badge>
-                  </div>
-                }
-                icon={ds.icon}
-                variant={ds.component ? "primary" : "secondary"}
-                disabled={!ds.component}
-                className="flex flex-col h-full bg-white/90 dark:bg-zinc-900 rounded-2xl shadow-lg border border-zinc-100 dark:border-zinc-700 hover:border-indigo-200"
+          {filteredDataStructures.length > 0 ? (
+            filteredDataStructures.map((ds) => (
+              <motion.div
+                key={ds.id}
+                variants={cardVariants}
+                whileHover={{
+                  y: -4,
+                  boxShadow: "0 8px 32px rgba(80, 80, 120, 0.1)",
+                }}
+                transition={{ type: "spring", stiffness: 90 }}
+                className="transition-all"
               >
-                <p className="text-zinc-600 dark:text-zinc-300 mb-4">{ds.description}</p>
+                <Card
+                  title={ds.name}
+                  subtitle={
+                    <div className="flex flex-wrap gap-2 mt-1">
+                      <Badge color="bg-indigo-100 text-indigo-700">{ds.category}</Badge>
+                      <Badge color="bg-purple-100 text-purple-700">{ds.difficulty}</Badge>
+                    </div>
+                  }
+                  icon={ds.icon}
+                  variant={ds.component ? "primary" : "secondary"}
+                  disabled={!ds.component}
+                  className="flex flex-col h-full bg-white/90 dark:bg-zinc-900 rounded-2xl shadow-lg border border-zinc-100 dark:border-zinc-700 hover:border-indigo-200"
+                >
+                  <p className="text-zinc-600 dark:text-zinc-300 mb-4">{ds.description}</p>
 
-                <div className="mb-4">
-                  <h6 className="text-sm font-semibold text-zinc-700 dark:text-zinc-200 mb-2">Features</h6>
-                  <div className="flex flex-wrap gap-2">
-                    {ds.features.slice(0, 2).map((feature, idx) => (
-                      <Badge key={idx} color="bg-indigo-50 text-indigo-700">
-                        <span className="w-2 h-2 rounded-full bg-green-400 mr-2 inline-block"></span>
-                        {feature}
-                      </Badge>
-                    ))}
+                  <div className="mb-4">
+                    <h6 className="text-sm font-semibold text-zinc-700 dark:text-zinc-200 mb-2">Features</h6>
+                    <div className="flex flex-wrap gap-2">
+                      {ds.features.slice(0, 2).map((feature, idx) => (
+                        <Badge key={idx} color="bg-indigo-50 text-indigo-700">
+                          <span className="w-2 h-2 rounded-full bg-green-400 mr-2 inline-block"></span>
+                          {feature}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                <div className="mb-4">
-                  <h6 className="text-sm font-semibold text-zinc-700 dark:text-zinc-200 mb-2">Time Complexity</h6>
-                  <div className="grid grid-cols-4 gap-2 text-center text-xs">
-                   {(["access", "search", "insertion", "deletion"] as const).map((key) => (
-                      <div key={key}>
-                        <div className="text-zinc-400 capitalize">{key}</div>
-                        <div className="font-bold text-zinc-700 dark:text-zinc-100">
-                          {ds.timeComplexity[key]}
+                  <div className="mb-4">
+                    <h6 className="text-sm font-semibold text-zinc-700 dark:text-zinc-200 mb-2">Time Complexity</h6>
+                    <div className="grid grid-cols-4 gap-2 text-center text-xs">
+                      {(["access", "search", "insertion", "deletion"] as const).map((key) => (
+                        <div key={key}>
+                          <div className="text-zinc-400 capitalize">{key}</div>
+                          <div className="font-bold text-zinc-700 dark:text-zinc-100">
+                            {ds.timeComplexity[key]}
+                          </div>
                         </div>
-                      </div>
-                    ))}
-
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                <div className="mt-auto flex items-center justify-between pt-2">
-                  <Badge color="bg-indigo-50 text-indigo-700">Space: {ds.spaceComplexity}</Badge>
-                  {ds.component ? (
-                    <Link
-                      to={`/data-structures/${ds.id}`}
-                      className="inline-flex items-center gap-1 text-sm font-semibold px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition"
-                    >
-                      Visualize
-                    </Link>
-                  ) : (
-                    <Badge color="bg-zinc-200 text-zinc-500">Coming Soon</Badge>
-                  )}
-                </div>
-              </Card>
-            </motion.div>
-          ))}
-
+                  <div className="mt-auto flex items-center justify-between pt-2">
+                    <Badge color="bg-indigo-50 text-indigo-700">Space: {ds.spaceComplexity}</Badge>
+                    {ds.component ? (
+                      <Link
+                        to={`/data-structures/${ds.id}`}
+                        className="inline-flex items-center gap-1 text-sm font-semibold px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition"
+                      >
+                        <i className="bi bi-play-circle" /> Visualize
+                      </Link>
+                    ) : (
+                      <Badge color="bg-zinc-200 text-zinc-500">Coming Soon</Badge>
+                    )}
+                  </div>
+                </Card>
+              </motion.div>
+            ))
+          ) : (
+            <div className="col-span-full text-center text-zinc-400 py-10">
+              <i className="bi bi-search text-4xl mb-2"></i>
+              <div>No data structures found.</div>
+            </div>
+          )}
         </motion.div>
       </div>
     </motion.div>
