@@ -7,6 +7,7 @@ import Graph from '../pages/data-structures/Graph';
 import Heap from '../pages/data-structures/Heap';
 import Backtracking from '../pages/data-structures/Backtracking';
 import HashTable from '../pages/data-structures/HashTable';
+import Trie from '../pages/data-structures/Trie';
 
 export interface DataStructure {
   id: string;
@@ -28,6 +29,35 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'trie',
+  name: 'Trie (Prefix Tree)',
+  description: 'A tree-like data structure for storing strings, enabling fast prefix searches and dictionary operations.',
+  category: 'hierarchical',
+  difficulty: 'intermediate',
+  component: Trie, 
+  icon: 'bi-tree',
+  features: [
+    'Efficient prefix search',
+    'Fast insert and lookup',
+    'Space-efficient for large dictionaries',
+    'Supports autocomplete'
+  ],
+  timeComplexity: {
+    access: 'O(m)',
+    search: 'O(m)',
+    insertion: 'O(m)',
+    deletion: 'O(m)'
+  },
+  spaceComplexity: 'O(n * m)', 
+  useCases: [
+    'Autocomplete',
+    'Spell checking',
+    'IP routing',
+    'Dictionary implementations'
+  ]
+}
+,
   {
   id: 'hash-table',
   name: 'Hash Table',
