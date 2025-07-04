@@ -38,7 +38,7 @@ function countingSortByDigit(arr, exp) {
 };
 
 const getMaxDigits = (arr: number[]) => {
-  let max = Math.max(...arr);
+  const max = Math.max(...arr);
   return max.toString().length;
 };
 
@@ -64,7 +64,7 @@ const RadixSort: React.FC = () => {
     const workingArray = [...arr];
     const maxDigits = getMaxDigits(workingArray);
 
-    let sorted: number[] = [];
+    const sorted: number[] = [];
     for (let place = 0; place < maxDigits; place++) {
       // Distribute to buckets
       const buckets: number[][] = Array.from({ length: 10 }, () => []);
