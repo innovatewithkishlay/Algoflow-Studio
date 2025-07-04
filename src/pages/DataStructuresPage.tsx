@@ -157,9 +157,21 @@ const DataStructuresPage: React.FC = () => {
               </motion.div>
             ))
           ) : (
-            <div className="col-span-full text-center text-zinc-400 py-10">
-              <i className="bi bi-search text-4xl mb-2"></i>
-              <div>No data structures found.</div>
+            <div className="col-span-full flex flex-col items-center justify-center py-16">
+              <i className="bi bi-emoji-frown text-5xl text-indigo-300 mb-4"></i>
+              <div className="text-lg font-semibold text-zinc-600 mb-2">
+                We don't have this yet!
+              </div>
+              <div className="text-zinc-500 mb-4">
+                Can't find the data structure you're looking for? You can request it below.
+              </div>
+              <a
+                href="mailto:kishlay141@gmail.com?subject=Request%20for%20new%20Data%20Structure%20Visualizer"
+                className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-indigo-600 text-white font-semibold shadow hover:bg-indigo-700 transition"
+              >
+                <i className="bi bi-envelope"></i>
+                Request to Add
+              </a>
             </div>
           )}
         </motion.div>
