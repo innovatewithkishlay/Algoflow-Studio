@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Card from "../components/ui/Card";
 import { algorithms } from "../config/algorithms";
@@ -24,6 +24,19 @@ const cardVariants = {
 };
 
 const AlgorithmsPage: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Filter logic: match name, description, features, or advantages
+  const filteredAlgorithms = algorithms.filter(algo => {
+    const q = searchQuery.toLowerCase();
+    return (
+      algo.name.toLowerCase().includes(q) ||
+      algo.description.toLowerCase().includes(q) ||
+      algo.features.some(f => f.toLowerCase().includes(q)) ||
+      (algo.advantages && algo.advantages.some(a => a.toLowerCase().includes(q)))
+    );
+  });
+
   return (
     <div className="min-h-screen bg-white py-10 px-4">
       <div className="max-w-7xl mx-auto">
@@ -56,104 +69,134 @@ const AlgorithmsPage: React.FC = () => {
           </div>
         </header>
 
-        {/* Card Grid */}
+        {/* Search Bar */}
+        <div className="mb-8 flex justify-center">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            className="w-full max-w-lg rounded border border-gray-300 px-4 py-2 text-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            placeholder="Search algorithms..."
+          />
+        </div>
+
+        {/* Card Grid or Not Found */}
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          {algorithms.map((algo, i) => (
-            <motion.div
-              key={algo.id}
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-              transition={{
-                ...cardVariants.visible.transition,
-                delay: i * 0.07,
-              }}
-              whileHover={{
-                y: -4,
-                scale: 1.02,
-                boxShadow: "0 8px 32px 0 rgba(34,197,94,0.12)",
-              }}
-              className="transition-all"
-            >
-              <Card
-                title={algo.name}
-                subtitle={`${algo.category} • ${algo.difficulty}`}
-                icon={algo.icon}
-                variant={algo.component ? "success" : "secondary"}
-                disabled={!algo.component}
-                className="flex flex-col h-full bg-white rounded-2xl shadow-lg border border-zinc-100 hover:border-green-300"
+          {filteredAlgorithms.length > 0 ? (
+            filteredAlgorithms.map((algo, i) => (
+              <motion.div
+                key={algo.id}
+                variants={cardVariants}
+                initial="hidden"
+                animate="visible"
+                transition={{
+                  ...cardVariants.visible.transition,
+                  delay: i * 0.07,
+                }}
+                whileHover={{
+                  y: -4,
+                  scale: 1.02,
+                  boxShadow: "0 8px 32px 0 rgba(34,197,94,0.12)",
+                }}
+                className="transition-all"
               >
-                <p className="text-zinc-700 mb-4">{algo.description}</p>
+                <Card
+                  title={algo.name}
+                  subtitle={`${algo.category} • ${algo.difficulty}`}
+                  icon={algo.icon}
+                  variant={algo.component ? "success" : "secondary"}
+                  disabled={!algo.component}
+                  className="flex flex-col h-full bg-white rounded-2xl shadow-lg border border-zinc-100 hover:border-green-300"
+                >
+                  <p className="text-zinc-700 mb-4">{algo.description}</p>
 
-                <div className="mb-4">
-                  <h6 className="text-sm font-semibold text-zinc-800 mb-2">Features</h6>
-                  <div className="flex flex-wrap gap-2">
-                    {algo.features.slice(0, 2).map((feature, idx) => (
-                      <span
-                        key={idx}
-                        className="inline-flex items-center px-3 py-1 rounded-full bg-green-50 text-green-700 text-xs font-medium shadow-sm"
-                      >
-                        <span className="w-2 h-2 rounded-full bg-green-400 mr-2"></span>
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mb-4">
-                  <h6 className="text-sm font-semibold text-zinc-800 mb-2">Time Complexity</h6>
-                  <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                    <div>
-                      <div className="text-zinc-500">Best</div>
-                      <div className="font-bold text-green-600">{algo.timeComplexity.best}</div>
-                    </div>
-                    <div>
-                      <div className="text-zinc-500">Average</div>
-                      <div className="font-bold text-amber-500">{algo.timeComplexity.average}</div>
-                    </div>
-                    <div>
-                      <div className="text-zinc-500">Worst</div>
-                      <div className="font-bold text-red-600">{algo.timeComplexity.worst}</div>
+                  <div className="mb-4">
+                    <h6 className="text-sm font-semibold text-zinc-800 mb-2">Features</h6>
+                    <div className="flex flex-wrap gap-2">
+                      {algo.features.slice(0, 2).map((feature, idx) => (
+                        <span
+                          key={idx}
+                          className="inline-flex items-center px-3 py-1 rounded-full bg-green-50 text-green-700 text-xs font-medium shadow-sm"
+                        >
+                          <span className="w-2 h-2 rounded-full bg-green-400 mr-2"></span>
+                          {feature}
+                        </span>
+                      ))}
                     </div>
                   </div>
-                </div>
 
-                <div className="mb-4">
-                  <h6 className="text-sm font-semibold text-zinc-800 mb-2">Advantages</h6>
-                  <ul className="list-disc list-inside text-zinc-700 text-sm">
-                    {algo.advantages.slice(0, 2).map((advantage, idx) => (
-                      <li key={idx} className="mb-1">
-                        {advantage}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  <div className="mb-4">
+                    <h6 className="text-sm font-semibold text-zinc-800 mb-2">Time Complexity</h6>
+                    <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                      <div>
+                        <div className="text-zinc-500">Best</div>
+                        <div className="font-bold text-green-600">{algo.timeComplexity.best}</div>
+                      </div>
+                      <div>
+                        <div className="text-zinc-500">Average</div>
+                        <div className="font-bold text-amber-500">{algo.timeComplexity.average}</div>
+                      </div>
+                      <div>
+                        <div className="text-zinc-500">Worst</div>
+                        <div className="font-bold text-red-600">{algo.timeComplexity.worst}</div>
+                      </div>
+                    </div>
+                  </div>
 
-                <div className="mt-auto flex items-center justify-between pt-2">
-                  <span className="text-xs bg-green-50 text-green-700 rounded px-2 py-0.5 font-semibold">
-                    Space: {algo.spaceComplexity}
-                  </span>
-                  {algo.component ? (
-                    <Link
-                      to={`/algorithms/${algo.id}`}
-                      className="inline-flex items-center gap-1 text-sm font-semibold px-3 py-1.5 rounded-lg bg-green-600 text-white hover:bg-green-700 transition"
-                    >
-                      Visualize
-                    </Link>
-                  ) : (
-                    <span className="text-xs bg-gray-200 text-gray-500 rounded px-2 py-1 font-semibold">
-                      Coming Soon
+                  <div className="mb-4">
+                    <h6 className="text-sm font-semibold text-zinc-800 mb-2">Advantages</h6>
+                    <ul className="list-disc list-inside text-zinc-700 text-sm">
+                      {algo.advantages.slice(0, 2).map((advantage, idx) => (
+                        <li key={idx} className="mb-1">
+                          {advantage}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mt-auto flex items-center justify-between pt-2">
+                    <span className="text-xs bg-green-50 text-green-700 rounded px-2 py-0.5 font-semibold">
+                      Space: {algo.spaceComplexity}
                     </span>
-                  )}
-                </div>
-              </Card>
-            </motion.div>
-          ))}
+                    {algo.component ? (
+                      <Link
+                        to={`/algorithms/${algo.id}`}
+                        className="inline-flex items-center gap-1 text-sm font-semibold px-3 py-1.5 rounded-lg bg-green-600 text-white hover:bg-green-700 transition"
+                      >
+                        Visualize
+                      </Link>
+                    ) : (
+                      <span className="text-xs bg-gray-200 text-gray-500 rounded px-2 py-1 font-semibold">
+                        Coming Soon
+                      </span>
+                    )}
+                  </div>
+                </Card>
+              </motion.div>
+            ))
+          ) : (
+            <div className="col-span-full flex flex-col items-center justify-center py-16">
+              <i className="bi bi-emoji-frown text-5xl text-green-300 mb-4"></i>
+              <div className="text-lg font-semibold text-zinc-600 mb-2">
+                We don't have this yet!
+              </div>
+              <div className="text-zinc-500 mb-4">
+                Can't find the algorithm you're looking for? You can request it below.
+              </div>
+              <a
+                href="mailto:kishlay141@gmail.com?subject=Request%20for%20new%20Algorithm%20Visualizer"
+                className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-green-600 text-white font-semibold shadow hover:bg-green-700 transition"
+              >
+                <i className="bi bi-envelope"></i>
+                Request to Add
+              </a>
+            </div>
+          )}
         </motion.div>
       </div>
     </div>
