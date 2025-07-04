@@ -8,6 +8,7 @@ import Heap from '../pages/data-structures/Heap';
 import Backtracking from '../pages/data-structures/Backtracking';
 import HashTable from '../pages/data-structures/HashTable';
 import Trie from '../pages/data-structures/Trie';
+import DisjointSet from '../pages/data-structures/DisjointSet';
 
 export interface DataStructure {
   id: string;
@@ -29,6 +30,34 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'disjoint-set',
+  name: 'Disjoint Set (Union-Find)',
+  description: 'A data structure that keeps track of a partition of a set into disjoint subsets, supporting efficient union and find operations.',
+  category: 'non-linear',
+  difficulty: 'intermediate',
+  component: DisjointSet, 
+  icon: 'bi-diagram-3',
+  features: [
+    'Efficient union and find',
+    'Union by rank',
+    'Path compression',
+    'Dynamic connectivity'
+  ],
+  timeComplexity: {
+    access: 'O(1)',
+    search: 'O(α(n))', 
+    insertion: 'O(1)',
+    deletion: 'O(1)'
+  },
+  spaceComplexity: 'O(n)',
+  useCases: [
+    'Network connectivity',
+    'Kruskal’s MST algorithm',
+    'Image processing (connected components)',
+    'Dynamic connectivity queries'
+  ]
+},
   {
   id: 'trie',
   name: 'Trie (Prefix Tree)',
