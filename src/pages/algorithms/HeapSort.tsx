@@ -172,8 +172,8 @@ const HeapSort: React.FC = () => {
 
   function heapify(arr: number[], n: number, i: number, steps: HeapSortStep[], buildingHeap = false, sortedCount = 0) {
     let largest = i;
-    let l = 2 * i + 1;
-    let r = 2 * i + 2;
+    const l = 2 * i + 1;
+    const r = 2 * i + 2;
     steps.push({
       array: [...arr],
       heapSize: n,
