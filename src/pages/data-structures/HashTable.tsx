@@ -124,13 +124,19 @@ const HashTable: React.FC = () => {
           </p>
           <div className="rounded-xl bg-[#F3F4F6] text-zinc-800 font-mono text-sm px-5 py-4 my-4 shadow-sm border border-zinc-200 overflow-x-auto">
             <span className="text-zinc-400">// Hash function example</span> <br />
-            {`function hash(key) {
+<pre>
+{`function hash(key) {
   let hashValue = 0;
   for (let i = 0; i < key.length; i++) {
     hashValue = (hashValue + key.charCodeAt(i)) % tableSize;
   }
   return hashValue;
-}`}
+}
+
+// Example usage:
+const index = hash("example");`}
+</pre>
+
           </div>
 
           <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mt-6 mb-3">
