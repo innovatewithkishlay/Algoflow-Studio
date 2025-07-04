@@ -1,10 +1,30 @@
 import React, { useState } from 'react';
 import { useTheme } from '../../contexts/ThemeContext';
 
+// Utility: generate random undirected edges for demo
+function generateRandomEdges(nodeCount: number): [number, number][] {
+  const edges: [number, number][] = [];
+  for (let i = 0; i < nodeCount; i++) {
+    const connections = new Set<number>();
+    const edgeCount = Math.floor(Math.random() * 2) + 1;
+    while (connections.size < edgeCount && nodeCount > 1) {
+      const j = Math.floor(Math.random() * nodeCount);
+      if (j !== i) connections.add(j);
+    }
+    for (const j of connections) {
+      if (!edges.some(([a, b]) => (a === i && b === j) || (a === j && b === i))) {
+        edges.push([i, j]);
+      }
+    }
+  }
+  return edges;
+}
+
 const Graph: React.FC = () => {
   const { isDarkMode } = useTheme();
   const [graphData, setGraphData] = useState<number[]>([1, 2, 3, 4, 5]);
   const [inputValue, setInputValue] = useState<string>('');
+  const [selected, setSelected] = useState<number | null>(null);
 
   const addNode = () => {
     if (inputValue.trim() && !isNaN(Number(inputValue))) {
@@ -15,39 +35,93 @@ const Graph: React.FC = () => {
 
   const clearGraph = () => {
     setGraphData([]);
+    setSelected(null);
   };
 
   const generateRandomGraph = () => {
     const newGraph = Array.from({ length: 5 }, () => Math.floor(Math.random() * 20) + 1);
     setGraphData(newGraph);
+    setSelected(null);
   };
 
-  // --- Visualization logic (array-style node display) ---
-  const renderGraphVisualization = () => (
-    <div
-      className={`p-3 rounded min-h-[100px] min-w-[300px] flex items-center justify-center ${isDarkMode ? 'bg-zinc-800 text-zinc-100' : 'bg-zinc-100 text-zinc-900'}`}
-    >
-      {graphData.length === 0 ? (
-        <div className="flex flex-col items-center gap-2 text-zinc-400">
+  // --- Visualization logic: circular node layout with edges ---
+  const renderGraphVisualization = () => {
+    const n = graphData.length;
+    if (n === 0) {
+      return (
+        <div className="flex flex-col items-center gap-2 text-zinc-400 min-h-[180px]">
           <span className="text-4xl">🕸️</span>
           <p>Graph is empty</p>
         </div>
-      ) : (
-        <div className="flex flex-row gap-3 justify-center items-center flex-wrap">
-          {graphData.map((value, idx) => (
-            <div key={idx} className="flex flex-col items-center relative">
-              <div
-                className="border-4 border-indigo-600 bg-indigo-500 text-white font-semibold text-xl w-12 h-12 rounded-full flex justify-center items-center"
-              >
-                {value}
-              </div>
-              <div className="text-xs text-indigo-500 mt-1 font-semibold">Node {idx}</div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+      );
+    }
+    const width = 440, height = 340;
+    const cx = width / 2, cy = height / 2;
+    const R = Math.min(100, 0.35 * Math.min(width, height)); // Always fits inside SVG
+    const nodePos = graphData.map((_, i) => {
+      const angle = (2 * Math.PI * i) / n;
+      return {
+        x: cx + R * Math.cos(angle - Math.PI / 2),
+        y: cy + R * Math.sin(angle - Math.PI / 2)
+      };
+    });
+    const edges = generateRandomEdges(n);
+
+    return (
+      <svg width={width} height={height} className={`block mx-auto rounded shadow border ${isDarkMode ? 'bg-zinc-800' : 'bg-zinc-100'}`}>
+        {/* Edges */}
+        {edges.map(([a, b], idx) => (
+          <line
+            key={idx}
+            x1={nodePos[a].x}
+            y1={nodePos[a].y}
+            x2={nodePos[b].x}
+            y2={nodePos[b].y}
+            stroke="#818cf8"
+            strokeWidth={4}
+            opacity={0.7}
+          />
+        ))}
+        {/* Nodes */}
+        {nodePos.map((pos, idx) => (
+          <g key={idx} onClick={() => setSelected(idx)} style={{ cursor: 'pointer' }}>
+            <circle
+              cx={pos.x}
+              cy={pos.y}
+              r={28}
+              fill={selected === idx ? "#6366f1" : "#e0e7ef"}
+              stroke="#6366f1"
+              strokeWidth={selected === idx ? 5 : 3}
+              style={{
+                filter: selected === idx ? 'drop-shadow(0 0 6px #818cf8)' : undefined,
+                transition: 'all 0.2s'
+              }}
+            />
+            <text
+              x={pos.x}
+              y={pos.y + 7}
+              textAnchor="middle"
+              fontSize={20}
+              fill={selected === idx ? "#fff" : "#3730a3"}
+              fontWeight={700}
+            >
+              {graphData[idx]}
+            </text>
+            <text
+              x={pos.x}
+              y={pos.y + 32}
+              textAnchor="middle"
+              fontSize={11}
+              fill="#818cf8"
+              fontWeight={600}
+            >
+              Node {idx}
+            </text>
+          </g>
+        ))}
+      </svg>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-white py-10 px-4">
@@ -142,9 +216,17 @@ const Graph: React.FC = () => {
             Memory Layout
           </h4>
           <p className="text-zinc-700 leading-relaxed">
-            Graphs are stored using structures like adjacency lists or matrices. The visualization below shows the current graph nodes as a flat array (for demo purposes).
+            Graphs are stored using structures like adjacency lists or matrices. The visualization below shows the current graph nodes and their connections.
           </p>
           {renderGraphVisualization()}
+          {selected !== null && (
+            <div className="text-center mt-2">
+              <div className="inline-flex items-center gap-2 rounded border-2 border-green-600 bg-green-100 px-4 py-2 text-green-800 font-semibold shadow">
+                <i className="bi bi-check-circle"></i>
+                Selected: Node {selected} (Value: {graphData[selected]})
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Graph Representations */}
@@ -285,7 +367,7 @@ const graph = {
           </div>
           <div className="mt-4 flex items-center gap-2 bg-indigo-50 border border-indigo-200 rounded px-4 py-2 text-indigo-700">
             <i className="bi bi-lightbulb"></i>
-            <strong>Tip:</strong> Add nodes to see how the graph structure is built.
+            <strong>Tip:</strong> Click a node to select it. Try adding, clearing, or randomizing!
           </div>
         </div>
 
