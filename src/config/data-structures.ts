@@ -5,6 +5,8 @@ import Queue from '../pages/data-structures/Queue';
 import Tree from '../pages/data-structures/Tree';
 import Graph from '../pages/data-structures/Graph';
 import Heap from '../pages/data-structures/Heap';
+import Backtracking from '../pages/data-structures/Backtracking';
+
 export interface DataStructure {
   id: string;
   name: string;
@@ -25,6 +27,35 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'backtracking',
+  name: 'Backtracking',
+  description: 'A recursive, depth-first technique for systematically searching all possible solutions to constraint satisfaction problems, such as N-Queens.',
+  category: 'non-linear',
+  difficulty: 'advanced',
+  component: Backtracking,
+  icon: 'bi-arrow-repeat',
+  features: [
+    'Recursive search',
+    'Constraint satisfaction',
+    'Systematic pruning',
+    'Exponential solution space'
+  ],
+  timeComplexity: {
+    access: 'Depends',
+    search: 'Exponential',
+    insertion: 'Depends',
+    deletion: 'Depends'
+  },
+  spaceComplexity: 'O(N)',
+  useCases: [
+    'N-Queens problem',
+    'Sudoku solving',
+    'Maze/pathfinding',
+    'Permutations/combinations',
+    'Subset sum/partition'
+  ]
+},
   {
   id: 'heap',
   name: 'Heap (Binary Max Heap)',
