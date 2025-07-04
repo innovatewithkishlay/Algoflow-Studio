@@ -80,8 +80,8 @@ const DisjointSet: React.FC = () => {
   // Union by rank
   function union(a: number, b: number, arr: UFNode[]): boolean {
     const pathA: number[] = [], pathB: number[] = [];
-    let rootA = find(a, arr, pathA);
-    let rootB = find(b, arr, pathB);
+    const rootA = find(a, arr, pathA);
+    const rootB = find(b, arr, pathB);
     setHighlight([...pathA, ...pathB]);
     if (rootA === rootB) return false;
     if (arr[rootA].rank < arr[rootB].rank) {
