@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-
-// Animation variants
-const fadeUp = {
+import type { Variants } from "framer-motion";
+// Animation variants with proper typing
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.6, 
+      ease: [0.16, 1, 0.3, 1] 
+    } 
+  }
 };
 
-const fadeIn = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.8 } }
-};
-
-const staggerContainer = {
+const staggerContainer: Variants = {
   hidden: {},
   visible: {
     transition: { 
@@ -23,7 +25,7 @@ const staggerContainer = {
   }
 };
 
-const scaleHover = {
+const scaleHover: Variants = {
   hover: { 
     scale: 1.03,
     boxShadow: "0 20px 40px -15px rgba(79, 70, 229, 0.15)",
@@ -31,7 +33,7 @@ const scaleHover = {
   }
 };
 
-const textGlow = {
+const textGlow: Variants = {
   hidden: { opacity: 0.8, textShadow: "0 0 0px rgba(79, 70, 229, 0)" },
   visible: { 
     opacity: 1, 
@@ -48,14 +50,14 @@ const textGlow = {
   }
 };
 
-const pulse = {
+const pulse: Variants = {
   hidden: { scale: 1 },
   visible: {
     scale: [1, 1.02, 1],
     transition: {
       duration: 2,
       repeat: Infinity,
-      repeatType: "mirror"
+      repeatType: "mirror" as const
     }
   }
 };
@@ -148,7 +150,7 @@ const PathfindingVisual = () => (
         transition={{ 
           duration: 8,
           repeat: Infinity,
-          repeatType: "loop"
+          repeatType: "loop" as const
         }}
       />
     </div>
@@ -534,7 +536,7 @@ const WelcomePage: React.FC = () => {
                   className="text-center"
                 >
                   <Link 
-                to="/data-structures"
+                    to="/data-structures"
                     className="inline-flex items-center text-indigo-600 font-medium"
                   >
                     Explore Visualization
@@ -725,7 +727,7 @@ const WelcomePage: React.FC = () => {
             transition={{ delay: 0.4 }}
           >
             <Link
-                to="/data-structures"
+              to="/signup"
               className="inline-flex items-center px-8 py-4 rounded-xl font-bold text-indigo-600 bg-white hover:bg-gray-50 shadow-lg hover:shadow-xl transition"
             >
               <motion.span
