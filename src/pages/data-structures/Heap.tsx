@@ -1,15 +1,31 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
+// Types for heap tree nodes
+interface HeapTreeNode {
+  idx: number;
+  value: number;
+  x: number;
+  y: number;
+  depth: number;
+}
+
 // Helper for binary heap tree layout
 function left(i: number) { return 2 * i + 1; }
 function right(i: number) { return 2 * i + 2; }
 function parent(i: number) { return Math.floor((i - 1) / 2); }
 
 // Recursively layout the heap as a tree
-function layoutHeapTree(heap: number[], node = 0, depth = 0, x = 0, y = 0, spread = 300): any[] {
+function layoutHeapTree(
+  heap: number[],
+  node = 0,
+  depth = 0,
+  x = 0,
+  y = 0,
+  spread = 300
+): HeapTreeNode[] {
   if (node >= heap.length) return [];
-  const nodes = [{
+  const nodes: HeapTreeNode[] = [{
     idx: node,
     value: heap[node],
     x,
