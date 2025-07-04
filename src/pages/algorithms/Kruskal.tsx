@@ -103,7 +103,7 @@ const defaultEdges: Edge[] = [
 const numVertices = 5;
 
 const Kruskal: React.FC = () => {
-  const [edges, setEdges] = useState<Edge[]>(defaultEdges);
+  const [edges,] = useState<Edge[]>(defaultEdges);
   const [sortSteps, setSortSteps] = useState<KruskalStep[]>([]);
   const [currentStep, setCurrentStep] = useState<number>(-1);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -350,7 +350,7 @@ const Kruskal: React.FC = () => {
               <label className="block mb-1 text-zinc-700 font-medium">Graph Visualization:</label>
               <svg width={400} height={400} className="bg-slate-50 rounded shadow border" style={{ maxWidth: '100%' }}>
                 {/* Edges */}
-                {edges.map((edge, idx) => {
+                {edges.map((edge,) => {
                   const color = getEdgeColor(edge, step);
                   const { x: x1, y: y1 } = nodePositions[edge.u];
                   const { x: x2, y: y2 } = nodePositions[edge.v];
