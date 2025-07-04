@@ -85,7 +85,7 @@ src/
 We welcome contributions of all kinds:
 
 - Add new algorithm or data structure visualizers
-- Improve UI or add new animations
+- Improve UI or improve the visualization of algorithms and data structures
 - Add multi-language support (i18n)
 - Write unit or integration tests
 - Enhance accessibility and performance
