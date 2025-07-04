@@ -9,6 +9,7 @@ import Backtracking from '../pages/data-structures/Backtracking';
 import HashTable from '../pages/data-structures/HashTable';
 import Trie from '../pages/data-structures/Trie';
 import DisjointSet from '../pages/data-structures/DisjointSet';
+import SegmentTree from '../pages/data-structures/SegmentTree';
 
 export interface DataStructure {
   id: string;
@@ -30,6 +31,34 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'segment-tree',
+  name: 'Segment Tree',
+  description: 'A binary tree data structure that allows fast range queries and updates over an array.',
+  category: 'hierarchical',
+  difficulty: 'advanced',
+  component: SegmentTree, 
+  icon: 'bi-diagram-2',
+  features: [
+    'Efficient range queries',
+    'Supports range updates',
+    'Binary tree structure',
+    'Lazy propagation (optional)'
+  ],
+  timeComplexity: {
+    access: 'O(log n)',
+    search: 'O(log n)',
+    insertion: 'O(log n)',
+    deletion: 'O(log n)'
+  },
+  spaceComplexity: 'O(n)',
+  useCases: [
+    'Range sum/min/max queries',
+    'Interval problems',
+    'Competitive programming',
+    'Dynamic array problems'
+  ]
+},
   {
   id: 'disjoint-set',
   name: 'Disjoint Set (Union-Find)',
