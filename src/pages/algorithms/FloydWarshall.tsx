@@ -57,7 +57,7 @@ const defaultGraph = [
 ];
 
 const FloydWarshall: React.FC = () => {
-  const [graph, setGraph] = useState<number[][]>(defaultGraph);
+  const [graph, ] = useState<number[][]>(defaultGraph);
   const [sortSteps, setSortSteps] = useState<FloydStep[]>([]);
   const [currentStep, setCurrentStep] = useState<number>(-1);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
