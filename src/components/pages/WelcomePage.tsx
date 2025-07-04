@@ -557,7 +557,7 @@ const WelcomePage: React.FC = () => {
           viewport={{ once: true }}
         >
           <Link
-            to="/visualizations"
+            to="/data-structures"
             className="inline-flex items-center px-8 py-4 rounded-xl font-bold text-indigo-700 bg-white border border-indigo-200 hover:border-indigo-300 shadow-sm hover:shadow-md transition"
           >
             <motion.span
