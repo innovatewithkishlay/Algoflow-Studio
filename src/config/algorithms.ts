@@ -12,6 +12,7 @@ import CountingSort from '../pages/algorithms/CountingSort';
 import RadixSort from '../pages/algorithms/RadixSort';
 import Kruskal from '../pages/algorithms/Kruskal';
 import Dijkstra from '../pages/algorithms/Dijkstra';
+import FloydWarshall from '../pages/algorithms/FloydWarshall';
 export interface Algorithm {
   id: string;
   name: string;
@@ -33,6 +34,41 @@ export interface Algorithm {
 }
 
 export const algorithms: Algorithm[] = [
+  {
+  id: 'floyd-warshall',
+  name: "Floyd-Warshall Algorithm",
+  description: "A dynamic programming algorithm to find shortest paths between all pairs of nodes in a weighted graph (handles negative weights, no negative cycles).",
+  category: 'graph',
+  difficulty: 'advanced',
+  component: FloydWarshall,
+  icon: 'bi-table',
+  features: [
+    'Dynamic programming',
+    'All-pairs shortest paths',
+    'Handles negative weights',
+    'Matrix visualization'
+  ],
+  timeComplexity: {
+    best: 'O(V³)',
+    average: 'O(V³)',
+    worst: 'O(V³)'
+  },
+  spaceComplexity: 'O(V²)',
+  useCases: [
+    'Network routing',
+    'Operations research',
+    'Map analysis'
+  ],
+  advantages: [
+    'Simple, systematic',
+    'Handles negative weights',
+    'All-pairs shortest paths'
+  ],
+  disadvantages: [
+    'Slow for large graphs',
+    'No negative cycle detection'
+  ]
+},
   {
   id: 'dijkstra',
   name: "Dijkstra's Algorithm",
