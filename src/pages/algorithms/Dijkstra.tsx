@@ -136,7 +136,7 @@ const Dijkstra: React.FC = () => {
   const [speed] = useState<number>(1200);
   const intervalRef = useRef<number | null>(null);
   const [activeLanguage, setActiveLanguage] = useState<string>('javascript');
-  const [targetVertex, setTargetVertex] = useState<number>(5);
+  const [targetVertex] = useState<number>(5);
 
   // Generate steps for Dijkstra's Algorithm
   const generateDijkstraSteps = (
@@ -206,13 +206,14 @@ const Dijkstra: React.FC = () => {
     }
 
     // Reconstruct path
-    let path: number[] = [];
-    let t = target;
+    const path: number[] = [];
+    let t: number | null = target;
     while (t !== null && prev[t] !== null) {
-      path.unshift(t);
-      t = prev[t];
+    path.unshift(t);
+    t = prev[t];
     }
     if (t === start) path.unshift(start);
+
 
     steps.push({
       distances: [...dist],

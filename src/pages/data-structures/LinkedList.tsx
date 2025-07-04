@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { useTheme } from '../../contexts/ThemeContext';
 import { motion } from 'framer-motion';
 
 interface Node {
@@ -7,14 +6,12 @@ interface Node {
   next: Node | null;
 }
 
-// Only plain objects for variants!
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0 }
 };
 
 const LinkedList: React.FC = () => {
-//   const { isDarkMode } = useTheme();
   const [head, setHead] = useState<Node | null>(null);
   const [input, setInput] = useState<string>('1,2,3,4,5');
   const [insertValue, setInsertValue] = useState<number | ''>('');
@@ -28,7 +25,6 @@ const LinkedList: React.FC = () => {
       .filter((n) => !isNaN(n));
     createLinkedList(values);
     setSelectedNode(null);
-    // eslint-disable-next-line
   }, [input]);
 
   const createLinkedList = (values: number[]) => {
