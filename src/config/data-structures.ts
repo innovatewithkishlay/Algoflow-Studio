@@ -6,6 +6,7 @@ import Tree from '../pages/data-structures/Tree';
 import Graph from '../pages/data-structures/Graph';
 import Heap from '../pages/data-structures/Heap';
 import Backtracking from '../pages/data-structures/Backtracking';
+import HashTable from '../pages/data-structures/HashTable';
 
 export interface DataStructure {
   id: string;
@@ -27,6 +28,34 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'hash-table',
+  name: 'Hash Table',
+  description: 'A data structure that maps keys to values using a hash function, enabling fast access, insertion, and deletion.',
+  category: 'linear',
+  difficulty: 'intermediate',
+  component: HashTable,
+  icon: 'bi-hash',
+  features: [
+    'Key-value mapping',
+    'Constant time average-case operations',
+    'Handles collisions',
+    'Efficient lookups and updates'
+  ],
+  timeComplexity: {
+    access: 'O(1)',
+    search: 'O(1)',
+    insertion: 'O(1)',
+    deletion: 'O(1)'
+  },
+  spaceComplexity: 'O(n)',
+  useCases: [
+    'Dictionaries and maps',
+    'Caching (e.g., LRU)',
+    'Symbol tables in compilers',
+    'Database indexing'
+  ]
+},
   {
   id: 'backtracking',
   name: 'Backtracking',
