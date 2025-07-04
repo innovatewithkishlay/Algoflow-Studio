@@ -93,7 +93,7 @@ const InsertionSort: React.FC = () => {
     });
 
     for (let i = 1; i < workingArray.length; i++) {
-      let key = workingArray[i];
+      const key = workingArray[i];
       let j = i - 1;
       steps.push({
         i,
