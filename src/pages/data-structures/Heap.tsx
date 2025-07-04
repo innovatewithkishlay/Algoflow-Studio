@@ -1,18 +1,38 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
+// Helper for binary heap tree layout
+function left(i: number) { return 2 * i + 1; }
+function right(i: number) { return 2 * i + 2; }
+function parent(i: number) { return Math.floor((i - 1) / 2); }
+
+// Recursively layout the heap as a tree
+function layoutHeapTree(heap: number[], node = 0, depth = 0, x = 0, y = 0, spread = 300): any[] {
+  if (node >= heap.length) return [];
+  const nodes = [{
+    idx: node,
+    value: heap[node],
+    x,
+    y,
+    depth,
+  }];
+  const deltaY = 90;
+  const childSpread = spread / 2;
+  nodes.push(
+    ...layoutHeapTree(heap, left(node), depth + 1, x - childSpread, y + deltaY, childSpread),
+    ...layoutHeapTree(heap, right(node), depth + 1, x + childSpread, y + deltaY, childSpread)
+  );
+  return nodes;
+}
+
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0 }
 };
 
-function left(i: number) { return 2 * i + 1; }
-function right(i: number) { return 2 * i + 2; }
-function parent(i: number) { return Math.floor((i - 1) / 2); }
-
 const Heap: React.FC = () => {
-  const [heap, setHeap] = useState<number[]>([15, 12, 10, 8, 9, 5, 7]);
-  const [input, setInput] = useState<string>('15,12,10,8,9,5,7');
+  const [heap, setHeap] = useState<number[]>([42, 29, 18, 14, 7, 18, 12]);
+  const [input, setInput] = useState<string>('42,29,18,14,7,18,12');
   const [insertValue, setInsertValue] = useState<number | ''>('');
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
@@ -27,7 +47,6 @@ const Heap: React.FC = () => {
     // eslint-disable-next-line
   }, [input]);
 
-  // Heapify helpers
   function buildMaxHeap(arr: number[]): number[] {
     const a = [...arr];
     for (let i = Math.floor(a.length / 2) - 1; i >= 0; i--) {
@@ -77,57 +96,78 @@ const Heap: React.FC = () => {
     setInsertValue('');
   };
 
-  // Heap as tree visualization (simple binary tree layout)
+  // Render heap as SVG tree (dynamic layout)
   const renderHeapTree = () => {
     if (heap.length === 0) {
       return <div className="text-zinc-400 text-lg italic">Heap is empty</div>;
     }
-    // Recursive tree rendering
-    const renderNode = (idx: number, depth: number, pos: number) => {
-      if (idx >= heap.length) return null;
-      // Positioning for binary tree
-      const leftPos = pos - 120 / (depth + 1);
-      const rightPos = pos + 120 / (depth + 1);
-      return (
-        <div style={{ position: 'relative', textAlign: 'center' }}>
-          <motion.div
-            className={`mx-auto my-2 w-14 h-14 rounded-full border-2 flex items-center justify-center font-bold text-lg cursor-pointer
-              transition ${selectedIdx === idx
-                ? 'bg-indigo-600 border-indigo-600 text-white ring-4 ring-indigo-300'
-                : 'bg-indigo-50 border-indigo-400 text-indigo-700 hover:bg-indigo-100'
-              }`}
-            whileHover={{ scale: 1.07 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setSelectedIdx(idx)}
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            transition={{ delay: idx * 0.08, duration: 0.5, type: "spring", stiffness: 80 }}
-          >
-            {heap[idx]}
-          </motion.div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div style={{ flex: 1 }}>
-              {left(idx) < heap.length && (
-                <div style={{ position: 'relative', left: leftPos }}>
-                  <div className="w-0 h-0 border-l-2 border-indigo-400 mx-auto" style={{ height: 16 }} />
-                  {renderNode(left(idx), depth + 1, leftPos)}
-                </div>
+    const nodes = layoutHeapTree(
+      heap,
+      0,
+      0,
+      0,
+      60,
+      Math.max(300, 60 * Math.pow(2, Math.floor(Math.log2(heap.length + 1))))
+    );
+    const minX = Math.min(...nodes.map(n => n.x));
+    const maxX = Math.max(...nodes.map(n => n.x));
+    const width = maxX - minX + 120;
+    const height = Math.max(...nodes.map(n => n.y)) + 100;
+
+    return (
+      <svg width="100%" height={height} viewBox={`${minX - 60} 0 ${width} ${height}`} className="block mx-auto bg-slate-50 rounded shadow border">
+        {/* Edges */}
+        {nodes.map((node) => {
+          const l = left(node.idx), r = right(node.idx);
+          return (
+            <g key={node.idx + '-edges'}>
+              {l < heap.length && (
+                <line x1={node.x} y1={node.y} x2={nodes.find(n => n.idx === l)!.x} y2={nodes.find(n => n.idx === l)!.y} stroke="#a5b4fc" strokeWidth={4} />
               )}
-            </div>
-            <div style={{ flex: 1 }}>
-              {right(idx) < heap.length && (
-                <div style={{ position: 'relative', left: rightPos }}>
-                  <div className="w-0 h-0 border-l-2 border-indigo-400 mx-auto" style={{ height: 16 }} />
-                  {renderNode(right(idx), depth + 1, rightPos)}
-                </div>
+              {r < heap.length && (
+                <line x1={node.x} y1={node.y} x2={nodes.find(n => n.idx === r)!.x} y2={nodes.find(n => n.idx === r)!.y} stroke="#a5b4fc" strokeWidth={4} />
               )}
-            </div>
-          </div>
-        </div>
-      );
-    };
-    return <div className="flex flex-col items-center">{renderNode(0, 0, 0)}</div>;
+            </g>
+          );
+        })}
+        {/* Nodes */}
+        {nodes.map((node) => (
+          <g key={node.idx} onClick={() => setSelectedIdx(node.idx)} style={{ cursor: 'pointer' }}>
+            <circle
+              cx={node.x}
+              cy={node.y}
+              r={28}
+              fill={selectedIdx === node.idx ? "#6366f1" : "#e0e7ef"}
+              stroke="#6366f1"
+              strokeWidth={selectedIdx === node.idx ? 5 : 3}
+              style={{ filter: selectedIdx === node.idx ? 'drop-shadow(0 0 6px #818cf8)' : undefined }}
+            />
+            <text
+              x={node.x}
+              y={node.y + 7}
+              textAnchor="middle"
+              fontSize={20}
+              fill={selectedIdx === node.idx ? "#fff" : "#3730a3"}
+              fontWeight={700}
+            >
+              {node.value}
+            </text>
+            {node.idx === 0 && (
+              <text
+                x={node.x}
+                y={node.y - 38}
+                textAnchor="middle"
+                fontSize={13}
+                fill="#818cf8"
+                fontWeight={600}
+              >
+                root
+              </text>
+            )}
+          </g>
+        ))}
+      </svg>
+    );
   };
 
   return (
@@ -168,8 +208,8 @@ const Heap: React.FC = () => {
           </p>
           <div className="rounded-xl bg-[#F3F4F6] text-zinc-800 font-mono text-sm px-5 py-4 my-4 shadow-sm border border-zinc-200 overflow-x-auto">
             <span className="text-zinc-400">// Max Heap Example</span> <br />
-            [15, 12, 10, 8, 9, 5, 7] <br />
-            <span className="text-zinc-400">// 15 is the root (max), each parent ≥ its children</span>
+            [42, 29, 18, 14, 7, 18, 12] <br />
+            <span className="text-zinc-400">// 42 is the root (max), each parent ≥ its children</span>
           </div>
           <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mt-6 mb-3">
             <i className="bi bi-list-check text-indigo-600"></i>
@@ -181,6 +221,39 @@ const Heap: React.FC = () => {
             <li>Used for priority queues and heap sort</li>
             <li>Parent is always ≥ children (max-heap)</li>
           </ul>
+        </motion.div>
+
+        {/* Memory Layout */}
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-8">
+          <h4 className="flex items-center gap-2 text-zinc-900 text-xl font-semibold mb-3">
+            <i className="bi bi-cpu text-indigo-600"></i>
+            Memory Layout
+          </h4>
+          <p className="text-zinc-700 leading-relaxed mb-4">
+            A heap is efficiently implemented as an array, where the children of the node at index <code>i</code> are at <code>2i+1</code> and <code>2i+2</code>.
+            This allows fast access and manipulation without explicit pointers.
+          </p>
+          <div className="flex flex-col md:flex-row gap-6">
+            <div className="flex-1 bg-[#F3F4F6] rounded-lg p-4 shadow">
+              <h6 className="text-indigo-700 font-semibold mb-2">Array Representation:</h6>
+              <div className="flex flex-wrap gap-3 justify-center items-end mb-2">
+                {heap.map((v, i) => (
+                  <div key={i} className="w-12 h-12 rounded-lg border-2 flex items-center justify-center font-semibold text-lg bg-indigo-50 border-indigo-400 text-indigo-700">
+                    {v}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex-1 bg-[#F3F4F6] rounded-lg p-4 shadow">
+              <h6 className="text-green-700 font-semibold mb-2">Benefits:</h6>
+              <ul className="list-disc list-inside text-zinc-700 space-y-1">
+                <li>Efficient memory usage</li>
+                <li>Fast parent/child access</li>
+                <li>No pointers needed</li>
+                <li>Easy to implement</li>
+              </ul>
+            </div>
+          </div>
         </motion.div>
 
         {/* Interactive Section */}
@@ -195,7 +268,7 @@ const Heap: React.FC = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               className="w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder="Enter comma-separated numbers (e.g., 15,12,10,8,9,5,7)"
+              placeholder="Enter comma-separated numbers (e.g., 42,29,18,14,7,18,12)"
             />
           </div>
           <div className="mb-4 flex flex-col md:flex-row gap-3">
@@ -223,17 +296,36 @@ const Heap: React.FC = () => {
               </button>
             </div>
           </div>
-          <div className="mb-4">
-            <label className="block mb-1 text-zinc-700 font-medium">Current Heap:</label>
+          <div className="mb-6">
+            <label className="block mb-1 text-zinc-700 font-medium">Current Heap (Tree View):</label>
             {renderHeapTree()}
             {selectedIdx !== null && heap.length > 0 && (
-              <div className="text-center">
+              <div className="text-center mt-2">
                 <div className="inline-flex items-center gap-2 rounded border-2 border-green-600 bg-green-100 px-4 py-2 text-green-800 font-semibold shadow">
                   <i className="bi bi-check-circle"></i>
                   Selected: Index {selectedIdx} (Value: {heap[selectedIdx]})
                 </div>
               </div>
             )}
+          </div>
+          <div className="mb-4">
+            <label className="block mb-1 text-zinc-700 font-medium">Array Representation:</label>
+            <div className="flex flex-wrap gap-3 justify-center items-end mb-2">
+              {heap.map((value, idx) => (
+                <div
+                  key={idx}
+                  className={`w-12 h-12 rounded-lg border-2 flex items-center justify-center font-semibold text-lg
+                    ${selectedIdx === idx
+                      ? 'bg-indigo-600 border-indigo-600 text-white ring-2 ring-indigo-300'
+                      : 'bg-indigo-50 border-indigo-400 text-indigo-700'
+                    }`}
+                  onClick={() => setSelectedIdx(idx)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {value}
+                </div>
+              ))}
+            </div>
           </div>
           <div className="flex justify-center mb-3">
             <button
@@ -245,7 +337,7 @@ const Heap: React.FC = () => {
           </div>
           <div className="mt-4 flex items-center gap-2 bg-indigo-50 border border-indigo-200 rounded px-4 py-2 text-indigo-700">
             <i className="bi bi-lightbulb"></i>
-            <strong>Tip:</strong> Click on any heap node to select and highlight it.
+            <strong>Tip:</strong> Click on any node to select and highlight it. View both tree and array representations!
           </div>
         </motion.div>
 
