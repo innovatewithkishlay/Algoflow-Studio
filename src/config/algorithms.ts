@@ -585,43 +585,5 @@ export const algorithms: Algorithm[] = [
     'Not comparison-based',
     'Uses extra space'
   ]
-},
-  {
-    id: 'coming-soon',
-    name: 'More Algorithms Coming Soon',
-    description: 'We are working on adding more algorithms to help you learn and visualize complex computational concepts.',
-    category: 'sorting',
-    difficulty: 'beginner',
-    component: null,
-    icon: 'bi-hourglass-split',
-    features: [
-      'Dynamic Programming',
-      'Greedy Algorithms',
-      'Advanced Sorting',
-      'Graph Algorithms'
-    ],
-    timeComplexity: {
-      best: 'TBD',
-      average: 'TBD',
-      worst: 'TBD'
-    },
-    spaceComplexity: 'TBD',
-    useCases: [
-      'Advanced algorithms',
-      'Optimization problems',
-      'Complex data processing',
-      'Real-world applications'
-    ],
-    advantages: [
-      'Advanced problem solving',
-      'Optimization techniques',
-      'Efficient solutions',
-      'Industry applications'
-    ],
-    disadvantages: [
-      'Complex implementation',
-      'Requires deep understanding',
-      'May be overkill for simple problems'
-    ]
-  }
+}
 ];
