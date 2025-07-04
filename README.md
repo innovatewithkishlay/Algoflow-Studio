@@ -91,7 +91,7 @@ We welcome contributions of all kinds:
 - Enhance accessibility and performance
 - Refactor components using modern React patterns
 - Improve documentation or add tutorials
-
+- Even you can contribute by adding some new features
 ### How to Contribute
 
 1. Fork the repository
