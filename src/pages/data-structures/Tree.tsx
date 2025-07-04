@@ -7,7 +7,6 @@ const fadeUp = {
   visible: { opacity: 1, y: 0 }
 };
 
-// Tree node structure for binary tree
 interface TreeNode {
   value: number;
   left: TreeNode | null;
@@ -54,11 +53,39 @@ function flattenTree(node: TreeNode | null): TreeNode[] {
   return [node, ...flattenTree(node.left), ...flattenTree(node.right)];
 }
 
+// Traversal helpers (returns array of node values in order)
+function inorderTraversal(node: TreeNode | null, arr: number[] = []) {
+  if (!node) return arr;
+  inorderTraversal(node.left, arr);
+  arr.push(node.value);
+  inorderTraversal(node.right, arr);
+  return arr;
+}
+function preorderTraversal(node: TreeNode | null, arr: number[] = []) {
+  if (!node) return arr;
+  arr.push(node.value);
+  preorderTraversal(node.left, arr);
+  preorderTraversal(node.right, arr);
+  return arr;
+}
+function postorderTraversal(node: TreeNode | null, arr: number[] = []) {
+  if (!node) return arr;
+  postorderTraversal(node.left, arr);
+  postorderTraversal(node.right, arr);
+  arr.push(node.value);
+  return arr;
+}
+
 const Tree: React.FC = () => {
   const { isDarkMode } = useTheme();
   const [treeArr, setTreeArr] = useState<number[]>([8, 4, 12, 2, 6, 10, 14]);
   const [inputValue, setInputValue] = useState<string>('');
   const [selected, setSelected] = useState<number | null>(null);
+
+  // Traversal state
+  const [traversalOrder, setTraversalOrder] = useState<number[]>([]);
+  const [traversalStep, setTraversalStep] = useState<number>(-1);
+  const [isTraversing, setIsTraversing] = useState<boolean>(false);
 
   // Build and layout the tree
   const treeRoot = buildTree(treeArr);
@@ -69,19 +96,51 @@ const Tree: React.FC = () => {
     if (inputValue.trim() && !isNaN(Number(inputValue))) {
       setTreeArr([...treeArr, Number(inputValue)]);
       setInputValue('');
+      setTraversalOrder([]);
+      setTraversalStep(-1);
+      setIsTraversing(false);
     }
   };
 
   const clearTree = () => {
     setTreeArr([]);
     setSelected(null);
+    setTraversalOrder([]);
+    setTraversalStep(-1);
+    setIsTraversing(false);
   };
 
   const generateRandomTree = () => {
     const newTree = Array.from({ length: 7 }, () => Math.floor(Math.random() * 40) + 1);
     setTreeArr(newTree);
     setSelected(null);
+    setTraversalOrder([]);
+    setTraversalStep(-1);
+    setIsTraversing(false);
   };
+
+  // Traversal animation logic
+  const runTraversal = (type: 'inorder' | 'preorder' | 'postorder') => {
+    if (!treeRoot) return;
+    let order: number[] = [];
+    if (type === 'inorder') order = inorderTraversal(treeRoot, []);
+    if (type === 'preorder') order = preorderTraversal(treeRoot, []);
+    if (type === 'postorder') order = postorderTraversal(treeRoot, []);
+    setTraversalOrder(order);
+    setTraversalStep(-1);
+    setIsTraversing(true);
+  };
+
+  React.useEffect(() => {
+    if (isTraversing && traversalOrder.length > 0) {
+      if (traversalStep < traversalOrder.length - 1) {
+        const timer = setTimeout(() => setTraversalStep(traversalStep + 1), 700);
+        return () => clearTimeout(timer);
+      } else {
+        setTimeout(() => setIsTraversing(false), 700);
+      }
+    }
+  }, [isTraversing, traversalStep, traversalOrder]);
 
   // SVG tree visualization
   const renderTreeVisualization = () => {
@@ -134,17 +193,45 @@ const Tree: React.FC = () => {
                 cx={node.x}
                 cy={node.y}
                 r={28}
-                fill={selected === node.value ? "#6366f1" : "#e0e7ef"}
-                stroke="#6366f1"
-                strokeWidth={selected === node.value ? 5 : 3}
-                style={{ filter: selected === node.value ? 'drop-shadow(0 0 6px #818cf8)' : undefined }}
+                fill={
+                  traversalOrder[traversalStep] === node.value
+                    ? "#facc15" // highlight traversal node (yellow)
+                    : selected === node.value
+                      ? "#6366f1"
+                      : "#e0e7ef"
+                }
+                stroke={
+                  traversalOrder[traversalStep] === node.value
+                    ? "#facc15"
+                    : "#6366f1"
+                }
+                strokeWidth={
+                  traversalOrder[traversalStep] === node.value
+                    ? 7
+                    : selected === node.value
+                      ? 5
+                      : 3
+                }
+                style={{
+                  filter: traversalOrder[traversalStep] === node.value
+                    ? 'drop-shadow(0 0 8px #facc15)'
+                    : selected === node.value
+                      ? 'drop-shadow(0 0 6px #818cf8)'
+                      : undefined
+                }}
               />
               <text
                 x={node.x}
                 y={node.y! + 7}
                 textAnchor="middle"
                 fontSize={20}
-                fill={selected === node.value ? "#fff" : "#3730a3"}
+                fill={
+                  traversalOrder[traversalStep] === node.value
+                    ? "#fff"
+                    : selected === node.value
+                      ? "#fff"
+                      : "#3730a3"
+                }
                 fontWeight={700}
               >
                 {node.value}
@@ -375,9 +462,38 @@ class BinaryTree {
               <i className="bi bi-shuffle"></i> Random Tree
             </button>
           </div>
+          <div className="flex flex-wrap gap-2 mb-2">
+            <button
+              className="bg-indigo-500 text-white px-4 py-2 rounded shadow hover:bg-indigo-700 transition"
+              onClick={() => runTraversal('inorder')}
+              disabled={!treeRoot || isTraversing}
+            >
+              <i className="bi bi-arrow-left-right"></i> Inorder
+            </button>
+            <button
+              className="bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-700 transition"
+              onClick={() => runTraversal('preorder')}
+              disabled={!treeRoot || isTraversing}
+            >
+              <i className="bi bi-box-arrow-in-right"></i> Preorder
+            </button>
+            <button
+              className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-700 transition"
+              onClick={() => runTraversal('postorder')}
+              disabled={!treeRoot || isTraversing}
+            >
+              <i className="bi bi-arrow-down-up"></i> Postorder
+            </button>
+          </div>
+          {isTraversing && traversalOrder.length > 0 && (
+            <div className="mt-2 text-center font-semibold text-indigo-700">
+              Visiting: <span className="text-yellow-600">{traversalOrder[traversalStep]}</span>
+              <span className="ml-4 text-zinc-500 text-sm">({traversalStep + 1} / {traversalOrder.length})</span>
+            </div>
+          )}
           <div className="mt-4 flex items-center gap-2 bg-indigo-50 border border-indigo-200 rounded px-4 py-2 text-indigo-700">
             <i className="bi bi-lightbulb"></i>
-            <strong>Tip:</strong> Click a node to highlight it. Try adding, clearing, or randomizing!
+            <strong>Tip:</strong> Click a node to highlight it, or try the traversal buttons!
           </div>
         </motion.div>
 
