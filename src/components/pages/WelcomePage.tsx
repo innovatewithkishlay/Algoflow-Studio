@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
+
 // Animation variants with proper typing
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 28 },
@@ -60,6 +61,32 @@ const pulse: Variants = {
       repeatType: "mirror" as const
     }
   }
+};
+
+// Scrolling Banner Component
+const ScrollingBanner = () => {
+  const messages = [
+    "We are continuously adding new data structures and algorithms!",
+    "If you don't find what you were looking for, try visiting later."
+  ];
+  
+  return (
+    <div className="bg-indigo-600 py-2 overflow-hidden">
+      <motion.div
+        className="text-white text-sm font-medium whitespace-nowrap"
+        animate={{ 
+          x: ["100%", "-100%"]
+        }}
+        transition={{ 
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+      >
+        {messages.join(" ✦ ")} ✦ {messages.join(" ✦ ")} ✦
+      </motion.div>
+    </div>
+  );
 };
 
 // Visual components for algorithm previews
@@ -162,6 +189,9 @@ const WelcomePage: React.FC = () => {
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-50 via-white to-indigo-50 font-sans antialiased text-gray-900">
+      {/* Scrolling Banner */}
+      <ScrollingBanner />
+      
       {/* Hero Section */}
       <section className="relative overflow-hidden py-16 md:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Content */}
