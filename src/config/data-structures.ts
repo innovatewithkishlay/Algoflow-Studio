@@ -16,6 +16,7 @@ import BloomFilter from '../pages/data-structures/BloomFilter';
 import AVLTree from '../pages/data-structures/AVLTree';
 import RedBlackTree from '../pages/data-structures/RedBlackTree';
 import BTree from '../pages/data-structures/BTree';
+import BPlusTree from '../pages/data-structures/BPlusTree';
 
 export interface DataStructure {
   id: string;
@@ -37,6 +38,34 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'b-plus-tree',
+  name: 'B+ Tree',
+  description: 'A self-balancing multi-way search tree where all data is stored in the leaves, and internal nodes only direct the search. Used for database and filesystem indexing.',
+  category: 'hierarchical',
+  difficulty: 'advanced',
+  component: BPlusTree,
+  icon: 'bi-diagram-2',
+  features: [
+    'All data at leaf level',
+    'Internal nodes for routing',
+    'Leaves linked for fast range queries',
+    'Used in databases and filesystems'
+  ],
+  timeComplexity: {
+    access: 'O(log n)',
+    search: 'O(log n)',
+    insertion: 'O(log n)',
+    deletion: 'O(log n)'
+  },
+  spaceComplexity: 'O(n)',
+  useCases: [
+    'Database indexing',
+    'Filesystem storage',
+    'Efficient range queries',
+    'Large-scale sorted data'
+  ]
+},
   {
   id: 'b-tree',
   name: 'B-Tree',
