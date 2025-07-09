@@ -16,7 +16,7 @@ interface BloomStep {
 }
 
 const BLOOM_SIZE = 16;
-const HASH_COUNT = 3;
+// const HASH_COUNT = 3;
 
 // Simple hash functions for demonstration
 function hash1(str: string) {
