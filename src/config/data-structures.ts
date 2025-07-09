@@ -33,6 +33,34 @@ export interface DataStructure {
 
 export const dataStructures: DataStructure[] = [
   {
+  id: 'fenwick-tree',
+  name: 'Fenwick Tree',
+  description: 'A data structure that efficiently supports prefix sum and update queries on an array.',
+  category: 'hierarchical',
+  difficulty: 'advanced',
+  component: FenwickTree,
+  icon: 'bi-list-ol',
+  features: [
+    'Efficient prefix sum queries',
+    'Supports point updates',
+    'Space-efficient array-based implementation',
+    'Ideal for cumulative frequency tables'
+  ],
+  timeComplexity: {
+    access: 'O(log n)',
+    search: 'O(log n)',
+    insertion: 'O(log n)',
+    deletion: 'O(log n)'
+  },
+  spaceComplexity: 'O(n)',
+  useCases: [
+    'Prefix sum/range queries',
+    'Inversion count in arrays',
+    'Frequency tables',
+    'Competitive programming'
+  ]
+},
+  {
   id: 'segment-tree',
   name: 'Segment Tree',
   description: 'A binary tree data structure that allows fast range queries and updates over an array.',
