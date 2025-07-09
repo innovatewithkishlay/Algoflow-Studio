@@ -13,6 +13,7 @@ import SegmentTree from '../pages/data-structures/SegmentTree';
 import FenwickTree from '../pages/data-structures/FenwickTree';
 import PriorityQueue from '../pages/data-structures/PriorityQueue';
 import BloomFilter from '../pages/data-structures/BloomFilter';
+import AVLTree from '../pages/data-structures/AVLTree';
 
 export interface DataStructure {
   id: string;
@@ -34,6 +35,34 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'avl-tree',
+  name: 'AVL Tree',
+  description: 'A self-balancing binary search tree that maintains O(log n) height by performing rotations after insertions and deletions.',
+  category: 'hierarchical',
+  difficulty: 'advanced',
+  component: AVLTree,
+  icon: 'bi-diagram-2',
+  features: [
+    'Self-balancing BST',
+    'Automatic rotations',
+    'O(log n) insert/search/delete',
+    'Maintains height balance'
+  ],
+  timeComplexity: {
+    access: 'O(log n)',
+    search: 'O(log n)',
+    insertion: 'O(log n)',
+    deletion: 'O(log n)'
+  },
+  spaceComplexity: 'O(n)',
+  useCases: [
+    'Database indexing',
+    'Range queries',
+    'Ordered maps/sets',
+    'Real-time systems'
+  ]
+},
   {
   id: 'bloom-filter',
   name: 'Bloom Filter',
