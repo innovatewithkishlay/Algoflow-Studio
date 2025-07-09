@@ -34,6 +34,34 @@ export interface DataStructure {
 
 export const dataStructures: DataStructure[] = [
   {
+  id: 'priority-queue',
+  name: 'Priority Queue',
+  description: 'A data structure that allows elements to be processed based on priority rather than insertion order.',
+  category: 'linear',
+  difficulty: 'intermediate',
+  component: PriorityQueue,
+  icon: 'bi-arrow-up-circle',
+  features: [
+    'Elements with priorities',
+    'Efficient insert and extract-max',
+    'Heap-based implementation',
+    'Dynamic priority updates'
+  ],
+  timeComplexity: {
+    access: 'O(1)',
+    search: 'O(n)',
+    insertion: 'O(log n)',
+    deletion: 'O(log n)'
+  },
+  spaceComplexity: 'O(n)',
+  useCases: [
+    'Task scheduling',
+    'Dijkstra’s algorithm',
+    'Event-driven simulations',
+    'Load balancing'
+  ]
+},
+  {
   id: 'fenwick-tree',
   name: 'Fenwick Tree',
   description: 'A data structure that efficiently supports prefix sum and update queries on an array.',
