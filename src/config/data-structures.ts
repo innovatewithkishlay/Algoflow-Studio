@@ -14,6 +14,7 @@ import FenwickTree from '../pages/data-structures/FenwickTree';
 import PriorityQueue from '../pages/data-structures/PriorityQueue';
 import BloomFilter from '../pages/data-structures/BloomFilter';
 import AVLTree from '../pages/data-structures/AVLTree';
+import RedBlackTree from '../pages/data-structures/RedBlackTree';
 
 export interface DataStructure {
   id: string;
@@ -35,6 +36,34 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'red-black-tree',
+  name: 'Red-Black Tree',
+  description: 'A self-balancing binary search tree with node coloring rules to guarantee O(log n) search, insertion, and deletion.',
+  category: 'hierarchical',
+  difficulty: 'advanced',
+  component: RedBlackTree,
+  icon: 'bi-circle-half',
+  features: [
+    'Self-balancing BST',
+    'Red/black coloring rules',
+    'O(log n) insert/search/delete',
+    'Automatic balancing via rotations'
+  ],
+  timeComplexity: {
+    access: 'O(log n)',
+    search: 'O(log n)',
+    insertion: 'O(log n)',
+    deletion: 'O(log n)'
+  },
+  spaceComplexity: 'O(n)',
+  useCases: [
+    'Database indexing',
+    'Ordered maps/sets',
+    'Real-time systems',
+    'Efficient sorted storage'
+  ]
+},
   {
   id: 'avl-tree',
   name: 'AVL Tree',
