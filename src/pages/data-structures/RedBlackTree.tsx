@@ -82,7 +82,7 @@ function insertRBSteps(root: RBNode | null, value: number): RBStep[] {
   }
 
   // Insert and then fixup (simplified, not full RB logic for brevity)
-  let newRoot = insert(root, value, null);
+  const newRoot = insert(root, value, null);
   // For visualization, always color root black
   if (newRoot) newRoot.color = 'black';
   steps.push({
