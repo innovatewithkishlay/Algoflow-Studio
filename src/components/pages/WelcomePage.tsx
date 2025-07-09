@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
@@ -67,7 +67,7 @@ const pulse: Variants = {
 const ScrollingBanner = () => {
   const messages = [
     "We are continuously adding new data structures and algorithms!",
-    "If you don't find what you were looking for, try visiting later."
+    "If you didn't find what you were looking for, try visiting later."
   ];
   
   return (
@@ -89,52 +89,170 @@ const ScrollingBanner = () => {
   );
 };
 
-// Visual components for algorithm previews
-const GraphVisual = () => (
-  <div className="relative w-full h-40 flex items-center justify-center">
-    <div className="absolute w-32 h-32 rounded-full border-2 border-indigo-200" />
-    <div className="absolute w-8 h-8 rounded-full bg-indigo-500" />
-    <div className="absolute w-8 h-8 rounded-full bg-indigo-400 top-4 left-12" />
-    <div className="absolute w-8 h-8 rounded-full bg-indigo-400 top-4 right-12" />
-    <div className="absolute w-8 h-8 rounded-full bg-indigo-300 bottom-4 left-8" />
-    <div className="absolute w-8 h-8 rounded-full bg-indigo-300 bottom-4 right-8" />
-    <div className="absolute w-8 h-8 rounded-full bg-indigo-200 top-12 left-4" />
-    <div className="absolute w-8 h-8 rounded-full bg-indigo-200 top-12 right-4" />
-    
-    {/* Connections */}
-    <div className="absolute w-2 h-16 bg-indigo-300 transform rotate-45" />
-    <div className="absolute w-2 h-16 bg-indigo-300 transform -rotate-45" />
-    <div className="absolute w-2 h-12 bg-indigo-200 transform rotate-20 top-16 left-16" />
-    <div className="absolute w-2 h-12 bg-indigo-200 transform -rotate-20 top-16 right-16" />
-  </div>
-);
+// Enhanced GraphVisual with animated nodes and connections
+const GraphVisual = () => {
+  return (
+    <div className="relative w-full h-40 flex items-center justify-center">
+      {/* Background circle */}
+      <motion.div 
+        className="absolute w-32 h-32 rounded-full border-2 border-indigo-200"
+        animate={{ 
+          rotate: 360,
+          transition: { 
+            duration: 25, 
+            repeat: Infinity, 
+            ease: "linear" 
+          } 
+        }}
+      />
+      
+      {/* Central node */}
+      <motion.div 
+        className="absolute w-8 h-8 rounded-full bg-indigo-500"
+        animate={{ 
+          scale: [1, 1.2, 1],
+          boxShadow: [
+            "0 0 0 0 rgba(79, 70, 229, 0.3)",
+            "0 0 0 10px rgba(79, 70, 229, 0)",
+            "0 0 0 0 rgba(79, 70, 229, 0)"
+          ]
+        }}
+        transition={{ 
+          duration: 3,
+          repeat: Infinity,
+          repeatType: "loop"
+        }}
+      />
+      
+      {/* Nodes with staggered animations */}
+      {[
+        { position: "top-4 left-12", color: "bg-indigo-400" },
+        { position: "top-4 right-12", color: "bg-indigo-400" },
+        { position: "bottom-4 left-8", color: "bg-indigo-300" },
+        { position: "bottom-4 right-8", color: "bg-indigo-300" },
+        { position: "top-12 left-4", color: "bg-indigo-200" },
+        { position: "top-12 right-4", color: "bg-indigo-200" }
+      ].map((node, i) => (
+        <motion.div
+          key={i}
+          className={`absolute w-8 h-8 rounded-full ${node.color} ${node.position}`}
+          animate={{ 
+            scale: [1, 1.3, 1],
+            opacity: [0.8, 1, 0.8]
+          }}
+          transition={{ 
+            duration: 2,
+            delay: i * 0.3,
+            repeat: Infinity,
+            repeatType: "reverse"
+          }}
+        />
+      ))}
+      
+      {/* Animated connections */}
+      {[
+        { rotation: "rotate-45", delay: 0 },
+        { rotation: "-rotate-45", delay: 0.2 },
+        { rotation: "rotate-20", position: "top-16 left-16", delay: 0.4 },
+        { rotation: "-rotate-20", position: "top-16 right-16", delay: 0.6 }
+      ].map((conn, i) => (
+        <motion.div
+          key={i}
+          className={`absolute w-2 h-16 bg-indigo-300 transform ${conn.rotation} ${conn.position || ''}`}
+          animate={{ 
+            backgroundColor: ["#a5b4fc", "#818cf8", "#4f46e5", "#a5b4fc"],
+          }}
+          transition={{ 
+            duration: 2,
+            delay: conn.delay,
+            repeat: Infinity,
+            repeatType: "reverse"
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
-const TreeVisual = () => (
-  <div className="relative w-full h-40 flex items-center justify-center">
-    {/* Tree trunk */}
-    <div className="absolute w-3 h-32 bg-yellow-700" />
-    
-    {/* Tree levels */}
-    <div className="absolute top-4 w-24 h-10 bg-green-500 rounded-full" />
-    <div className="absolute top-10 w-32 h-12 bg-green-600 rounded-full" />
-    <div className="absolute top-20 w-40 h-16 bg-green-700 rounded-full" />
-    
-    {/* Decorations */}
-    <div className="absolute top-8 left-1/2 w-3 h-3 bg-red-500 rounded-full" />
-    <div className="absolute top-14 left-1/3 w-3 h-3 bg-red-500 rounded-full" />
-    <div className="absolute top-14 right-1/3 w-3 h-3 bg-red-500 rounded-full" />
-    <div className="absolute top-24 left-1/4 w-3 h-3 bg-red-500 rounded-full" />
-    <div className="absolute top-24 right-1/4 w-3 h-3 bg-red-500 rounded-full" />
-    <div className="absolute top-24 left-1/2 w-3 h-3 bg-red-500 rounded-full" />
-  </div>
-);
+// Enhanced TreeVisual with growing animation
+const TreeVisual = () => {
+  return (
+    <div className="relative w-full h-40 flex items-center justify-center">
+      {/* Tree trunk with growth animation */}
+      <motion.div 
+        className="absolute w-3 bg-yellow-700"
+        initial={{ height: 0 }}
+        animate={{ height: 32 }}
+        transition={{ duration: 1 }}
+      />
+      
+      {/* Tree levels with staggered appearance */}
+      <motion.div 
+        className="absolute top-4 w-24 h-10 bg-green-500 rounded-full"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ delay: 0.3, duration: 0.8 }}
+      />
+      <motion.div 
+        className="absolute top-10 w-32 h-12 bg-green-600 rounded-full"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ delay: 0.6, duration: 0.8 }}
+      />
+      <motion.div 
+        className="absolute top-20 w-40 h-16 bg-green-700 rounded-full"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ delay: 0.9, duration: 0.8 }}
+      />
+      
+      {/* Decorations with pulsing animation */}
+      {[
+        { position: "top-8 left-1/2" },
+        { position: "top-14 left-1/3" },
+        { position: "top-14 right-1/3" },
+        { position: "top-24 left-1/4" },
+        { position: "top-24 right-1/4" },
+        { position: "top-24 left-1/2" }
+      ].map((decoration, i) => (
+        <motion.div
+          key={i}
+          className={`absolute w-3 h-3 bg-red-500 rounded-full ${decoration.position}`}
+          animate={{ 
+            scale: [1, 1.5, 1],
+            boxShadow: [
+              "0 0 0 0 rgba(239, 68, 68, 0.4)",
+              "0 0 0 6px rgba(239, 68, 68, 0)",
+              "0 0 0 0 rgba(239, 68, 68, 0)"
+            ]
+          }}
+          transition={{ 
+            duration: 2,
+            delay: i * 0.3,
+            repeat: Infinity
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
+// Enhanced SortingVisual with continuous sorting animation
 const SortingVisual = () => {
+  const [heights] = useState([4, 9, 2, 7, 5, 1, 8, 3, 6]);
   const [active, setActive] = useState(0);
+  
+  // Cycle through active bars
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActive(prev => (prev + 1) % heights.length);
+    }, 300);
+    return () => clearInterval(interval);
+  }, [heights.length]);
   
   return (
     <div className="relative w-full h-40 flex items-end justify-center gap-1 px-4">
-      {[4, 9, 2, 7, 5, 1, 8, 3, 6].map((height, i) => (
+      {heights.map((height, i) => (
         <motion.div
           key={i}
           className={`w-6 rounded-t-md ${i === active ? 'bg-indigo-600' : 'bg-indigo-300'}`}
@@ -143,14 +261,27 @@ const SortingVisual = () => {
             height: `${height * 14}px`,
             backgroundColor: i === active ? "#4f46e5" : "#a5b4fc"
           }}
-          transition={{ duration: 0.5, delay: i * 0.05 }}
-          onHoverStart={() => setActive(i)}
+          transition={{ duration: 0.3 }}
         />
       ))}
+      
+      {/* Animated comparison pointer */}
+      <motion.div
+        className="absolute top-0 w-4 h-4 bg-red-500 rounded-full"
+        animate={{ 
+          x: [0, 20, 40, 60, 80, 100, 120, 140, 160, 0]
+        }}
+        transition={{ 
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
     </div>
   );
 };
 
+// Enhanced PathfindingVisual for Dynamic Programming
 const PathfindingVisual = () => (
   <div className="relative w-full h-40 flex items-center justify-center">
     <div className="grid grid-cols-5 grid-rows-5 gap-1 w-40 h-40">
@@ -166,7 +297,7 @@ const PathfindingVisual = () => (
         />
       ))}
       
-      {/* Path */}
+      {/* Pathfinding animation */}
       <motion.div 
         className="absolute w-6 h-6 bg-yellow-400 rounded-full"
         initial={{ x: -40, y: -40 }}
@@ -177,12 +308,188 @@ const PathfindingVisual = () => (
         transition={{ 
           duration: 8,
           repeat: Infinity,
-          repeatType: "loop" as const
+          repeatType: "loop"
         }}
       />
     </div>
   </div>
 );
+
+// New animated HashVisual
+const HashVisual = () => {
+  return (
+    <div className="relative w-full h-40 flex items-center justify-center">
+      <div className="grid grid-cols-5 gap-1 w-40">
+        {Array.from({ length: 10 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="h-6 bg-indigo-200 rounded flex items-center justify-center"
+            animate={{ 
+              backgroundColor: ["#c7d2fe", "#a5b4fc", "#818cf8", "#a5b4fc", "#c7d2fe"]
+            }}
+            transition={{ 
+              duration: 4,
+              delay: i * 0.2,
+              repeat: Infinity
+            }}
+          >
+            <div className="w-4 h-4 bg-indigo-500 rounded-full" />
+          </motion.div>
+        ))}
+      </div>
+      
+      {/* Keys with collision animation */}
+      <motion.div 
+        className="absolute w-6 h-6 bg-indigo-600 rounded-full"
+        animate={{ 
+          y: [0, 140, 140, 0],
+          x: [0, 0, 0, 0]
+        }}
+        transition={{ 
+          duration: 4,
+          repeat: Infinity,
+          times: [0, 0.3, 0.7, 1]
+        }}
+      />
+      <motion.div 
+        className="absolute w-6 h-6 bg-indigo-600 rounded-full top-20 left-24"
+        animate={{ 
+          y: [0, 140, 140, 0],
+          x: [0, 0, 0, 0]
+        }}
+        transition={{ 
+          duration: 4,
+          delay: 1,
+          repeat: Infinity,
+          times: [0, 0.3, 0.7, 1]
+        }}
+      />
+      <motion.div 
+        className="absolute w-6 h-6 bg-indigo-600 rounded-full top-32 left-12"
+        animate={{ 
+          y: [0, 140, 140, 0],
+          x: [0, 0, 0, 0]
+        }}
+        transition={{ 
+          duration: 4,
+          delay: 2,
+          repeat: Infinity,
+          times: [0, 0.3, 0.7, 1]
+        }}
+      />
+      
+      {/* Collision visualization */}
+      <motion.div
+        className="absolute top-28 left-12 w-4 h-0.5 bg-red-500"
+        animate={{ 
+          width: [0, 20, 20, 0],
+          opacity: [0, 1, 1, 0]
+        }}
+        transition={{ 
+          duration: 4,
+          delay: 2.5,
+          repeat: Infinity,
+          times: [0, 0.1, 0.2, 0.3]
+        }}
+      />
+    </div>
+  );
+};
+
+// New animated AdvancedVisual
+const AdvancedVisual = () => {
+  return (
+    <div className="relative w-full h-40 flex items-center justify-center">
+      <motion.div 
+        className="absolute w-32 h-32 border-2 border-indigo-200 rounded-lg"
+        animate={{ 
+          rotate: [0, 5, -5, 0],
+          scale: [1, 1.02, 1]
+        }}
+        transition={{ 
+          duration: 6,
+          repeat: Infinity,
+          repeatType: "reverse"
+        }}
+      />
+      
+      <motion.div 
+        className="absolute w-24 h-24 border-2 border-indigo-300 rounded-lg"
+        animate={{ 
+          rotate: [0, -10, 5, 0],
+          scale: [1, 1.03, 1]
+        }}
+        transition={{ 
+          duration: 8,
+          delay: 1,
+          repeat: Infinity,
+          repeatType: "reverse"
+        }}
+      />
+      
+      <motion.div 
+        className="absolute w-16 h-16 border-2 border-indigo-400 rounded-lg"
+        animate={{ 
+          rotate: [0, 15, -10, 0],
+          scale: [1, 1.04, 1]
+        }}
+        transition={{ 
+          duration: 7,
+          delay: 2,
+          repeat: Infinity,
+          repeatType: "reverse"
+        }}
+      />
+      
+      <motion.div 
+        className="absolute w-8 h-8 bg-indigo-500 rounded-lg"
+        animate={{ 
+          rotate: [0, 360],
+          scale: [1, 1.2, 1],
+          backgroundColor: ["#6366f1", "#8b5cf6", "#6366f1"]
+        }}
+        transition={{ 
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      
+      {/* Connection lines */}
+      {[
+        { id: 1, path: "M-30,-30 L0,0", delay: 0 },
+        { id: 2, path: "M30,-30 L0,0", delay: 0.3 },
+        { id: 3, path: "M-20,30 L0,0", delay: 0.6 },
+        { id: 4, path: "M20,30 L0,0", delay: 0.9 }
+      ].map(conn => (
+        <motion.svg
+          key={conn.id}
+          className="absolute w-full h-full"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: conn.delay }}
+        >
+          <motion.path
+            d={conn.path}
+            stroke="#a5b4fc"
+            strokeWidth="2"
+            fill="none"
+            strokeDasharray="10,5"
+            animate={{ 
+              strokeDashoffset: [0, 20],
+              opacity: [0.5, 1, 0.5]
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+        </motion.svg>
+      ))}
+    </div>
+  );
+};
 
 const WelcomePage: React.FC = () => {
   const [hovered, setHovered] = useState(false);
@@ -497,29 +804,13 @@ const WelcomePage: React.FC = () => {
             {
               title: "Hash Tables & Sets",
               subtitle: "Hash Collisions, Open Addressing, Disjoint Sets",
-              visual: <div className="relative w-full h-40 flex items-center justify-center">
-                <div className="grid grid-cols-5 gap-1 w-40">
-                  {Array.from({ length: 10 }).map((_, i) => (
-                    <div key={i} className="h-6 bg-indigo-200 rounded flex items-center justify-center">
-                      <div className="w-4 h-4 bg-indigo-500 rounded-full" />
-                    </div>
-                  ))}
-                  <div className="absolute w-6 h-6 bg-indigo-600 rounded-full" />
-                  <div className="absolute w-6 h-6 bg-indigo-600 rounded-full top-20 left-24" />
-                  <div className="absolute w-6 h-6 bg-indigo-600 rounded-full top-32 left-12" />
-                </div>
-              </div>,
+              visual: <HashVisual />,
               description: "See how hashing functions distribute data and handle collisions"
             },
             {
               title: "Advanced Data Structures",
               subtitle: "Heaps, Segment Trees, Tries, Disjoint Sets",
-              visual: <div className="relative w-full h-40 flex items-center justify-center">
-                <div className="absolute w-32 h-32 border-2 border-indigo-200 rounded-lg" />
-                <div className="absolute w-24 h-24 border-2 border-indigo-300 rounded-lg rotate-12" />
-                <div className="absolute w-16 h-16 border-2 border-indigo-400 rounded-lg rotate-24" />
-                <div className="absolute w-8 h-8 bg-indigo-500 rounded-lg rotate-12" />
-              </div>,
+              visual: <AdvancedVisual />,
               description: "Explore specialized structures for optimized problem solving"
             }
           ].map((item, i) => (
