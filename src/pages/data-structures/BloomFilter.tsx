@@ -39,7 +39,7 @@ const hashFns = [hash1, hash2, hash3];
 function bloomAddSteps(bitArray: number[], value: string): BloomStep[] {
   const steps: BloomStep[] = [];
   const hashes = hashFns.map(fn => fn(value));
-  let arr = [...bitArray];
+  const arr = [...bitArray];
   steps.push({
     bitArray: [...arr],
     hashes,
@@ -70,7 +70,7 @@ function bloomAddSteps(bitArray: number[], value: string): BloomStep[] {
 function bloomQuerySteps(bitArray: number[], value: string): BloomStep[] {
   const steps: BloomStep[] = [];
   const hashes = hashFns.map(fn => fn(value));
-  let arr = [...bitArray];
+  const arr = [...bitArray];
   steps.push({
     bitArray: [...arr],
     hashes,
