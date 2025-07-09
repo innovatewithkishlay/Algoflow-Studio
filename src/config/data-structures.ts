@@ -11,6 +11,7 @@ import Trie from '../pages/data-structures/Trie';
 import DisjointSet from '../pages/data-structures/DisjointSet';
 import SegmentTree from '../pages/data-structures/SegmentTree';
 import FenwickTree from '../pages/data-structures/FenwickTree';
+import PriorityQueue from '../pages/data-structures/PriorityQueue';
 
 export interface DataStructure {
   id: string;
