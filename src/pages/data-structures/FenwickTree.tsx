@@ -161,19 +161,22 @@ const FenwickTree: React.FC = () => {
   }, [arr]);
 
   // Animation effect
-  React.useEffect(() => {
-    let interval: ReturnType<typeof setInterval>;
-    if (isPlaying && steps.length > 0 && currentStep < steps.length - 1) {
-      interval = setInterval(() => {
-        setCurrentStep((prev) => {
-          if (prev < steps.length - 1) return prev + 1;
-          setIsPlaying(false);
-          return prev;
-        });
-      }, speed);
-    }
-    return () => interval && clearInterval(interval);
-  }, [isPlaying, currentStep, steps.length, speed]);
+ React.useEffect(() => {
+  let interval: ReturnType<typeof setInterval> | undefined;
+  if (isPlaying && steps.length > 0 && currentStep < steps.length - 1) {
+    interval = setInterval(() => {
+      setCurrentStep((prev) => {
+        if (prev < steps.length - 1) return prev + 1;
+        setIsPlaying(false);
+        return prev;
+      });
+    }, speed);
+  }
+  return () => {
+    if (interval !== undefined) clearInterval(interval);
+  };
+}, [isPlaying, currentStep, steps.length, speed]);
+
 
   // Start visualization
   const handleVisualize = () => {
