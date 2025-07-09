@@ -31,10 +31,10 @@ function heapifyUp(heap: { value: number; priority: number }[], idx: number, ste
 }
 
 function heapifyDown(heap: { value: number; priority: number }[], idx: number, steps: HeapStep[]) {
-  let n = heap.length;
+  const n = heap.length;
   while (true) {
     let largest = idx;
-    let l = left(idx), r = right(idx);
+    const l = left(idx), r = right(idx);
     if (l < n && heap[l].priority > heap[largest].priority) largest = l;
     if (r < n && heap[r].priority > heap[largest].priority) largest = r;
     if (largest !== idx) {
