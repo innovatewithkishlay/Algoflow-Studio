@@ -35,6 +35,34 @@ export interface DataStructure {
 
 export const dataStructures: DataStructure[] = [
   {
+  id: 'bloom-filter',
+  name: 'Bloom Filter',
+  description: 'A probabilistic data structure for set membership queries, allowing false positives but no false negatives.',
+  category: 'linear',
+  difficulty: 'advanced',
+  component: BloomFilter,
+  icon: 'bi-funnel',
+  features: [
+    'Probabilistic membership testing',
+    'Space-efficient',
+    'No false negatives',
+    'Multiple hash functions'
+  ],
+  timeComplexity: {
+    access: 'O(1)',
+    search: 'O(k)',
+    insertion: 'O(k)',
+    deletion: 'N/A'
+  },
+  spaceComplexity: 'O(m)',
+  useCases: [
+    'Database query optimization',
+    'Web cache filtering',
+    'Network packet analysis',
+    'Spell checking'
+  ]
+},
+  {
   id: 'priority-queue',
   name: 'Priority Queue',
   description: 'A data structure that allows elements to be processed based on priority rather than insertion order.',
