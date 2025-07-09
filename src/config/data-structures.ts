@@ -15,6 +15,7 @@ import PriorityQueue from '../pages/data-structures/PriorityQueue';
 import BloomFilter from '../pages/data-structures/BloomFilter';
 import AVLTree from '../pages/data-structures/AVLTree';
 import RedBlackTree from '../pages/data-structures/RedBlackTree';
+import BTree from '../pages/data-structures/BTree';
 
 export interface DataStructure {
   id: string;
@@ -36,6 +37,34 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'b-tree',
+  name: 'B-Tree',
+  description: 'A self-balancing multi-way search tree used in databases and filesystems, allowing nodes to contain multiple keys and children for efficient, balanced storage and retrieval.',
+  category: 'hierarchical',
+  difficulty: 'advanced',
+  component: BTree,
+  icon: 'bi-diagram-2',
+  features: [
+    'Multi-way branching',
+    'Node splitting and balancing',
+    'O(log n) search/insert/delete',
+    'Used in databases/filesystems'
+  ],
+  timeComplexity: {
+    access: 'O(log n)',
+    search: 'O(log n)',
+    insertion: 'O(log n)',
+    deletion: 'O(log n)'
+  },
+  spaceComplexity: 'O(n)',
+  useCases: [
+    'Database indexing',
+    'Filesystems',
+    'Range queries',
+    'Efficient large-scale storage'
+  ]
+},
   {
   id: 'red-black-tree',
   name: 'Red-Black Tree',
