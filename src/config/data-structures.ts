@@ -21,6 +21,7 @@ import SuffixTrie from '../pages/data-structures/SuffixTrie';
 import SuffixArray from '../pages/data-structures/SuffixArray';
 import Treap from '../pages/data-structures/Treap';
 import IntervalTree from '../pages/data-structures/IntervalTree';
+import KDTree from '../pages/data-structures/KDTree';
 
 export interface DataStructure {
   id: string;
@@ -42,6 +43,32 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'kd-tree',
+  name: 'KD-Tree',
+  description: 'A binary tree for multidimensional points that recursively partitions space by alternating splitting axes.',
+  category: 'hierarchical',
+  difficulty: 'advanced',
+  component: KDTree,
+  icon: 'bi-bricks',
+  features: [
+    'Recursive k-dimensional space partitioning',
+    'Efficient range and nearest neighbor queries',
+    'Widely used in spatial databases and graphics'
+  ],
+  timeComplexity: {
+    access: 'O(log n)',
+    search: 'O(n^{1-1/k} + m)', // k = dimensions, m = results
+    insertion: 'O(log n)',
+    deletion: 'O(log n)'
+  },
+  spaceComplexity: 'O(n)',
+  useCases: [
+    'Spatial databases',
+    'Computer graphics',
+    'Machine learning'
+  ]
+},
   {
   id: 'interval-tree',
   name: 'Interval Tree',
