@@ -20,6 +20,7 @@ import BPlusTree from '../pages/data-structures/BPlusTree';
 import SuffixTrie from '../pages/data-structures/SuffixTrie';
 import SuffixArray from '../pages/data-structures/SuffixArray';
 import Treap from '../pages/data-structures/Treap';
+import IntervalTree from '../pages/data-structures/IntervalTree';
 
 export interface DataStructure {
   id: string;
@@ -41,6 +42,32 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'interval-tree',
+  name: 'Interval Tree',
+  description: 'A balanced binary search tree storing intervals to efficiently find all intervals overlapping with a given interval.',
+  category: 'hierarchical',
+  difficulty: 'advanced',
+  component: IntervalTree,
+  icon: 'bi-diagram-3',
+  features: [
+    'Stores intervals with max high endpoint',
+    'Efficient overlap queries',
+    'Balanced BST structure'
+  ],
+  timeComplexity: {
+    access: 'O(log n)',
+    search: 'O(log n + k)', // k = number of overlaps
+    insertion: 'O(log n)',
+    deletion: 'O(log n)'
+  },
+  spaceComplexity: 'O(n)',
+  useCases: [
+    'Scheduling conflicts',
+    'Computational geometry',
+    'Genome analysis'
+  ]
+},
   {
   id: 'treap',
   name: 'Treap',
