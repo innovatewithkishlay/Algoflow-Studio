@@ -17,6 +17,7 @@ import AVLTree from '../pages/data-structures/AVLTree';
 import RedBlackTree from '../pages/data-structures/RedBlackTree';
 import BTree from '../pages/data-structures/BTree';
 import BPlusTree from '../pages/data-structures/BPlusTree';
+import SuffixTrie from '../pages/data-structures/SuffixTrie';
 
 export interface DataStructure {
   id: string;
@@ -38,6 +39,34 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'suffix-trie',
+  name: 'Suffix Trie',
+  description: 'A trie that contains all the suffixes of a given string, enabling fast substring search and pattern matching.',
+  category: 'hierarchical',
+  difficulty: 'advanced',
+  component: SuffixTrie,
+  icon: 'bi-diagram-2',
+  features: [
+    'All suffixes stored',
+    'Fast substring/pattern search',
+    'Space-efficient for repeated substrings',
+    'Foundation for advanced text algorithms'
+  ],
+  timeComplexity: {
+    access: 'O(m)', // m = length of query string
+    search: 'O(m)',
+    insertion: 'O(n^2)', // n = length of original string
+    deletion: 'O(n^2)'
+  },
+  spaceComplexity: 'O(n^2)',
+  useCases: [
+    'Substring search',
+    'Pattern matching',
+    'Bioinformatics (DNA search)',
+    'Plagiarism detection'
+  ]
+},
   {
   id: 'b-plus-tree',
   name: 'B+ Tree',
