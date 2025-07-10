@@ -22,6 +22,7 @@ import SuffixArray from '../pages/data-structures/SuffixArray';
 import Treap from '../pages/data-structures/Treap';
 import IntervalTree from '../pages/data-structures/IntervalTree';
 import KDTree from '../pages/data-structures/KDTree';
+import PatriciaTrie from '../pages/data-structures/PatriciaTrie';
 
 export interface DataStructure {
   id: string;
@@ -43,6 +44,33 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'patricia-trie',
+  name: 'Patricia Trie',
+  description: 'A compressed trie (Radix Trie) that merges chains of single-child nodes for space-efficient string storage and fast prefix search.',
+  category: 'hierarchical',
+  difficulty: 'advanced',
+  component: PatriciaTrie,
+  icon: 'bi-tree',
+  features: [
+    'Compressed trie with path compression',
+    'Efficient prefix search and insertion',
+    'Space-optimized compared to standard tries',
+    'Used in IP routing and dictionary compression'
+  ],
+  timeComplexity: {
+    access: 'O(k)',
+    search: 'O(k)',
+    insertion: 'O(k)',
+    deletion: 'O(k)'
+  },
+  spaceComplexity: 'O(nk)',
+  useCases: [
+    'IP routing',
+    'Dictionary compression',
+    'Prefix search in text processing'
+  ]
+},
   {
   id: 'kd-tree',
   name: 'KD-Tree',
