@@ -19,6 +19,7 @@ import BTree from '../pages/data-structures/BTree';
 import BPlusTree from '../pages/data-structures/BPlusTree';
 import SuffixTrie from '../pages/data-structures/SuffixTrie';
 import SuffixArray from '../pages/data-structures/SuffixArray';
+import Treap from '../pages/data-structures/Treap';
 
 export interface DataStructure {
   id: string;
@@ -40,6 +41,33 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'treap',
+  name: 'Treap',
+  description: 'A randomized balanced binary search tree combining BST and heap properties with rotations.',
+  category: 'hierarchical',
+  difficulty: 'advanced',
+  component: Treap,
+  icon: 'bi-tree',
+  features: [
+    'Maintains BST and heap properties',
+    'Randomized balancing',
+    'Expected O(log n) insert/search/delete',
+    'Uses rotations to maintain heap property'
+  ],
+  timeComplexity: {
+    access: 'O(log n)',
+    search: 'O(log n)',
+    insertion: 'O(log n)',
+    deletion: 'O(log n)'
+  },
+  spaceComplexity: 'O(n)',
+  useCases: [
+    'Balanced BST alternative',
+    'Randomized data structures',
+    'Advanced algorithms'
+  ]
+},
   {
   id: 'suffix-array',
   name: 'Suffix Array',
