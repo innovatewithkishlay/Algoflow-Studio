@@ -158,14 +158,14 @@ function doOverlap(i1, i2) {
 }`
 };
 
-const defaultIntervals: Interval[] = [
-  { low: 15, high: 20 },
-  { low: 10, high: 30 },
-  { low: 17, high: 19 },
-  { low: 5, high: 20 },
-  { low: 12, high: 15 },
-  { low: 30, high: 40 }
-];
+// const defaultIntervals: Interval[] = [
+//   { low: 15, high: 20 },
+//   { low: 10, high: 30 },
+//   { low: 17, high: 19 },
+//   { low: 5, high: 20 },
+//   { low: 12, high: 15 },
+//   { low: 30, high: 40 }
+// ];
 
 const IntervalTree: React.FC = () => {
   const [root, setRoot] = useState<IntervalNode | null>(null);
