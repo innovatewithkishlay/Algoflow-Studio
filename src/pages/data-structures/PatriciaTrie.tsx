@@ -182,7 +182,7 @@ function insert(root, word) {
 };
 
 const PatriciaTrie: React.FC = () => {
-  const [root,] = useState<PatriciaNode>({ label: '', children: [], isWord: false });
+  const [root] = useState<PatriciaNode>({ label: '', children: [], isWord: false });
   const [steps, setSteps] = useState<PatriciaStep[]>([]);
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
