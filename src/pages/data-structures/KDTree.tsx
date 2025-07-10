@@ -191,14 +191,14 @@ function rangeSearch(root, query, found = []) {
 }`
 };
 
-const defaultPoints: Point[] = [
-  { x: 30, y: 40 },
-  { x: 5, y: 25 },
-  { x: 70, y: 70 },
-  { x: 10, y: 12 },
-  { x: 50, y: 30 },
-  { x: 35, y: 45 }
-];
+// const defaultPoints: Point[] = [
+//   { x: 30, y: 40 },
+//   { x: 5, y: 25 },
+//   { x: 70, y: 70 },
+//   { x: 10, y: 12 },
+//   { x: 50, y: 30 },
+//   { x: 35, y: 45 }
+// ];
 
 const KDTree: React.FC = () => {
   const [root, setRoot] = useState<KDNode | null>(null);
