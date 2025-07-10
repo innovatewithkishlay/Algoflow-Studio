@@ -18,6 +18,7 @@ import RedBlackTree from '../pages/data-structures/RedBlackTree';
 import BTree from '../pages/data-structures/BTree';
 import BPlusTree from '../pages/data-structures/BPlusTree';
 import SuffixTrie from '../pages/data-structures/SuffixTrie';
+import SuffixArray from '../pages/data-structures/SuffixArray';
 
 export interface DataStructure {
   id: string;
@@ -39,6 +40,34 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'suffix-array',
+  name: 'Suffix Array',
+  description: 'A space-efficient array of all suffixes of a string in sorted order, enabling fast substring and pattern matching.',
+  category: 'linear',
+  difficulty: 'advanced',
+  component: SuffixArray,
+  icon: 'bi-list-ol',
+  features: [
+    'All suffixes sorted lexicographically',
+    'Fast substring/pattern search',
+    'Space-efficient for large texts',
+    'Foundation for advanced text algorithms'
+  ],
+  timeComplexity: {
+    access: 'O(1)',
+    search: 'O(m log n)',
+    insertion: 'O(n² log n)', 
+    deletion: 'O(n)'
+  },
+  spaceComplexity: 'O(n)',
+  useCases: [
+    'Substring search',
+    'Pattern matching',
+    'Bioinformatics (DNA search)',
+    'Full-text indexing'
+  ]
+},
   {
   id: 'suffix-trie',
   name: 'Suffix Trie',
