@@ -33,7 +33,7 @@ function insertSuffixTrieSteps(str: string): SuffixTrieStep[] {
   const root: TrieNode = { children: {}, isEnd: false, label: '' };
   for (let i = 0; i < str.length; i++) {
     let curr = root;
-    let suffix = str.slice(i);
+    const suffix = str.slice(i);
     steps.push({
       root: cloneTrie(root),
       highlight: [],
