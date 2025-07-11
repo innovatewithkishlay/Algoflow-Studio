@@ -41,45 +41,52 @@ const AlgorithmsPage: React.FC = () => {
     <div className="min-h-screen bg-white py-10 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-10">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center shadow">
-              <svg
-                width={28}
-                height={28}
-                viewBox="0 0 28 28"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle cx={14} cy={22} r={4} fill="#22c55e" />
-                <circle cx={7} cy={8} r={3} fill="#86efac" />
-                <circle cx={21} cy={8} r={3} fill="#86efac" />
-                <circle cx={14} cy={14} r={3.5} fill="#4ade80" />
-                <line x1={14} y1={18} x2={14} y2={14} stroke="#22c55e" strokeWidth={2} />
-                <line x1={14} y1={14} x2={7} y2={8} stroke="#4ade80" strokeWidth={2} />
-                <line x1={14} y1={14} x2={21} y2={8} stroke="#4ade80" strokeWidth={2} />
-              </svg>
-            </div>
-            <div>
-              <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900 mb-1">Algorithms</h1>
-              <p className="text-zinc-600 text-base">
-                Learn different algorithms through step-by-step visualizations and interactive examples.
-              </p>
-            </div>
-          </div>
-        </header>
+       <header className="max-w-3xl mx-auto pb-10 text-center">
+               <motion.h1
+                 className="text-5xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 animate-gradient-x"
+                 initial={{ opacity: 0, y: -40 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ duration: 0.7, type: "spring" }}
+               >
+                 Algorithms Explorer
+               </motion.h1>
+               <motion.p
+                 className="mt-4 text-lg text-gray-600 dark:text-gray-300"
+                 initial={{ opacity: 0, y: -20 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ delay: 0.15, duration: 0.7, type: "spring" }}
+               >
+                 Visual, interactive, and always growing.
+               </motion.p>
+               <motion.p
+  className="mt-1 text-sm dark:text-blue-300 font-medium"
+  style={{ color: '#198754' }} 
+  initial={{ opacity: 0, y: -10 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.25, duration: 0.7, type: "spring" }}
+>
+  We’re continuously adding new data structures. Check back later!
+</motion.p>
 
-        {/* Search Bar */}
-        <div className="mb-8 flex justify-center">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            className="w-full max-w-lg rounded border border-gray-300 px-4 py-2 text-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-            placeholder="Search algorithms..."
-          />
-        </div>
-
+             </header>
+       
+               {/* Modern Search Bar */}
+               <div className="mb-10 max-w-2xl mx-auto">
+                 <div className="relative">
+                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                     <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                       <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+                     </svg>
+                   </div>
+                   <input
+                     type="text"
+                     value={searchQuery}
+                     onChange={e => setSearchQuery(e.target.value)}
+                     className="block w-full pl-10 pr-4 py-3.5 rounded-xl border border-gray-300 bg-white/80 dark:bg-zinc-800/70 backdrop-blur-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+                     placeholder="Search algorithms..."
+                   />
+                 </div>
+               </div>
         {/* Card Grid or Not Found */}
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8"
