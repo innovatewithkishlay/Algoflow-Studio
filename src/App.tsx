@@ -21,7 +21,7 @@ import AlgorithmsPage from './pages/AlgorithmsPage';
 import DataStructureVisualizer from './pages/DataStructureVisualizer';	
 import AlgorithmVisualizer from './pages/AlgorithmVisualizer';
 import TimeComplexityPage from './pages/TimeComplexityPage';
-
+import RoadmapPage from './pages/RoadmapPage'; 
 import './styles/globals.css';
 import './styles/components.css';
 
@@ -76,6 +76,15 @@ const App: React.FC = () => {
                     </RequireAuth>
                   }
                 />
+                <Route
+  path="/roadmap"
+  element={
+    <RequireAuth>
+      <RoadmapPage />
+    </RequireAuth>
+  }
+/>
+
                 <Route
                   path="/algorithms"
                   element={
