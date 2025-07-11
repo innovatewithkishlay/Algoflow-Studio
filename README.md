@@ -17,6 +17,27 @@ An immersive, modern platform to learn, visualize, and master Data Structures & 
 
 ---
 
+## What's Included?
+
+AlgoFlow Studio currently features **15 algorithms** and **22 data structures** with interactive visualizations and explanations.
+
+### Algorithms (15)
+
+- **Searching:** Linear Search, Binary Search
+- **Sorting:** Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort, Heap Sort, Counting Sort, Radix Sort
+- **Graph Algorithms:** BFS (Breadth-First Search), DFS (Depth-First Search), Kruskal's Algorithm, Dijkstra's Algorithm, Floyd-Warshall Algorithm
+
+### Data Structures (22)
+
+- **Fundamentals:** Arrays, Linked List, Stack, Queue
+- **Trees:** Tree, AVL Tree, Red-Black Tree, B-Tree, B+ Tree, Interval Tree, KD-Tree, OSTree
+- **Heaps & Queues:** Heap, Priority Queue
+- **Graphs:** Graph, Disjoint Set
+- **Tries & Variants:** Trie, Suffix Trie, Patricia Trie
+- **Other Structures:** Hash Table, Segment Tree, Fenwick Tree (Binary Indexed Tree), Bloom Filter, Suffix Array, Treap, Backtracking
+
+---
+
 ## Technology Stack
 
 | Category         | Stack                                    |
