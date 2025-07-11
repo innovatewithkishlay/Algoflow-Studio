@@ -11,6 +11,7 @@ const navLinks = [
   { to: "/data-structures", label: "Data Structures" },
   { to: "/algorithms", label: "Algorithms" },
   { to: "/time-complexity", label: "Time Complexity" },
+  { to: "/roadmap", label: "DSA Roadmap" },
 ];
 
 const Navbar: React.FC<NavbarProps> = ({ onSidebarToggle }) => {
