@@ -32,12 +32,6 @@ function cloneOST(node: OSTNode | null): OSTNode | null {
   };
 }
 
-function updateSize(node: OSTNode | null): number {
-  if (!node) return 0;
-  node.size = 1 + updateSize(node.left) + updateSize(node.right);
-  return node.size;
-}
-
 function insertOSTSteps(root: OSTNode | null, key: number, steps: OSTStep[]): OSTNode {
   if (!root) {
     const newNode = { key, size: 1, left: null, right: null };
