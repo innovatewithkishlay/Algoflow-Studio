@@ -51,23 +51,32 @@ const DataStructuresPage: React.FC = () => {
       transition={{ duration: 0.5 }}
     >
       <div className="max-w-7xl mx-auto">
-        <motion.header
-          className="text-center mb-12"
-          initial={{ y: -30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.5, type: "spring" }}
+         <header className="max-w-3xl mx-auto pb-10 text-center">
+        <motion.h1
+          className="text-5xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 animate-gradient-x"
+          initial={{ opacity: 0, y: -40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, type: "spring" }}
         >
-          <div className="flex flex-col items-center">
-            <div className="relative inline-flex mb-3">
-              <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 tracking-tight">
-                Data Structures Explorer
-              </h1>
-            </div>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mt-3">
-              Interactive visualizations to understand and master fundamental data structures
-            </p>
-          </div>
-        </motion.header>
+          Data Structures Explorer
+        </motion.h1>
+        <motion.p
+          className="mt-4 text-lg text-gray-600 dark:text-gray-300"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.7, type: "spring" }}
+        >
+          Visual, interactive, and always growing.
+        </motion.p>
+        <motion.p
+          className="mt-1 text-sm text-blue-700 dark:text-blue-300 font-medium"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25, duration: 0.7, type: "spring" }}
+        >
+          We’re continuously adding new data structures. Check back later!
+        </motion.p>
+      </header>
 
         {/* Modern Search Bar */}
         <div className="mb-10 max-w-2xl mx-auto">
