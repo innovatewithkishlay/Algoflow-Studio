@@ -23,6 +23,7 @@ import Treap from '../pages/data-structures/Treap';
 import IntervalTree from '../pages/data-structures/IntervalTree';
 import KDTree from '../pages/data-structures/KDTree';
 import PatriciaTrie from '../pages/data-structures/PatriciaTrie';
+import OSTree from '../pages/data-structures/OSTree';
 
 export interface DataStructure {
   id: string;
@@ -44,6 +45,32 @@ export interface DataStructure {
 }
 
 export const dataStructures: DataStructure[] = [
+  {
+  id: 'order-statistic-tree',
+  name: 'Order Statistic Tree',
+  description: 'A binary search tree augmented with subtree sizes to support rank and select operations efficiently.',
+  category: 'hierarchical',
+  difficulty: 'advanced',
+  component: OSTree,
+  icon: 'bi-sort-numeric-down',
+  features: [
+    'Supports rank and select queries',
+    'Augmented BST with subtree sizes',
+    'O(log n) query and update time'
+  ],
+  timeComplexity: {
+    access: 'O(log n)',
+    search: 'O(log n)',
+    insertion: 'O(log n)',
+    deletion: 'O(log n)'
+  },
+  spaceComplexity: 'O(n)',
+  useCases: [
+    'Statistics and ranking',
+    'Databases and selection queries',
+    'Competitive programming'
+  ]
+},
   {
   id: 'patricia-trie',
   name: 'Patricia Trie',
