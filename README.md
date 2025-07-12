@@ -2,7 +2,7 @@
 
 An immersive, modern platform to learn, visualize, and master Data Structures & Algorithms through engaging animations. Built with React, TypeScript, Tailwind CSS, and Framer Motion.
 
-![AlgoFlow Studio Preview](./Algo.gif)
+<!-- ![AlgoFlow Studio Preview](./Algo.gif) -->
 
 ---
 
