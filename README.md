@@ -1,6 +1,7 @@
 # AlgoFlow Studio
 
 An immersive, modern platform to learn, visualize, and master Data Structures & Algorithms through engaging animations. Built with React, TypeScript, Tailwind CSS, and Framer Motion.
+Fully containerized with Docker for consistent performance across environments, showcasing system design and scalability best practices.
 
 ![AlgoFlow Studio Preview](./Algo.gif)
 
@@ -66,6 +67,20 @@ npm run dev
 Then open `http://localhost:5173` in your browser.
 
 ---
+
+### Run with Docker (System Design & Scalability)
+
+You can also run AlgoFlow Studio using Docker to ensure a consistent environment and easy deployment:
+
+1. Build the Docker image:
+   ```bash
+   docker build -t algoflow .
+2. Run the container:
+  ```bash
+   docker run --env-file frontend.env -p 3000:3000 algoflow.
+3. Open in Browser:
+  ```bash
+   http://localhost:3000
 
 ## Project Structure
 
